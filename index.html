@@ -86,23 +86,12 @@
             background-image: linear-gradient(to right, rgba(181, 90, 48, 0.15) 1px, transparent 1px);
         }
 
-        .pulse-ai {
-            box-shadow: 0 0 15px rgba(181, 90, 48, 0.4);
-            animation: pulse-border 2s infinite;
-        }
-
-        @keyframes pulse-border {
-            0% { box-shadow: 0 0 0 0 rgba(181, 90, 48, 0.6); }
-            70% { box-shadow: 0 0 0 10px rgba(181, 90, 48, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(181, 90, 48, 0); }
-        }
-
         .loader-spin {
             border: 3px solid #EAE6DF;
             border-top: 3px solid #B55A30;
             border-radius: 50%;
-            width: 20px;
-            height: 20px;
+            width: 18px;
+            height: 18px;
             animation: spin 0.8s linear infinite;
         }
 
@@ -183,9 +172,9 @@
                     <div class="p-4 bg-orange-50/60 rounded-xl border border-terracotta/30 space-y-3">
                         <div class="flex justify-between items-center">
                             <label class="font-mono text-xs font-bold uppercase text-terracotta flex items-center gap-1.5">
-                                <span>🎨 AI Hero Cover Art (Imagen 4.0)</span>
+                                <span>🎨 AI Hero Cover Art (Imagen 3.0)</span>
                             </label>
-                            <span class="text-[9px] font-mono bg-terracotta/10 text-terracotta px-1.5 py-0.5 rounded">imagen-4.0</span>
+                            <span class="text-[9px] font-mono bg-terracotta/10 text-terracotta px-1.5 py-0.5 rounded">imagen-3.0</span>
                         </div>
                         <p class="text-[11px] text-stone-600">Generate custom high-concept artwork directly onto the cover mockup:</p>
                         
@@ -228,10 +217,10 @@
                     <div class="space-y-3">
                         <label class="font-mono text-xs font-bold uppercase text-stone-500 block">3. Conceptual Artwork State</label>
                         <div class="space-y-1.5">
-                            <button onclick="setArtMode('synthesis')" class="art-mode-btn w-full text-left p-2 rounded text-xs bg-alabaster border border-stone-300 font-medium">
+                            <button onclick="setArtMode('synthesis', this)" class="art-mode-btn w-full text-left p-2 rounded text-xs bg-alabaster border border-stone-300 font-medium text-stone-900">
                                 ◆ Synthesis (Marble Bust + Copper Mesh)
                             </button>
-                            <button onclick="setArtMode('quantum')" class="art-mode-btn w-full text-left p-2 rounded text-xs hover:bg-stone-100 border border-transparent font-medium text-stone-600">
+                            <button onclick="setArtMode('quantum', this)" class="art-mode-btn w-full text-left p-2 rounded text-xs hover:bg-stone-100 border border-transparent font-medium text-stone-600">
                                 ◈ Quantum Logic (Prismatic Lattice)
                             </button>
                         </div>
@@ -290,7 +279,7 @@
                             <!-- AI Generated Image Container (Hidden by default) -->
                             <div id="cover-ai-img-container" class="hidden w-full max-w-[280px] h-[260px] rounded overflow-hidden shadow-lg border border-stone-300 bg-stone-100 flex items-center justify-center relative">
                                 <img id="cover-ai-img" src="" alt="AI Hero Cover Art" class="w-full h-full object-cover">
-                                <div class="absolute bottom-1 right-1 bg-charcoal/80 text-white font-mono text-[8px] px-1.5 py-0.5 rounded backdrop-blur">Imagen 4.0 Art</div>
+                                <div class="absolute bottom-1 right-1 bg-charcoal/80 text-white font-mono text-[8px] px-1.5 py-0.5 rounded backdrop-blur">Imagen AI Art</div>
                             </div>
 
                             <div id="uv-badge" class="absolute top-2 right-2 bg-yellow-400/90 text-charcoal font-mono text-[9px] font-bold px-2 py-0.5 rounded shadow opacity-0 transition-opacity pointer-events-none z-20">
@@ -324,7 +313,7 @@
             <div class="bg-alabaster p-6 rounded-xl border border-stone-300 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div>
                     <div class="flex items-center gap-2">
-                        <span class="text-terracotta font-mono text-xs font-bold uppercase tracking-widest">Powered by Gemini 3 Flash &amp; Imagen 4.0</span>
+                        <span class="text-terracotta font-mono text-xs font-bold uppercase tracking-widest">Powered by Gemini &amp; Imagen 3.0</span>
                         <span class="bg-terracotta text-white font-mono text-[9px] px-2 py-0.5 rounded-full font-bold">LIVE API</span>
                     </div>
                     <h2 class="font-serif text-3xl md:text-4xl text-charcoal mt-1">AI Magazine Copywriting &amp; Audio Studio</h2>
@@ -341,7 +330,7 @@
                 <div class="lg:col-span-6 bg-white p-6 rounded-xl border border-stone-200 shadow-sm space-y-5">
                     <h3 class="font-serif text-xl font-bold text-charcoal border-b border-stone-200 pb-2 flex items-center justify-between">
                         <span>✍️ AI Article &amp; Feature Copywriter</span>
-                        <span class="font-mono text-xs font-normal text-stone-500">gemini-3-flash-preview</span>
+                        <span class="font-mono text-xs font-normal text-stone-500">gemini-2.5-flash</span>
                     </h3>
 
                     <div class="space-y-4 text-xs">
@@ -442,7 +431,7 @@
         </section>
 
 
-        <!-- SECTION 2: THEME & INSPIRATION -->
+        <!-- SECTION 3: THEME & INSPIRATION -->
         <section id="section-theme" class="hidden space-y-8">
             <div class="bg-alabaster p-6 rounded-xl border border-stone-300">
                 <span class="text-terracotta font-mono text-xs font-bold uppercase tracking-widest">Editorial Philosophy</span>
@@ -523,7 +512,7 @@
         </section>
 
 
-        <!-- SECTION 3: AUDIT & SOP -->
+        <!-- SECTION 4: AUDIT & SOP -->
         <section id="section-audit" class="hidden space-y-8">
             <div class="bg-alabaster p-6 rounded-xl border border-stone-300">
                 <span class="text-terracotta font-mono text-xs font-bold uppercase tracking-widest">Quality Assurance Directive</span>
@@ -626,7 +615,7 @@
         </section>
 
 
-        <!-- SECTION 4: 80-PAGE FLATPLAN -->
+        <!-- SECTION 5: 80-PAGE FLATPLAN -->
         <section id="section-flatplan" class="hidden space-y-8">
             <div class="bg-alabaster p-6 rounded-xl border border-stone-300">
                 <span class="text-terracotta font-mono text-xs font-bold uppercase tracking-widest">Master Architecture</span>
@@ -664,11 +653,11 @@
                     <h3 class="font-serif text-xl font-bold text-charcoal">Page Spreads (Click to Inspect)</h3>
                     <!-- Filter Buttons -->
                     <div class="flex flex-wrap gap-1 font-mono text-[11px]">
-                        <button onclick="filterFlatplan('all')" class="fp-filter-btn px-2.5 py-1 rounded bg-charcoal text-white">All (80p)</button>
-                        <button onclick="filterFlatplan('feature')" class="fp-filter-btn px-2.5 py-1 rounded bg-stone-100 text-stone-700 hover:bg-stone-200">Features</button>
-                        <button onclick="filterFlatplan('literature')" class="fp-filter-btn px-2.5 py-1 rounded bg-stone-100 text-stone-700 hover:bg-stone-200">Literature</button>
-                        <button onclick="filterFlatplan('culture')" class="fp-filter-btn px-2.5 py-1 rounded bg-stone-100 text-stone-700 hover:bg-stone-200">Culture</button>
-                        <button onclick="filterFlatplan('alumni')" class="fp-filter-btn px-2.5 py-1 rounded bg-stone-100 text-stone-700 hover:bg-stone-200">Alumni</button>
+                        <button onclick="filterFlatplan('all', this)" class="fp-filter-btn px-2.5 py-1 rounded bg-charcoal text-white">All (80p)</button>
+                        <button onclick="filterFlatplan('feature', this)" class="fp-filter-btn px-2.5 py-1 rounded bg-stone-100 text-stone-700 hover:bg-stone-200">Features</button>
+                        <button onclick="filterFlatplan('literature', this)" class="fp-filter-btn px-2.5 py-1 rounded bg-stone-100 text-stone-700 hover:bg-stone-200">Literature</button>
+                        <button onclick="filterFlatplan('culture', this)" class="fp-filter-btn px-2.5 py-1 rounded bg-stone-100 text-stone-700 hover:bg-stone-200">Culture</button>
+                        <button onclick="filterFlatplan('alumni', this)" class="fp-filter-btn px-2.5 py-1 rounded bg-stone-100 text-stone-700 hover:bg-stone-200">Alumni</button>
                     </div>
                 </div>
 
@@ -710,7 +699,7 @@
         </section>
 
 
-        <!-- SECTION 5: IDENTITY & TYPOGRAPHY -->
+        <!-- SECTION 6: IDENTITY & TYPOGRAPHY -->
         <section id="section-identity" class="hidden space-y-8">
             <div class="bg-alabaster p-6 rounded-xl border border-stone-300">
                 <span class="text-terracotta font-mono text-xs font-bold uppercase tracking-widest">Brand System &amp; Micro-Typography</span>
@@ -836,15 +825,23 @@
                 <h3 class="font-serif text-lg font-bold text-charcoal">Gemini API Key Settings</h3>
                 <button onclick="closeApiModal()" class="font-mono text-xs text-stone-500 hover:text-stone-800">✕ Close</button>
             </div>
-            <p class="text-xs text-stone-600">
-                By default, requests use the platform runtime key. If you want to use a custom API key for extended calls or specific model limits, enter it below:
+            
+            <!-- API Key Warning Banner -->
+            <div id="api-modal-notice" class="hidden text-xs text-amber-900 bg-amber-50 p-3 rounded-lg border border-amber-200 space-y-1 font-mono">
+                <div class="font-bold flex items-center gap-1">⚠️ API KEY REQUIRED</div>
+                <div id="api-modal-notice-text">Please enter a valid Google Gemini API key to enable live AI features.</div>
+            </div>
+
+            <p class="text-xs text-stone-600 leading-relaxed">
+                Live features (Imagen 4.0 cover art, Gemini 3 Flash copywriting, and TTS audio podcasts) require a Google Gemini API Key. You can get a free API key in seconds from <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener font-bold text-terracotta underline">Google AI Studio ↗</a>.
             </p>
             <div>
-                <label class="font-mono text-xs font-bold text-stone-700 block mb-1">Custom API Key</label>
+                <label class="font-mono text-xs font-bold text-stone-700 block mb-1">Google Gemini API Key</label>
                 <input type="password" id="custom-api-key" placeholder="AIzaSy..." class="w-full p-2.5 text-xs border border-stone-300 rounded font-mono focus:outline-none focus:border-terracotta">
             </div>
-            <div class="flex justify-end gap-2 pt-2">
-                <button onclick="saveApiKey()" class="px-4 py-2 bg-terracotta text-white rounded text-xs font-bold hover:bg-stone-900 transition">Save Key</button>
+            <div class="flex justify-between items-center pt-2">
+                <button onclick="closeApiModal()" class="text-xs text-stone-500 hover:underline font-mono">Cancel</button>
+                <button onclick="saveApiKey()" class="px-4 py-2 bg-terracotta text-white rounded text-xs font-bold hover:bg-stone-900 transition">Save &amp; Enable AI</button>
             </div>
         </div>
     </div>
@@ -906,29 +903,58 @@
             { range: 'p. 80', title: 'Back Cover', section: 'front', type: 'Back Cover', brief: 'Minimalist brand mark and institutional contact information.', art: 'Stark geometric design', typo: 'DM Mono 9pt' }
         ];
 
-        // --- STREAMING_CHUNK:Implementing API key storage and backoff fetch engine... ---
         function getApiKey() {
             return localStorage.getItem('gemini_user_api_key') || "";
         }
 
-        function openApiModal() {
-            document.getElementById('custom-api-key').value = getApiKey();
-            document.getElementById('api-key-modal').classList.remove('hidden');
+        function ensureApiKey() {
+            const key = getApiKey();
+            if (!key) {
+                openApiModal("An API key is required to call Gemini & Imagen AI endpoints. Please enter your Google Gemini API key below.");
+                return null;
+            }
+            return key;
+        }
+
+        function openApiModal(noticeText = "") {
+            const input = document.getElementById('custom-api-key');
+            if (input) input.value = getApiKey();
+
+            const noticeBox = document.getElementById('api-modal-notice');
+            const noticeBoxText = document.getElementById('api-modal-notice-text');
+            if (noticeBox && noticeBoxText) {
+                if (noticeText) {
+                    noticeBoxText.innerText = noticeText;
+                    noticeBox.classList.remove('hidden');
+                } else {
+                    noticeBox.classList.add('hidden');
+                }
+            }
+
+            const modal = document.getElementById('api-key-modal');
+            if (modal) modal.classList.remove('hidden');
         }
 
         function closeApiModal() {
-            document.getElementById('api-key-modal').classList.add('hidden');
+            const modal = document.getElementById('api-key-modal');
+            if (modal) modal.classList.add('hidden');
         }
 
         function saveApiKey() {
-            const key = document.getElementById('custom-api-key').value.trim();
+            const input = document.getElementById('custom-api-key');
+            const key = input ? input.value.trim() : "";
+            if (!key) {
+                showToast("Please enter a valid API key.", true);
+                return;
+            }
             localStorage.setItem('gemini_user_api_key', key);
             closeApiModal();
-            showToast("API Key updated successfully!");
+            showToast("API Key saved! Live AI generation enabled.");
         }
 
         function showToast(message, isError = false) {
             const container = document.getElementById('toast-container');
+            if (!container) return;
             const toast = document.createElement('div');
             toast.className = `px-4 py-2.5 rounded-lg shadow-lg text-xs font-mono font-bold pointer-events-auto transition-all transform translate-y-2 opacity-0 ${isError ? 'bg-red-600 text-white' : 'bg-charcoal text-white'}`;
             toast.innerText = message;
@@ -965,64 +991,110 @@
             }
         }
 
-        // --- STREAMING_CHUNK:Defining Gemini API calls for Text, Image, and TTS... ---
-        // Gemini 3 Flash Text Generation
+        // Gemini Text Generation with Model Fallback
         async function callGeminiText(prompt, systemInstruction = "") {
-            const apiKey = getApiKey();
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
-            const payload = {
-                contents: [{ parts: [{ text: prompt }] }]
-            };
-            if (systemInstruction) {
-                payload.systemInstruction = { parts: [{ text: systemInstruction }] };
+            const apiKey = ensureApiKey();
+            if (!apiKey) throw new Error("Gemini API key is required. Please set your key in ⚙ Key settings.");
+
+            const candidateModels = [
+                "gemini-2.5-flash",
+                "gemini-2.0-flash",
+                "gemini-1.5-flash"
+            ];
+
+            let lastError = null;
+
+            for (const model of candidateModels) {
+                try {
+                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+                    const payload = {
+                        contents: [{ parts: [{ text: prompt }] }]
+                    };
+                    if (systemInstruction) {
+                        payload.systemInstruction = { parts: [{ text: systemInstruction }] };
+                    }
+
+                    const response = await fetchWithBackoff(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) {
+                        const errJson = await response.json().catch(() => ({}));
+                        const msg = errJson.error?.message || `HTTP ${response.status}`;
+                        lastError = new Error(`Model ${model}: ${msg}`);
+                        continue;
+                    }
+
+                    const result = await response.json();
+                    const genText = result.candidates?.[0]?.content?.parts?.[0]?.text;
+                    if (genText) return genText;
+                } catch (err) {
+                    lastError = err;
+                }
             }
 
-            const response = await fetchWithBackoff(apiUrl, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            });
-
-            if (!response.ok) {
-                const errJson = await response.json().catch(() => ({}));
-                throw new Error(errJson.error?.message || `HTTP ${response.status} Error`);
-            }
-
-            const result = await response.json();
-            return result.candidates?.[0]?.content?.parts?.[0]?.text || "No text generated.";
+            throw lastError || new Error("Failed to generate text content.");
         }
 
-        // Imagen 4.0 Image Generation
+        // Imagen Image Generation with Multi-Model Fallbacks
         async function callImagenGenerate(promptText) {
-            const apiKey = getApiKey();
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-001:predict?key=${apiKey}`;
-            const payload = {
-                instances: [{ prompt: promptText }],
-                parameters: { sampleCount: 1 }
-            };
+            const apiKey = ensureApiKey();
+            if (!apiKey) throw new Error("Gemini API key is required. Please set your key in ⚙ Key settings.");
 
-            const response = await fetchWithBackoff(apiUrl, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            });
+            const candidateModels = [
+                "imagen-3.0-generate-002",
+                "imagen-3.0-fast-generate-001",
+                "imagen-3.0-generate-001",
+                "gemini-2.5-flash-image"
+            ];
 
-            if (!response.ok) {
-                const errJson = await response.json().catch(() => ({}));
-                throw new Error(errJson.error?.message || `HTTP ${response.status} Error`);
+            let lastError = null;
+
+            for (const model of candidateModels) {
+                try {
+                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:predict?key=${apiKey}`;
+                    const payload = {
+                        instances: [{ prompt: promptText }],
+                        parameters: { sampleCount: 1 }
+                    };
+
+                    const response = await fetchWithBackoff(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) {
+                        const errJson = await response.json().catch(() => ({}));
+                        const msg = errJson.error?.message || `HTTP ${response.status}`;
+                        lastError = new Error(`Model ${model}: ${msg}`);
+                        console.warn(`Imagen model ${model} failed, trying next fallback...`, msg);
+                        continue;
+                    }
+
+                    const result = await response.json();
+                    if (result.predictions && result.predictions[0] && result.predictions[0].bytesBase64Encoded) {
+                        return `data:image/png;base64,${result.predictions[0].bytesBase64Encoded}`;
+                    } else if (result.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data) {
+                        const inlineData = result.candidates[0].content.parts[0].inlineData;
+                        return `data:${inlineData.mimeType || 'image/png'};base64,${inlineData.data}`;
+                    }
+                } catch (err) {
+                    lastError = err;
+                    console.warn(`Error calling model ${model}:`, err);
+                }
             }
 
-            const result = await response.json();
-            if (result.predictions && result.predictions[0] && result.predictions[0].bytesBase64Encoded) {
-                return `data:image/png;base64,${result.predictions[0].bytesBase64Encoded}`;
-            } else {
-                throw new Error("Image prediction returned empty result.");
-            }
+            throw lastError || new Error("Failed to generate image with available Imagen models.");
         }
 
         // Gemini 2.5 TTS Audio Generation
         async function callGeminiTTS(textToSay, voiceName = "Zephyr", styleInstruction = "") {
-            const apiKey = getApiKey();
+            const apiKey = ensureApiKey();
+            if (!apiKey) throw new Error("Gemini API key is required. Please set your key in ⚙ Key settings.");
+
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key=${apiKey}`;
             
             const fullPrompt = styleInstruction ? `${styleInstruction} ${textToSay}` : textToSay;
@@ -1124,42 +1196,49 @@
             }
         }
 
-        // --- STREAMING_CHUNK:Writing UI action handlers for AI generation workflows... ---
         // AI Cover Art Generator Handler
         async function generateCoverArtAI() {
-            const promptInput = document.getElementById('imagen-prompt-input').value.trim();
+            const inputEl = document.getElementById('imagen-prompt-input');
+            const promptInput = inputEl ? inputEl.value.trim() : "";
             if (!promptInput) {
                 showToast("Please enter a visual prompt.", true);
                 return;
             }
 
             const btn = document.getElementById('btn-gen-cover-art');
-            btn.disabled = true;
-            btn.innerHTML = `<div class="loader-spin"></div> <span>Generating with Imagen 4.0...</span>`;
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = `<div class="loader-spin"></div> <span>Generating AI Cover Art...</span>`;
+            }
 
             try {
                 const imgDataUrl = await callImagenGenerate(promptInput);
                 state.aiGeneratedCoverImg = imgDataUrl;
 
-                document.getElementById('coverCanvas').classList.add('hidden');
+                const cvs = document.getElementById('coverCanvas');
+                if (cvs) cvs.classList.add('hidden');
                 const container = document.getElementById('cover-ai-img-container');
                 const img = document.getElementById('cover-ai-img');
-                img.src = imgDataUrl;
-                container.classList.remove('hidden');
+                if (img) img.src = imgDataUrl;
+                if (container) container.classList.remove('hidden');
 
                 showToast("AI Cover Art synthesized & applied!");
             } catch (err) {
                 showToast("Image generation failed: " + err.message, true);
             } finally {
-                btn.disabled = false;
-                btn.innerHTML = `<span>✨ Generate AI Cover Art</span>`;
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = `<span>✨ Generate AI Cover Art</span>`;
+                }
             }
         }
 
         function resetCoverArtCanvas() {
             state.aiGeneratedCoverImg = null;
-            document.getElementById('cover-ai-img-container').classList.add('hidden');
-            document.getElementById('coverCanvas').classList.remove('hidden');
+            const container = document.getElementById('cover-ai-img-container');
+            const cvs = document.getElementById('coverCanvas');
+            if (container) container.classList.add('hidden');
+            if (cvs) cvs.classList.remove('hidden');
             drawCoverCanvas();
             showToast("Reset cover artwork to procedural canvas.");
         }
@@ -1167,8 +1246,10 @@
         // AI Cover Teaser Synthesizer
         async function generateCoverTeaserAI() {
             const btn = document.getElementById('btn-gen-teaser');
-            btn.disabled = true;
-            btn.innerHTML = `<span>Synthesizing...</span>`;
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = `<span>Synthesizing...</span>`;
+            }
 
             const systemPrompt = "Act as an executive magazine cover editor for 'PRAGYAURJA' (a high-end technical & humanities college magazine themed 'SYNTHESIS'). Synthesize 3 concise, punchy 1-line feature teasers referencing pages and themes like AI, Stage Drama, Civil Engineering, and Space Physics.";
             
@@ -1178,32 +1259,41 @@
                 
                 if (lines.length > 0) {
                     const teaserSelect = document.getElementById('cover-teaser-select');
-                    teaserSelect.innerHTML = '';
-                    lines.forEach((line, idx) => {
-                        const cleanLine = line.replace(/^[0-9\.\-\* ]+/, '').trim();
-                        teasers[idx] = cleanLine;
-                        const opt = document.createElement('option');
-                        opt.value = idx;
-                        opt.innerText = cleanLine.substring(0, 45) + '...';
-                        teaserSelect.appendChild(opt);
-                    });
+                    if (teaserSelect) {
+                        teaserSelect.innerHTML = '';
+                        lines.forEach((line, idx) => {
+                            const cleanLine = line.replace(/^[0-9\.\-\* ]+/, '').trim();
+                            teasers[idx] = cleanLine;
+                            const opt = document.createElement('option');
+                            opt.value = idx;
+                            opt.innerText = cleanLine.substring(0, 45) + '...';
+                            teaserSelect.appendChild(opt);
+                        });
+                    }
                     updateTeaser(0);
                     showToast("Synthesized 3 new cover teasers!");
                 }
             } catch (err) {
                 showToast("Teaser generation failed: " + err.message, true);
             } finally {
-                btn.disabled = false;
-                btn.innerHTML = `<span>✨ Synthesize with Gemini</span>`;
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = `<span>✨ Synthesize with Gemini</span>`;
+                }
             }
         }
 
         // AI Article Copywriter Handler
         async function generateArticleAI() {
-            const topic = document.getElementById('ai-topic-input').value.trim();
-            const tone = document.getElementById('ai-tone-select').value;
-            const length = document.getElementById('ai-length-select').value;
-            const context = document.getElementById('ai-context-input').value.trim();
+            const topicInput = document.getElementById('ai-topic-input');
+            const toneSelect = document.getElementById('ai-tone-select');
+            const lengthSelect = document.getElementById('ai-length-select');
+            const contextInput = document.getElementById('ai-context-input');
+
+            const topic = topicInput ? topicInput.value.trim() : "";
+            const tone = toneSelect ? toneSelect.value : "";
+            const length = lengthSelect ? lengthSelect.value : "";
+            const context = contextInput ? contextInput.value.trim() : "";
 
             if (!topic) {
                 showToast("Please enter a topic or section title.", true);
@@ -1211,8 +1301,10 @@
             }
 
             const btn = document.getElementById('btn-gen-article');
-            btn.disabled = true;
-            btn.innerHTML = `<div class="loader-spin"></div> <span>Synthesizing Copy...</span>`;
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = `<div class="loader-spin"></div> <span>Synthesizing Copy...</span>`;
+            }
 
             const systemPrompt = `You are a world-class magazine chief editor for 'PRAGYAURJA', an award-winning university magazine that synthesizes engineering rigor with humanities. Your style follows ${tone}. Format the output with clear HTML tags: <h3> for section headlines, <p> for body paragraphs, and <blockquote> for pull quotes. Ensure body paragraphs are engaging, highly articulate, and devoid of cheesy clichés. Include a brief deck subhead above the main story.`;
 
@@ -1220,30 +1312,38 @@
 
             try {
                 const htmlText = await callGeminiText(prompt, systemPrompt);
-                document.getElementById('ai-article-output').innerHTML = htmlText;
+                const outEl = document.getElementById('ai-article-output');
+                if (outEl) outEl.innerHTML = htmlText;
                 showToast("Article copy generated successfully!");
             } catch (err) {
                 showToast("Article generation failed: " + err.message, true);
             } finally {
-                btn.disabled = false;
-                btn.innerHTML = `<span>✨ Synthesize Article Copy</span>`;
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = `<span>✨ Synthesize Article Copy</span>`;
+                }
             }
         }
 
         // AI TTS Speech Generator Handler
         async function generateSpeechAI() {
-            const articleText = document.getElementById('ai-article-output').innerText.trim();
+            const articleOut = document.getElementById('ai-article-output');
+            const articleText = articleOut ? articleOut.innerText.trim() : "";
             if (!articleText || articleText.includes('Click "Synthesize Article Copy"')) {
                 showToast("Please generate or paste article text first.", true);
                 return;
             }
 
-            const voice = document.getElementById('tts-voice-select').value;
-            const style = document.getElementById('tts-style-input').value.trim();
+            const voiceSelect = document.getElementById('tts-voice-select');
+            const styleInput = document.getElementById('tts-style-input');
+            const voice = voiceSelect ? voiceSelect.value : "Zephyr";
+            const style = styleInput ? styleInput.value.trim() : "";
             const btn = document.getElementById('btn-gen-tts');
 
-            btn.disabled = true;
-            btn.innerHTML = `<div class="loader-spin"></div> <span>Synthesizing Voiceover Audio...</span>`;
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = `<div class="loader-spin"></div> <span>Synthesizing Voiceover Audio...</span>`;
+            }
 
             // Truncate to first 400 characters for snappy preview
             const textSnippet = articleText.substring(0, 450);
@@ -1251,44 +1351,57 @@
             try {
                 const audioUrl = await callGeminiTTS(textSnippet, voice, style);
                 const player = document.getElementById('tts-audio-player');
-                player.src = audioUrl;
-                document.getElementById('tts-voice-badge').innerText = `Voice: ${voice}`;
-                document.getElementById('audio-player-container').classList.remove('hidden');
-                player.play();
+                if (player) {
+                    player.src = audioUrl;
+                    player.play();
+                }
+                const badge = document.getElementById('tts-voice-badge');
+                if (badge) badge.innerText = `Voice: ${voice}`;
+                const container = document.getElementById('audio-player-container');
+                if (container) container.classList.remove('hidden');
                 showToast("Audio voiceover generated!");
             } catch (err) {
                 showToast("TTS generation failed: " + err.message, true);
             } finally {
-                btn.disabled = false;
-                btn.innerHTML = `<span>🔊 Generate AI Audio Voiceover (WAV)</span>`;
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = `<span>🔊 Generate AI Audio Voiceover (WAV)</span>`;
+                }
             }
         }
 
         // AI Forensic Draft Auditor Handler
         async function auditDraftAI() {
-            const draftText = document.getElementById('audit-input-text').value.trim();
+            const textInput = document.getElementById('audit-input-text');
+            const draftText = textInput ? textInput.value.trim() : "";
             if (!draftText) {
                 showToast("Please paste draft text to audit.", true);
                 return;
             }
 
             const btn = document.getElementById('btn-run-audit');
-            btn.disabled = true;
-            btn.innerHTML = `Analyzing with Gemini...`;
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = `Analyzing with Gemini...`;
+            }
 
             const systemPrompt = "Act as an elite prepress quality assurance editor for PRAGYAURJA magazine. Audit the provided draft text against our SOP rules: (1) Check alignment & readability; (2) Eliminate passive wordiness; (3) Verify tone fits 'SYNTHESIS' editorial philosophy; (4) Provide a polished corrected version.";
 
             try {
                 const resultText = await callGeminiText(`Audit this draft submission:\n"${draftText}"`, systemPrompt);
                 const formatted = resultText.replace(/\n/g, '<br>');
-                document.getElementById('audit-result-text').innerHTML = formatted;
-                document.getElementById('audit-result-box').classList.remove('hidden');
+                const resultOut = document.getElementById('audit-result-text');
+                if (resultOut) resultOut.innerHTML = formatted;
+                const resultBox = document.getElementById('audit-result-box');
+                if (resultBox) resultBox.classList.remove('hidden');
                 showToast("Forensic audit complete!");
             } catch (err) {
                 showToast("Audit failed: " + err.message, true);
             } finally {
-                btn.disabled = false;
-                btn.innerHTML = `<span>✨ Run Forensic AI Quality Audit</span>`;
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = `<span>✨ Run Forensic AI Quality Audit</span>`;
+                }
             }
         }
 
@@ -1296,13 +1409,16 @@
             if (!state.selectedFpItem) return;
             const item = state.selectedFpItem;
             switchTab('aistudio');
-            document.getElementById('ai-topic-input').value = item.title + " (" + item.range + ")";
-            document.getElementById('ai-context-input').value = `Brief: ${item.brief}. Art Direction: ${item.art}. Typo Specs: ${item.typo}.`;
+            const topicInput = document.getElementById('ai-topic-input');
+            const contextInput = document.getElementById('ai-context-input');
+            if (topicInput) topicInput.value = item.title + " (" + item.range + ")";
+            if (contextInput) contextInput.value = `Brief: ${item.brief}. Art Direction: ${item.art}. Typo Specs: ${item.typo}.`;
             generateArticleAI();
         }
 
         function copyGeneratedText() {
-            const text = document.getElementById('ai-article-output').innerText;
+            const out = document.getElementById('ai-article-output');
+            const text = out ? out.innerText : "";
             if (text) {
                 const el = document.createElement('textarea');
                 el.value = text;
@@ -1314,7 +1430,6 @@
             }
         }
 
-        // --- STREAMING_CHUNK:Writing tab switcher and canvas rendering routines... ---
         // Tab Switching Logic
         function switchTab(tabId) {
             state.activeTab = tabId;
@@ -1356,51 +1471,59 @@
 
             if (finishType === 'deboss') {
                 if (state.finishes.deboss) {
-                    titleText.classList.add('emboss-effect');
-                    btn.classList.add('border-terracotta', 'bg-orange-50');
+                    if (titleText) titleText.classList.add('emboss-effect');
+                    if (btn) btn.classList.add('border-terracotta', 'bg-orange-50');
                 } else {
-                    titleText.classList.remove('emboss-effect');
-                    btn.classList.remove('border-terracotta', 'bg-orange-50');
+                    if (titleText) titleText.classList.remove('emboss-effect');
+                    if (btn) btn.classList.remove('border-terracotta', 'bg-orange-50');
                 }
             } else if (finishType === 'spotuv') {
                 if (state.finishes.spotuv) {
-                    uvBadge.classList.remove('opacity-0');
-                    btn.classList.add('border-terracotta', 'bg-orange-50');
+                    if (uvBadge) uvBadge.classList.remove('opacity-0');
+                    if (btn) btn.classList.add('border-terracotta', 'bg-orange-50');
                 } else {
-                    uvBadge.classList.add('opacity-0');
-                    btn.classList.remove('border-terracotta', 'bg-orange-50');
+                    if (uvBadge) uvBadge.classList.add('opacity-0');
+                    if (btn) btn.classList.remove('border-terracotta', 'bg-orange-50');
                 }
                 drawCoverCanvas();
             } else if (finishType === 'grid') {
                 if (state.finishes.grid) {
-                    gridOverlay.classList.remove('opacity-0');
-                    gridBadge.innerText = 'ON';
-                    gridBadge.classList.replace('bg-stone-200', 'bg-terracotta');
-                    gridBadge.classList.add('text-white');
-                    btn.classList.add('border-terracotta', 'bg-orange-50');
+                    if (gridOverlay) gridOverlay.classList.remove('opacity-0');
+                    if (gridBadge) {
+                        gridBadge.innerText = 'ON';
+                        gridBadge.classList.replace('bg-stone-200', 'bg-terracotta');
+                        gridBadge.classList.add('text-white');
+                    }
+                    if (btn) btn.classList.add('border-terracotta', 'bg-orange-50');
                 } else {
-                    gridOverlay.classList.add('opacity-0');
-                    gridBadge.innerText = 'OFF';
-                    gridBadge.classList.replace('bg-terracotta', 'bg-stone-200');
-                    gridBadge.classList.remove('text-white');
-                    btn.classList.remove('border-terracotta', 'bg-orange-50');
+                    if (gridOverlay) gridOverlay.classList.add('opacity-0');
+                    if (gridBadge) {
+                        gridBadge.innerText = 'OFF';
+                        gridBadge.classList.replace('bg-terracotta', 'bg-stone-200');
+                        gridBadge.classList.remove('text-white');
+                    }
+                    if (btn) btn.classList.remove('border-terracotta', 'bg-orange-50');
                 }
             }
         }
 
-        function setArtMode(mode) {
+        function setArtMode(mode, btnEl) {
             state.artMode = mode;
             document.querySelectorAll('.art-mode-btn').forEach(btn => {
                 btn.classList.remove('bg-alabaster', 'border-stone-300', 'text-stone-900');
                 btn.classList.add('border-transparent', 'text-stone-600');
             });
-            event.currentTarget.classList.add('bg-alabaster', 'border-stone-300', 'text-stone-900');
+            if (btnEl) {
+                btnEl.classList.add('bg-alabaster', 'border-stone-300', 'text-stone-900');
+                btnEl.classList.remove('border-transparent', 'text-stone-600');
+            }
             resetCoverArtCanvas();
         }
 
         function updateTeaser(index) {
             state.teaserIndex = index;
-            document.getElementById('teaser-text').innerText = teasers[index];
+            const textEl = document.getElementById('teaser-text');
+            if (textEl) textEl.innerText = teasers[index];
         }
 
         // HTML5 Canvas Interactive Hero Cover Art
@@ -1423,7 +1546,7 @@
         }
 
         function drawCoverCanvas() {
-            if (!ctx) return;
+            if (!ctx || !canvas) return;
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
             const centerX = canvas.width / 2;
@@ -1483,7 +1606,6 @@
             ctx.restore();
         }
 
-        // --- STREAMING_CHUNK:Rendering Flatplan cards and Chart.js integration... ---
         function renderFlatplanGrid() {
             const grid = document.getElementById('flatplan-grid');
             if (!grid) return;
@@ -1518,76 +1640,100 @@
             });
         }
 
-        function filterFlatplan(category) {
+        function filterFlatplan(category, btnEl) {
             state.flatplanFilter = category;
             document.querySelectorAll('.fp-filter-btn').forEach(btn => {
                 btn.className = 'fp-filter-btn px-2.5 py-1 rounded bg-stone-100 text-stone-700 hover:bg-stone-200';
             });
-            event.currentTarget.className = 'fp-filter-btn px-2.5 py-1 rounded bg-charcoal text-white';
+            if (btnEl) {
+                btnEl.className = 'fp-filter-btn px-2.5 py-1 rounded bg-charcoal text-white';
+            }
             renderFlatplanGrid();
         }
 
         function showFpDetail(item) {
             state.selectedFpItem = item;
-            document.getElementById('fp-detail-range').innerText = item.range + ' // ' + item.type;
-            document.getElementById('fp-detail-title').innerText = item.title;
-            document.getElementById('fp-detail-brief').innerText = item.brief;
-            document.getElementById('fp-detail-art').innerText = item.art;
-            document.getElementById('fp-detail-typo').innerText = item.typo;
-            document.getElementById('fp-detail-box').classList.remove('hidden');
-            document.getElementById('fp-detail-box').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            const rEl = document.getElementById('fp-detail-range');
+            const tEl = document.getElementById('fp-detail-title');
+            const bEl = document.getElementById('fp-detail-brief');
+            const aEl = document.getElementById('fp-detail-art');
+            const tyEl = document.getElementById('fp-detail-typo');
+            const box = document.getElementById('fp-detail-box');
+
+            if (rEl) rEl.innerText = item.range + ' // ' + item.type;
+            if (tEl) tEl.innerText = item.title;
+            if (bEl) bEl.innerText = item.brief;
+            if (aEl) aEl.innerText = item.art;
+            if (tyEl) tyEl.innerText = item.typo;
+            if (box) {
+                box.classList.remove('hidden');
+                box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
         }
 
         function closeFpDetail() {
-            document.getElementById('fp-detail-box').classList.add('hidden');
+            const box = document.getElementById('fp-detail-box');
+            if (box) box.classList.add('hidden');
         }
 
-        // Chart.js Integration
+        // Chart.js Integration with Graceful Fallback
         let flatChartInstance = null;
 
         function renderChart() {
             const chartCanvas = document.getElementById('flatplanChart');
             if (!chartCanvas) return;
+            if (typeof Chart === 'undefined') return;
 
             if (flatChartInstance) {
                 flatChartInstance.destroy();
             }
 
-            const ctxChart = chartCanvas.getContext('2d');
-            flatChartInstance = new Chart(ctxChart, {
-                type: 'doughnut',
-                data: {
-                    labels: ['Features & Tech (20p)', 'Literature & Arts (18p)', 'Culture & Life (18p)', 'Alumni & Milestones (14p)', 'Front/Back Matter (10p)'],
-                    datasets: [{
-                        data: [20, 18, 18, 14, 10],
-                        backgroundColor: ['#1F4E5B', '#B55A30', '#D4A373', '#2B4C7E', '#A8A29E'],
-                        borderWidth: 2,
-                        borderColor: '#FDFBF7'
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { display: false },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    return ' ' + context.label + ': ' + context.raw + ' Pages';
+            try {
+                const ctxChart = chartCanvas.getContext('2d');
+                flatChartInstance = new Chart(ctxChart, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Features & Tech (20p)', 'Literature & Arts (18p)', 'Culture & Life (18p)', 'Alumni & Milestones (14p)', 'Front/Back Matter (10p)'],
+                        datasets: [{
+                            data: [20, 18, 18, 14, 10],
+                            backgroundColor: ['#1F4E5B', '#B55A30', '#D4A373', '#2B4C7E', '#A8A29E'],
+                            borderWidth: 2,
+                            borderColor: '#FDFBF7'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        return ' ' + context.label + ': ' + context.raw + ' Pages';
+                                    }
                                 }
                             }
-                        }
-                    },
-                    cutout: '70%'
-                }
-            });
+                        },
+                        cutout: '70%'
+                    }
+                });
+            } catch (e) {
+                console.log('Chart load deferred');
+            }
         }
 
-        // Initialization
-        window.addEventListener('DOMContentLoaded', () => {
+        // Safe Initialization
+        function initApp() {
             initCanvas();
             renderFlatplanGrid();
-        });
+            setTimeout(renderChart, 200);
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initApp);
+        } else {
+            initApp();
+        }
     </script>
 </body>
 </html>
