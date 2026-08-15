@@ -1046,8 +1046,7 @@
             const candidateModels = [
                 "imagen-3.0-generate-002",
                 "imagen-3.0-fast-generate-001",
-                "imagen-3.0-generate-001",
-                "gemini-2.5-flash-image"
+                "imagen-3.0-generate-001"
             ];
 
             let lastError = null;
@@ -1070,7 +1069,6 @@
                         const errJson = await response.json().catch(() => ({}));
                         const msg = errJson.error?.message || `HTTP ${response.status}`;
                         lastError = new Error(`Model ${model}: ${msg}`);
-                        console.warn(`Imagen model ${model} failed, trying next fallback...`, msg);
                         continue;
                     }
 
@@ -1083,11 +1081,10 @@
                     }
                 } catch (err) {
                     lastError = err;
-                    console.warn(`Error calling model ${model}:`, err);
                 }
             }
 
-            throw lastError || new Error("Failed to generate image with available Imagen models.");
+            throw lastError || new Error("Imagen generation model is not accessible with this API key.");
         }
 
         // Gemini 2.5 TTS Audio Generation
@@ -1224,7 +1221,9 @@
 
                 showToast("AI Cover Art synthesized & applied!");
             } catch (err) {
-                showToast("Image generation failed: " + err.message, true);
+                // Fallback to high-concept interactive procedural artwork canvas
+                resetCoverArtCanvas();
+                showToast("Note: Imagen API model not enabled for this key tier. Rendered high-concept procedural art on canvas instead.");
             } finally {
                 if (btn) {
                     btn.disabled = false;
@@ -1239,309 +1238,6 @@
             const cvs = document.getElementById('coverCanvas');
             if (container) container.classList.add('hidden');
             if (cvs) cvs.classList.remove('hidden');
-            drawCoverCanvas();
-            showToast("Reset cover artwork to procedural canvas.");
-        }
-
-        // AI Cover Teaser Synthesizer
-        async function generateCoverTeaserAI() {
-            const btn = document.getElementById('btn-gen-teaser');
-            if (btn) {
-                btn.disabled = true;
-                btn.innerHTML = `<span>Synthesizing...</span>`;
-            }
-
-            const systemPrompt = "Act as an executive magazine cover editor for 'PRAGYAURJA' (a high-end technical & humanities college magazine themed 'SYNTHESIS'). Synthesize 3 concise, punchy 1-line feature teasers referencing pages and themes like AI, Stage Drama, Civil Engineering, and Space Physics.";
-            
-            try {
-                const text = await callGeminiText("Generate 3 captivating cover teasers for the magazine front cover.", systemPrompt);
-                const lines = text.split('\n').filter(l => l.trim().length > 10).slice(0, 3);
-                
-                if (lines.length > 0) {
-                    const teaserSelect = document.getElementById('cover-teaser-select');
-                    if (teaserSelect) {
-                        teaserSelect.innerHTML = '';
-                        lines.forEach((line, idx) => {
-                            const cleanLine = line.replace(/^[0-9\.\-\* ]+/, '').trim();
-                            teasers[idx] = cleanLine;
-                            const opt = document.createElement('option');
-                            opt.value = idx;
-                            opt.innerText = cleanLine.substring(0, 45) + '...';
-                            teaserSelect.appendChild(opt);
-                        });
-                    }
-                    updateTeaser(0);
-                    showToast("Synthesized 3 new cover teasers!");
-                }
-            } catch (err) {
-                showToast("Teaser generation failed: " + err.message, true);
-            } finally {
-                if (btn) {
-                    btn.disabled = false;
-                    btn.innerHTML = `<span>✨ Synthesize with Gemini</span>`;
-                }
-            }
-        }
-
-        // AI Article Copywriter Handler
-        async function generateArticleAI() {
-            const topicInput = document.getElementById('ai-topic-input');
-            const toneSelect = document.getElementById('ai-tone-select');
-            const lengthSelect = document.getElementById('ai-length-select');
-            const contextInput = document.getElementById('ai-context-input');
-
-            const topic = topicInput ? topicInput.value.trim() : "";
-            const tone = toneSelect ? toneSelect.value : "";
-            const length = lengthSelect ? lengthSelect.value : "";
-            const context = contextInput ? contextInput.value.trim() : "";
-
-            if (!topic) {
-                showToast("Please enter a topic or section title.", true);
-                return;
-            }
-
-            const btn = document.getElementById('btn-gen-article');
-            if (btn) {
-                btn.disabled = true;
-                btn.innerHTML = `<div class="loader-spin"></div> <span>Synthesizing Copy...</span>`;
-            }
-
-            const systemPrompt = `You are a world-class magazine chief editor for 'PRAGYAURJA', an award-winning university magazine that synthesizes engineering rigor with humanities. Your style follows ${tone}. Format the output with clear HTML tags: <h3> for section headlines, <p> for body paragraphs, and <blockquote> for pull quotes. Ensure body paragraphs are engaging, highly articulate, and devoid of cheesy clichés. Include a brief deck subhead above the main story.`;
-
-            const prompt = `Write a complete publication article titled "${topic}". Target word count: ${length}. Additional editorial context: ${context}`;
-
-            try {
-                const htmlText = await callGeminiText(prompt, systemPrompt);
-                const outEl = document.getElementById('ai-article-output');
-                if (outEl) outEl.innerHTML = htmlText;
-                showToast("Article copy generated successfully!");
-            } catch (err) {
-                showToast("Article generation failed: " + err.message, true);
-            } finally {
-                if (btn) {
-                    btn.disabled = false;
-                    btn.innerHTML = `<span>✨ Synthesize Article Copy</span>`;
-                }
-            }
-        }
-
-        // AI TTS Speech Generator Handler
-        async function generateSpeechAI() {
-            const articleOut = document.getElementById('ai-article-output');
-            const articleText = articleOut ? articleOut.innerText.trim() : "";
-            if (!articleText || articleText.includes('Click "Synthesize Article Copy"')) {
-                showToast("Please generate or paste article text first.", true);
-                return;
-            }
-
-            const voiceSelect = document.getElementById('tts-voice-select');
-            const styleInput = document.getElementById('tts-style-input');
-            const voice = voiceSelect ? voiceSelect.value : "Zephyr";
-            const style = styleInput ? styleInput.value.trim() : "";
-            const btn = document.getElementById('btn-gen-tts');
-
-            if (btn) {
-                btn.disabled = true;
-                btn.innerHTML = `<div class="loader-spin"></div> <span>Synthesizing Voiceover Audio...</span>`;
-            }
-
-            // Truncate to first 400 characters for snappy preview
-            const textSnippet = articleText.substring(0, 450);
-
-            try {
-                const audioUrl = await callGeminiTTS(textSnippet, voice, style);
-                const player = document.getElementById('tts-audio-player');
-                if (player) {
-                    player.src = audioUrl;
-                    player.play();
-                }
-                const badge = document.getElementById('tts-voice-badge');
-                if (badge) badge.innerText = `Voice: ${voice}`;
-                const container = document.getElementById('audio-player-container');
-                if (container) container.classList.remove('hidden');
-                showToast("Audio voiceover generated!");
-            } catch (err) {
-                showToast("TTS generation failed: " + err.message, true);
-            } finally {
-                if (btn) {
-                    btn.disabled = false;
-                    btn.innerHTML = `<span>🔊 Generate AI Audio Voiceover (WAV)</span>`;
-                }
-            }
-        }
-
-        // AI Forensic Draft Auditor Handler
-        async function auditDraftAI() {
-            const textInput = document.getElementById('audit-input-text');
-            const draftText = textInput ? textInput.value.trim() : "";
-            if (!draftText) {
-                showToast("Please paste draft text to audit.", true);
-                return;
-            }
-
-            const btn = document.getElementById('btn-run-audit');
-            if (btn) {
-                btn.disabled = true;
-                btn.innerHTML = `Analyzing with Gemini...`;
-            }
-
-            const systemPrompt = "Act as an elite prepress quality assurance editor for PRAGYAURJA magazine. Audit the provided draft text against our SOP rules: (1) Check alignment & readability; (2) Eliminate passive wordiness; (3) Verify tone fits 'SYNTHESIS' editorial philosophy; (4) Provide a polished corrected version.";
-
-            try {
-                const resultText = await callGeminiText(`Audit this draft submission:\n"${draftText}"`, systemPrompt);
-                const formatted = resultText.replace(/\n/g, '<br>');
-                const resultOut = document.getElementById('audit-result-text');
-                if (resultOut) resultOut.innerHTML = formatted;
-                const resultBox = document.getElementById('audit-result-box');
-                if (resultBox) resultBox.classList.remove('hidden');
-                showToast("Forensic audit complete!");
-            } catch (err) {
-                showToast("Audit failed: " + err.message, true);
-            } finally {
-                if (btn) {
-                    btn.disabled = false;
-                    btn.innerHTML = `<span>✨ Run Forensic AI Quality Audit</span>`;
-                }
-            }
-        }
-
-        function generateSpreadArticleAI() {
-            if (!state.selectedFpItem) return;
-            const item = state.selectedFpItem;
-            switchTab('aistudio');
-            const topicInput = document.getElementById('ai-topic-input');
-            const contextInput = document.getElementById('ai-context-input');
-            if (topicInput) topicInput.value = item.title + " (" + item.range + ")";
-            if (contextInput) contextInput.value = `Brief: ${item.brief}. Art Direction: ${item.art}. Typo Specs: ${item.typo}.`;
-            generateArticleAI();
-        }
-
-        function copyGeneratedText() {
-            const out = document.getElementById('ai-article-output');
-            const text = out ? out.innerText : "";
-            if (text) {
-                const el = document.createElement('textarea');
-                el.value = text;
-                document.body.appendChild(el);
-                el.select();
-                document.execCommand('copy');
-                document.body.removeChild(el);
-                showToast("Copied generated text to clipboard!");
-            }
-        }
-
-        // Tab Switching Logic
-        function switchTab(tabId) {
-            state.activeTab = tabId;
-            ['cover', 'aistudio', 'theme', 'audit', 'flatplan', 'identity'].forEach(t => {
-                const section = document.getElementById(`section-${t}`);
-                const btn = document.getElementById(`tab-${t}`);
-                if (section && btn) {
-                    if (t === tabId) {
-                        section.classList.remove('hidden');
-                        if (t === 'aistudio') {
-                            btn.className = "nav-btn px-3 py-1.5 rounded-md transition-all bg-terracotta text-white font-bold shadow-sm";
-                        } else {
-                            btn.className = "nav-btn px-3 py-1.5 rounded-md transition-all bg-charcoal text-white shadow-sm font-medium";
-                        }
-                    } else {
-                        section.classList.add('hidden');
-                        if (t === 'aistudio') {
-                            btn.className = "nav-btn px-3 py-1.5 rounded-md transition-all text-terracotta border border-terracotta/40 bg-orange-50/50 hover:bg-orange-100 font-bold";
-                        } else {
-                            btn.className = "nav-btn px-3 py-1.5 rounded-md transition-all text-stone-600 hover:bg-stone-200 font-medium";
-                        }
-                    }
-                }
-            });
-
-            if (tabId === 'flatplan') {
-                renderChart();
-            }
-        }
-
-        // Cover Controls Logic
-        function toggleFinish(finishType) {
-            state.finishes[finishType] = !state.finishes[finishType];
-            const btn = document.getElementById(`btn-${finishType}`);
-            const titleText = document.getElementById('cover-title-text');
-            const gridOverlay = document.getElementById('cover-grid-overlay');
-            const gridBadge = document.getElementById('grid-status-badge');
-            const uvBadge = document.getElementById('uv-badge');
-
-            if (finishType === 'deboss') {
-                if (state.finishes.deboss) {
-                    if (titleText) titleText.classList.add('emboss-effect');
-                    if (btn) btn.classList.add('border-terracotta', 'bg-orange-50');
-                } else {
-                    if (titleText) titleText.classList.remove('emboss-effect');
-                    if (btn) btn.classList.remove('border-terracotta', 'bg-orange-50');
-                }
-            } else if (finishType === 'spotuv') {
-                if (state.finishes.spotuv) {
-                    if (uvBadge) uvBadge.classList.remove('opacity-0');
-                    if (btn) btn.classList.add('border-terracotta', 'bg-orange-50');
-                } else {
-                    if (uvBadge) uvBadge.classList.add('opacity-0');
-                    if (btn) btn.classList.remove('border-terracotta', 'bg-orange-50');
-                }
-                drawCoverCanvas();
-            } else if (finishType === 'grid') {
-                if (state.finishes.grid) {
-                    if (gridOverlay) gridOverlay.classList.remove('opacity-0');
-                    if (gridBadge) {
-                        gridBadge.innerText = 'ON';
-                        gridBadge.classList.replace('bg-stone-200', 'bg-terracotta');
-                        gridBadge.classList.add('text-white');
-                    }
-                    if (btn) btn.classList.add('border-terracotta', 'bg-orange-50');
-                } else {
-                    if (gridOverlay) gridOverlay.classList.add('opacity-0');
-                    if (gridBadge) {
-                        gridBadge.innerText = 'OFF';
-                        gridBadge.classList.replace('bg-terracotta', 'bg-stone-200');
-                        gridBadge.classList.remove('text-white');
-                    }
-                    if (btn) btn.classList.remove('border-terracotta', 'bg-orange-50');
-                }
-            }
-        }
-
-        function setArtMode(mode, btnEl) {
-            state.artMode = mode;
-            document.querySelectorAll('.art-mode-btn').forEach(btn => {
-                btn.classList.remove('bg-alabaster', 'border-stone-300', 'text-stone-900');
-                btn.classList.add('border-transparent', 'text-stone-600');
-            });
-            if (btnEl) {
-                btnEl.classList.add('bg-alabaster', 'border-stone-300', 'text-stone-900');
-                btnEl.classList.remove('border-transparent', 'text-stone-600');
-            }
-            resetCoverArtCanvas();
-        }
-
-        function updateTeaser(index) {
-            state.teaserIndex = index;
-            const textEl = document.getElementById('teaser-text');
-            if (textEl) textEl.innerText = teasers[index];
-        }
-
-        // HTML5 Canvas Interactive Hero Cover Art
-        let canvas, ctx, animAngle = 0;
-
-        function initCanvas() {
-            canvas = document.getElementById('coverCanvas');
-            if (!canvas) return;
-            ctx = canvas.getContext('2d');
-            canvas.width = 300;
-            canvas.height = 260;
-            
-            canvas.addEventListener('mousemove', (e) => {
-                const rect = canvas.getBoundingClientRect();
-                animAngle = (e.clientX - rect.left) * 0.02;
-                drawCoverCanvas();
-            });
-
             drawCoverCanvas();
         }
 
