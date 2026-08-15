@@ -61,7 +61,7 @@
         }
 
         .emboss-effect {
-            text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.8), -1px -1px 0px rgba(0, 0, 0, 0.3);
+            text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.9), -2px -2px 0px rgba(0, 0, 0, 0.35);
         }
 
         .spot-uv-canvas {
@@ -83,7 +83,7 @@
 
         .grid-overlay {
             background-size: calc(100% / 12) 100%;
-            background-image: linear-gradient(to right, rgba(181, 90, 48, 0.15) 1px, transparent 1px);
+            background-image: linear-gradient(to right, rgba(181, 90, 48, 0.18) 1px, transparent 1px);
         }
 
         .loader-spin {
@@ -103,7 +103,6 @@
 </head>
 <body class="min-h-screen flex flex-col selection:bg-terracotta selection:text-white">
 
-    <!-- Top Navigation Header -->
     <header class="sticky top-0 z-50 bg-alabaster/95 backdrop-blur-md border-b border-stone-300 px-4 lg:px-12 py-3.5">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
             <div class="flex items-center space-x-3">
@@ -147,7 +146,6 @@
     <!-- Main Content Area -->
     <main class="flex-grow max-w-7xl w-full mx-auto px-4 lg:px-12 py-8">
 
-        <!-- SECTION 1: COVER STUDIO -->
         <section id="section-cover" class="space-y-8">
             <div class="bg-alabaster p-6 rounded-xl border border-stone-300 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div class="max-w-3xl">
@@ -172,9 +170,9 @@
                     <div class="p-4 bg-orange-50/60 rounded-xl border border-terracotta/30 space-y-3">
                         <div class="flex justify-between items-center">
                             <label class="font-mono text-xs font-bold uppercase text-terracotta flex items-center gap-1.5">
-                                <span>🎨 AI Hero Cover Art (Imagen 3.0)</span>
+                                <span>🎨 AI Hero Cover Art</span>
                             </label>
-                            <span class="text-[9px] font-mono bg-terracotta/10 text-terracotta px-1.5 py-0.5 rounded">imagen-3.0</span>
+                            <span class="text-[9px] font-mono bg-terracotta/10 text-terracotta px-1.5 py-0.5 rounded">Imagen 3</span>
                         </div>
                         <p class="text-[11px] text-stone-600">Generate custom high-concept artwork directly onto the cover mockup:</p>
                         
@@ -308,12 +306,11 @@
         </section>
 
 
-        <!-- SECTION: AI EDITORIAL STUDIO -->
         <section id="section-aistudio" class="hidden space-y-8">
             <div class="bg-alabaster p-6 rounded-xl border border-stone-300 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div>
                     <div class="flex items-center gap-2">
-                        <span class="text-terracotta font-mono text-xs font-bold uppercase tracking-widest">Powered by Gemini &amp; Imagen 3.0</span>
+                        <span class="text-terracotta font-mono text-xs font-bold uppercase tracking-widest">Powered by Gemini &amp; Imagen 3</span>
                         <span class="bg-terracotta text-white font-mono text-[9px] px-2 py-0.5 rounded-full font-bold">LIVE API</span>
                     </div>
                     <h2 class="font-serif text-3xl md:text-4xl text-charcoal mt-1">AI Magazine Copywriting &amp; Audio Studio</h2>
@@ -431,7 +428,6 @@
         </section>
 
 
-        <!-- SECTION 3: THEME & INSPIRATION -->
         <section id="section-theme" class="hidden space-y-8">
             <div class="bg-alabaster p-6 rounded-xl border border-stone-300">
                 <span class="text-terracotta font-mono text-xs font-bold uppercase tracking-widest">Editorial Philosophy</span>
@@ -512,7 +508,6 @@
         </section>
 
 
-        <!-- SECTION 4: AUDIT & SOP -->
         <section id="section-audit" class="hidden space-y-8">
             <div class="bg-alabaster p-6 rounded-xl border border-stone-300">
                 <span class="text-terracotta font-mono text-xs font-bold uppercase tracking-widest">Quality Assurance Directive</span>
@@ -615,7 +610,6 @@
         </section>
 
 
-        <!-- SECTION 5: 80-PAGE FLATPLAN -->
         <section id="section-flatplan" class="hidden space-y-8">
             <div class="bg-alabaster p-6 rounded-xl border border-stone-300">
                 <span class="text-terracotta font-mono text-xs font-bold uppercase tracking-widest">Master Architecture</span>
@@ -699,7 +693,6 @@
         </section>
 
 
-        <!-- SECTION 6: IDENTITY & TYPOGRAPHY -->
         <section id="section-identity" class="hidden space-y-8">
             <div class="bg-alabaster p-6 rounded-xl border border-stone-300">
                 <span class="text-terracotta font-mono text-xs font-bold uppercase tracking-widest">Brand System &amp; Micro-Typography</span>
@@ -818,7 +811,7 @@
 
     </main>
 
-    <!-- API Key Modal -->
+    <!-- API Key Settings Modal -->
     <div id="api-key-modal" class="hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white max-w-md w-full p-6 rounded-xl border border-stone-300 shadow-2xl space-y-4">
             <div class="flex justify-between items-center border-b border-stone-200 pb-2">
@@ -826,14 +819,13 @@
                 <button onclick="closeApiModal()" class="font-mono text-xs text-stone-500 hover:text-stone-800">✕ Close</button>
             </div>
             
-            <!-- API Key Warning Banner -->
             <div id="api-modal-notice" class="hidden text-xs text-amber-900 bg-amber-50 p-3 rounded-lg border border-amber-200 space-y-1 font-mono">
                 <div class="font-bold flex items-center gap-1">⚠️ API KEY REQUIRED</div>
                 <div id="api-modal-notice-text">Please enter a valid Google Gemini API key to enable live AI features.</div>
             </div>
 
             <p class="text-xs text-stone-600 leading-relaxed">
-                Live features (Imagen 4.0 cover art, Gemini 3 Flash copywriting, and TTS audio podcasts) require a Google Gemini API Key. You can get a free API key in seconds from <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener font-bold text-terracotta underline">Google AI Studio ↗</a>.
+                Live AI features (Gemini Flash copywriting, TTS podcasts, and custom art) require a Google Gemini API Key. You can obtain a free key in seconds from <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener font-bold text-terracotta underline">Google AI Studio ↗</a>.
             </p>
             <div>
                 <label class="font-mono text-xs font-bold text-stone-700 block mb-1">Google Gemini API Key</label>
@@ -846,7 +838,7 @@
         </div>
     </div>
 
-    <!-- Toast Notification Overlay -->
+    <!-- Toast Notification Container -->
     <div id="toast-container" class="fixed bottom-4 right-4 z-50 flex flex-col gap-2 pointer-events-none"></div>
 
     <!-- Footer -->
@@ -858,14 +850,12 @@
             </div>
             <div class="text-stone-400 text-center md:text-right">
                 <div>CASE &amp; SPD Benchmark Aligned Specification</div>
-                <div class="text-[10px] text-stone-500 mt-0.5">Gemini 3 Flash &amp; Imagen 4.0 Integrated Architecture</div>
+                <div class="text-[10px] text-stone-500 mt-0.5">Gemini 2.5 Flash Integrated Architecture</div>
             </div>
         </div>
     </footer>
 
-    <!-- JavaScript Logic -->
     <script>
-        // --- State Management ---
         const state = {
             activeTab: 'cover',
             finishes: {
@@ -903,342 +893,60 @@
             { range: 'p. 80', title: 'Back Cover', section: 'front', type: 'Back Cover', brief: 'Minimalist brand mark and institutional contact information.', art: 'Stark geometric design', typo: 'DM Mono 9pt' }
         ];
 
-        function getApiKey() {
-            return localStorage.getItem('gemini_user_api_key') || "";
-        }
-
-        function ensureApiKey() {
-            const key = getApiKey();
-            if (!key) {
-                openApiModal("An API key is required to call Gemini & Imagen AI endpoints. Please enter your Google Gemini API key below.");
-                return null;
-            }
-            return key;
-        }
-
-        function openApiModal(noticeText = "") {
-            const input = document.getElementById('custom-api-key');
-            if (input) input.value = getApiKey();
-
-            const noticeBox = document.getElementById('api-modal-notice');
-            const noticeBoxText = document.getElementById('api-modal-notice-text');
-            if (noticeBox && noticeBoxText) {
-                if (noticeText) {
-                    noticeBoxText.innerText = noticeText;
-                    noticeBox.classList.remove('hidden');
-                } else {
-                    noticeBox.classList.add('hidden');
-                }
-            }
-
-            const modal = document.getElementById('api-key-modal');
-            if (modal) modal.classList.remove('hidden');
-        }
-
-        function closeApiModal() {
-            const modal = document.getElementById('api-key-modal');
-            if (modal) modal.classList.add('hidden');
-        }
-
-        function saveApiKey() {
-            const input = document.getElementById('custom-api-key');
-            const key = input ? input.value.trim() : "";
-            if (!key) {
-                showToast("Please enter a valid API key.", true);
-                return;
-            }
-            localStorage.setItem('gemini_user_api_key', key);
-            closeApiModal();
-            showToast("API Key saved! Live AI generation enabled.");
-        }
-
-        function showToast(message, isError = false) {
-            const container = document.getElementById('toast-container');
-            if (!container) return;
-            const toast = document.createElement('div');
-            toast.className = `px-4 py-2.5 rounded-lg shadow-lg text-xs font-mono font-bold pointer-events-auto transition-all transform translate-y-2 opacity-0 ${isError ? 'bg-red-600 text-white' : 'bg-charcoal text-white'}`;
-            toast.innerText = message;
-            container.appendChild(toast);
-
-            setTimeout(() => {
-                toast.classList.remove('translate-y-2', 'opacity-0');
-            }, 10);
-
-            setTimeout(() => {
-                toast.classList.add('opacity-0', 'translate-y-2');
-                setTimeout(() => toast.remove(), 300);
-            }, 3500);
-        }
-
-        // Exponential backoff fetch helper
-        async function fetchWithBackoff(url, options, maxRetries = 3) {
-            let delay = 1000;
-            for (let i = 0; i < maxRetries; i++) {
-                try {
-                    const response = await fetch(url, options);
-                    if (response.status === 429 || response.status >= 500) {
-                        if (i === maxRetries - 1) return response;
-                        await new Promise(r => setTimeout(r, delay));
-                        delay *= 2;
-                        continue;
-                    }
-                    return response;
-                } catch (err) {
-                    if (i === maxRetries - 1) throw err;
-                    await new Promise(r => setTimeout(r, delay));
-                    delay *= 2;
-                }
-            }
-        }
-
-        // Gemini Text Generation with Model Fallback
-        async function callGeminiText(prompt, systemInstruction = "") {
-            const apiKey = ensureApiKey();
-            if (!apiKey) throw new Error("Gemini API key is required. Please set your key in ⚙ Key settings.");
-
-            const candidateModels = [
-                "gemini-2.5-flash",
-                "gemini-2.0-flash",
-                "gemini-1.5-flash"
-            ];
-
-            let lastError = null;
-
-            for (const model of candidateModels) {
-                try {
-                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
-                    const payload = {
-                        contents: [{ parts: [{ text: prompt }] }]
-                    };
-                    if (systemInstruction) {
-                        payload.systemInstruction = { parts: [{ text: systemInstruction }] };
-                    }
-
-                    const response = await fetchWithBackoff(apiUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-
-                    if (!response.ok) {
-                        const errJson = await response.json().catch(() => ({}));
-                        const msg = errJson.error?.message || `HTTP ${response.status}`;
-                        lastError = new Error(`Model ${model}: ${msg}`);
-                        continue;
-                    }
-
-                    const result = await response.json();
-                    const genText = result.candidates?.[0]?.content?.parts?.[0]?.text;
-                    if (genText) return genText;
-                } catch (err) {
-                    lastError = err;
-                }
-            }
-
-            throw lastError || new Error("Failed to generate text content.");
-        }
-
-        // Imagen Image Generation with Multi-Model Fallbacks
-        async function callImagenGenerate(promptText) {
-            const apiKey = ensureApiKey();
-            if (!apiKey) throw new Error("Gemini API key is required. Please set your key in ⚙ Key settings.");
-
-            const candidateModels = [
-                "imagen-3.0-generate-002",
-                "imagen-3.0-fast-generate-001",
-                "imagen-3.0-generate-001"
-            ];
-
-            let lastError = null;
-
-            for (const model of candidateModels) {
-                try {
-                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:predict?key=${apiKey}`;
-                    const payload = {
-                        instances: [{ prompt: promptText }],
-                        parameters: { sampleCount: 1 }
-                    };
-
-                    const response = await fetchWithBackoff(apiUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-
-                    if (!response.ok) {
-                        const errJson = await response.json().catch(() => ({}));
-                        const msg = errJson.error?.message || `HTTP ${response.status}`;
-                        lastError = new Error(`Model ${model}: ${msg}`);
-                        continue;
-                    }
-
-                    const result = await response.json();
-                    if (result.predictions && result.predictions[0] && result.predictions[0].bytesBase64Encoded) {
-                        return `data:image/png;base64,${result.predictions[0].bytesBase64Encoded}`;
-                    } else if (result.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data) {
-                        const inlineData = result.candidates[0].content.parts[0].inlineData;
-                        return `data:${inlineData.mimeType || 'image/png'};base64,${inlineData.data}`;
-                    }
-                } catch (err) {
-                    lastError = err;
-                }
-            }
-
-            throw lastError || new Error("Imagen generation model is not accessible with this API key.");
-        }
-
-        // Gemini 2.5 TTS Audio Generation
-        async function callGeminiTTS(textToSay, voiceName = "Zephyr", styleInstruction = "") {
-            const apiKey = ensureApiKey();
-            if (!apiKey) throw new Error("Gemini API key is required. Please set your key in ⚙ Key settings.");
-
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key=${apiKey}`;
+        function switchTab(tabId) {
+            state.activeTab = tabId;
+            const sections = ['cover', 'aistudio', 'theme', 'audit', 'flatplan', 'identity'];
             
-            const fullPrompt = styleInstruction ? `${styleInstruction} ${textToSay}` : textToSay;
-            
-            const payload = {
-                contents: [{ parts: [{ text: fullPrompt }] }],
-                generationConfig: {
-                    responseModalities: ["AUDIO"],
-                    speechConfig: {
-                        voiceConfig: {
-                            prebuiltVoiceConfig: { voiceName: voiceName }
-                        }
+            sections.forEach(id => {
+                const sec = document.getElementById('section-' + id);
+                const btn = document.getElementById('tab-' + id);
+                
+                if (sec) {
+                    if (id === tabId) {
+                        sec.classList.remove('hidden');
+                    } else {
+                        sec.classList.add('hidden');
                     }
                 }
-            };
 
-            const response = await fetchWithBackoff(apiUrl, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
+                if (btn) {
+                    if (id === tabId) {
+                        btn.className = id === 'aistudio'
+                            ? "nav-btn px-3 py-1.5 rounded-md transition-all bg-terracotta text-white font-bold shadow-sm"
+                            : "nav-btn px-3 py-1.5 rounded-md transition-all bg-charcoal text-white shadow-sm";
+                    } else {
+                        btn.className = id === 'aistudio'
+                            ? "nav-btn px-3 py-1.5 rounded-md transition-all text-terracotta border border-terracotta/40 bg-orange-50/50 hover:bg-orange-100 font-bold"
+                            : "nav-btn px-3 py-1.5 rounded-md transition-all text-stone-600 hover:bg-stone-200";
+                    }
+                }
             });
 
-            if (!response.ok) {
-                const errJson = await response.json().catch(() => ({}));
-                throw new Error(errJson.error?.message || `HTTP ${response.status} Error`);
-            }
-
-            const result = await response.json();
-            const part = result?.candidates?.[0]?.content?.parts?.[0];
-            const audioData = part?.inlineData?.data;
-            const mimeType = part?.inlineData?.mimeType || "audio/L16;rate=24000";
-
-            if (!audioData) {
-                throw new Error("No audio payload returned from Gemini TTS.");
-            }
-
-            let sampleRate = 24000;
-            const match = mimeType.match(/rate=(\d+)/);
-            if (match) {
-                sampleRate = parseInt(match[1], 10);
-            }
-
-            const pcmBuffer = base64ToArrayBuffer(audioData);
-            const pcm16 = new Int16Array(pcmBuffer);
-            const wavBlob = pcmToWav(pcm16, sampleRate);
-            return URL.createObjectURL(wavBlob);
-        }
-
-        // Helper PCM to WAV Audio Converter
-        function base64ToArrayBuffer(base64) {
-            const binaryString = atob(base64);
-            const len = binaryString.length;
-            const bytes = new Uint8Array(len);
-            for (let i = 0; i < len; i++) {
-                bytes[i] = binaryString.charCodeAt(i);
-            }
-            return bytes.buffer;
-        }
-
-        function pcmToWav(pcm16Data, sampleRate = 24000) {
-            const numChannels = 1;
-            const bytesPerSample = 2;
-            const blockAlign = numChannels * bytesPerSample;
-            const byteRate = sampleRate * blockAlign;
-            const dataSize = pcm16Data.length * bytesPerSample;
-            const buffer = new ArrayBuffer(44 + dataSize);
-            const view = new DataView(buffer);
-
-            // RIFF chunk descriptor
-            writeString(view, 0, 'RIFF');
-            view.setUint32(4, 36 + dataSize, true);
-            writeString(view, 8, 'WAVE');
-
-            // fmt sub-chunk
-            writeString(view, 12, 'fmt ');
-            view.setUint32(16, 16, true);
-            view.setUint16(20, 1, true);
-            view.setUint16(22, numChannels, true);
-            view.setUint32(24, sampleRate, true);
-            view.setUint32(28, byteRate, true);
-            view.setUint16(32, blockAlign, true);
-            view.setUint16(34, 16, true);
-
-            // data sub-chunk
-            writeString(view, 36, 'data');
-            view.setUint32(40, dataSize, true);
-
-            let offset = 44;
-            for (let i = 0; i < pcm16Data.length; i++, offset += 2) {
-                view.setInt16(offset, pcm16Data[i], true);
-            }
-
-            return new Blob([buffer], { type: 'audio/wav' });
-        }
-
-        function writeString(view, offset, string) {
-            for (let i = 0; i < string.length; i++) {
-                view.setUint8(offset + i, string.charCodeAt(i));
+            if (tabId === 'flatplan') {
+                setTimeout(renderChart, 100);
             }
         }
 
-        // AI Cover Art Generator Handler
-        async function generateCoverArtAI() {
-            const inputEl = document.getElementById('imagen-prompt-input');
-            const promptInput = inputEl ? inputEl.value.trim() : "";
-            if (!promptInput) {
-                showToast("Please enter a visual prompt.", true);
-                return;
+        let ctx = null;
+        let canvas = null;
+        let animAngle = 0;
+        let animFrameId = null;
+
+        function initCanvas() {
+            canvas = document.getElementById('coverCanvas');
+            if (!canvas) return;
+            ctx = canvas.getContext('2d');
+            canvas.width = 280;
+            canvas.height = 260;
+
+            function animate() {
+                animAngle += 0.015;
+                drawCoverCanvas();
+                animFrameId = requestAnimationFrame(animate);
             }
 
-            const btn = document.getElementById('btn-gen-cover-art');
-            if (btn) {
-                btn.disabled = true;
-                btn.innerHTML = `<div class="loader-spin"></div> <span>Generating AI Cover Art...</span>`;
-            }
-
-            try {
-                const imgDataUrl = await callImagenGenerate(promptInput);
-                state.aiGeneratedCoverImg = imgDataUrl;
-
-                const cvs = document.getElementById('coverCanvas');
-                if (cvs) cvs.classList.add('hidden');
-                const container = document.getElementById('cover-ai-img-container');
-                const img = document.getElementById('cover-ai-img');
-                if (img) img.src = imgDataUrl;
-                if (container) container.classList.remove('hidden');
-
-                showToast("AI Cover Art synthesized & applied!");
-            } catch (err) {
-                // Fallback to high-concept interactive procedural artwork canvas
-                resetCoverArtCanvas();
-                showToast("Note: Imagen API model not enabled for this key tier. Rendered high-concept procedural art on canvas instead.");
-            } finally {
-                if (btn) {
-                    btn.disabled = false;
-                    btn.innerHTML = `<span>✨ Generate AI Cover Art</span>`;
-                }
-            }
-        }
-
-        function resetCoverArtCanvas() {
-            state.aiGeneratedCoverImg = null;
-            const container = document.getElementById('cover-ai-img-container');
-            const cvs = document.getElementById('coverCanvas');
-            if (container) container.classList.add('hidden');
-            if (cvs) cvs.classList.remove('hidden');
-            drawCoverCanvas();
+            if (animFrameId) cancelAnimationFrame(animFrameId);
+            animate();
         }
 
         function drawCoverCanvas() {
@@ -1300,6 +1008,568 @@
             }
 
             ctx.restore();
+        }
+
+        function toggleFinish(type) {
+            state.finishes[type] = !state.finishes[type];
+
+            if (type === 'spotuv') {
+                const badge = document.getElementById('uv-badge');
+                const btn = document.getElementById('btn-spotuv');
+                if (badge) badge.style.opacity = state.finishes.spotuv ? '1' : '0';
+                if (btn) {
+                    btn.className = state.finishes.spotuv
+                        ? "p-2.5 border-2 border-terracotta bg-orange-50 rounded text-left transition font-medium"
+                        : "p-2.5 border border-stone-300 rounded text-left hover:border-terracotta transition font-medium";
+                }
+            } else if (type === 'deboss') {
+                const title = document.getElementById('cover-title-text');
+                const btn = document.getElementById('btn-deboss');
+                if (title) {
+                    if (state.finishes.deboss) title.classList.add('emboss-effect');
+                    else title.classList.remove('emboss-effect');
+                }
+                if (btn) {
+                    btn.className = state.finishes.deboss
+                        ? "p-2.5 border-2 border-terracotta bg-orange-50 rounded text-left transition font-medium"
+                        : "p-2.5 border border-stone-300 rounded text-left hover:border-terracotta transition font-medium";
+                }
+            } else if (type === 'grid') {
+                const overlay = document.getElementById('cover-grid-overlay');
+                const badge = document.getElementById('grid-status-badge');
+                const btn = document.getElementById('btn-grid');
+                if (overlay) overlay.style.opacity = state.finishes.grid ? '1' : '0';
+                if (badge) badge.innerText = state.finishes.grid ? 'ON' : 'OFF';
+                if (btn) {
+                    btn.className = state.finishes.grid
+                        ? "w-full p-2.5 border-2 border-terracotta bg-orange-50 rounded text-left transition text-xs font-medium flex justify-between items-center"
+                        : "w-full p-2.5 border border-stone-300 rounded text-left hover:border-terracotta transition text-xs font-medium flex justify-between items-center";
+                }
+            }
+        }
+
+        function setArtMode(mode, btnEl) {
+            state.artMode = mode;
+            document.querySelectorAll('.art-mode-btn').forEach(btn => {
+                btn.className = "art-mode-btn w-full text-left p-2 rounded text-xs hover:bg-stone-100 border border-transparent font-medium text-stone-600";
+            });
+            if (btnEl) {
+                btnEl.className = "art-mode-btn w-full text-left p-2 rounded text-xs bg-alabaster border border-stone-300 font-medium text-stone-900";
+            }
+            resetCoverArtCanvas();
+        }
+
+        function updateTeaser(val) {
+            state.teaserIndex = parseInt(val, 10);
+            const textEl = document.getElementById('teaser-text');
+            if (textEl && teasers[state.teaserIndex]) {
+                textEl.innerText = teasers[state.teaserIndex];
+            }
+        }
+
+        function getApiKey() {
+            return localStorage.getItem('gemini_user_api_key') || "";
+        }
+
+        function ensureApiKey() {
+            const key = getApiKey();
+            if (!key) {
+                openApiModal("An API key is required to call Gemini AI endpoints. Please enter your Google Gemini API key below.");
+                return null;
+            }
+            return key;
+        }
+
+        function openApiModal(noticeText = "") {
+            const input = document.getElementById('custom-api-key');
+            if (input) input.value = getApiKey();
+
+            const noticeBox = document.getElementById('api-modal-notice');
+            const noticeBoxText = document.getElementById('api-modal-notice-text');
+            if (noticeBox && noticeBoxText) {
+                if (noticeText) {
+                    noticeBoxText.innerText = noticeText;
+                    noticeBox.classList.remove('hidden');
+                } else {
+                    noticeBox.classList.add('hidden');
+                }
+            }
+
+            const modal = document.getElementById('api-key-modal');
+            if (modal) modal.classList.remove('hidden');
+        }
+
+        function closeApiModal() {
+            const modal = document.getElementById('api-key-modal');
+            if (modal) modal.classList.add('hidden');
+        }
+
+        function saveApiKey() {
+            const input = document.getElementById('custom-api-key');
+            const key = input ? input.value.trim() : "";
+            if (!key) {
+                showToast("Please enter a valid API key.", true);
+                return;
+            }
+            localStorage.setItem('gemini_user_api_key', key);
+            closeApiModal();
+            showToast("API Key saved! Live AI generation enabled.");
+        }
+
+        function showToast(message, isError = false) {
+            const container = document.getElementById('toast-container');
+            if (!container) return;
+            const toast = document.createElement('div');
+            toast.className = `px-4 py-2.5 rounded-lg shadow-lg text-xs font-mono font-bold pointer-events-auto transition-all transform translate-y-2 opacity-0 ${isError ? 'bg-red-600 text-white' : 'bg-charcoal text-white'}`;
+            toast.innerText = message;
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-2', 'opacity-0');
+            }, 10);
+
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-2');
+                setTimeout(() => toast.remove(), 300);
+            }, 3500);
+        }
+
+        async function fetchWithBackoff(url, options, maxRetries = 3) {
+            let delay = 1000;
+            for (let i = 0; i < maxRetries; i++) {
+                try {
+                    const response = await fetch(url, options);
+                    if (response.status === 429 || response.status >= 500) {
+                        if (i === maxRetries - 1) return response;
+                        await new Promise(r => setTimeout(r, delay));
+                        delay *= 2;
+                        continue;
+                    }
+                    return response;
+                } catch (err) {
+                    if (i === maxRetries - 1) throw err;
+                    await new Promise(r => setTimeout(r, delay));
+                    delay *= 2;
+                }
+            }
+        }
+
+        async function callGeminiText(prompt, systemInstruction = "") {
+            const apiKey = ensureApiKey();
+            if (!apiKey) throw new Error("Gemini API key is required. Please set your key in ⚙ Key settings.");
+
+            const candidateModels = [
+                "gemini-2.5-flash",
+                "gemini-2.0-flash",
+                "gemini-1.5-flash"
+            ];
+
+            let lastError = null;
+
+            for (const model of candidateModels) {
+                try {
+                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+                    const payload = {
+                        contents: [{ parts: [{ text: prompt }] }]
+                    };
+                    if (systemInstruction) {
+                        payload.systemInstruction = { parts: [{ text: systemInstruction }] };
+                    }
+
+                    const response = await fetchWithBackoff(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) {
+                        const errJson = await response.json().catch(() => ({}));
+                        const msg = errJson.error?.message || `HTTP ${response.status}`;
+                        lastError = new Error(`Model ${model}: ${msg}`);
+                        continue;
+                    }
+
+                    const result = await response.json();
+                    const genText = result.candidates?.[0]?.content?.parts?.[0]?.text;
+                    if (genText) return genText;
+                } catch (err) {
+                    lastError = err;
+                }
+            }
+
+            throw lastError || new Error("Failed to generate text content.");
+        }
+
+        async function callImagenGenerate(promptText) {
+            const apiKey = ensureApiKey();
+            if (!apiKey) throw new Error("Gemini API key is required. Please set your key in ⚙ Key settings.");
+
+            const candidateModels = [
+                "imagen-3.0-generate-002",
+                "imagen-3.0-fast-generate-001",
+                "imagen-3.0-generate-001"
+            ];
+
+            let lastError = null;
+
+            for (const model of candidateModels) {
+                try {
+                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:predict?key=${apiKey}`;
+                    const payload = {
+                        instances: [{ prompt: promptText }],
+                        parameters: { sampleCount: 1 }
+                    };
+
+                    const response = await fetchWithBackoff(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) {
+                        const errJson = await response.json().catch(() => ({}));
+                        const msg = errJson.error?.message || `HTTP ${response.status}`;
+                        lastError = new Error(`Model ${model}: ${msg}`);
+                        continue;
+                    }
+
+                    const result = await response.json();
+                    if (result.predictions && result.predictions[0] && result.predictions[0].bytesBase64Encoded) {
+                        return `data:image/png;base64,${result.predictions[0].bytesBase64Encoded}`;
+                    } else if (result.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data) {
+                        const inlineData = result.candidates[0].content.parts[0].inlineData;
+                        return `data:${inlineData.mimeType || 'image/png'};base64,${inlineData.data}`;
+                    }
+                } catch (err) {
+                    lastError = err;
+                }
+            }
+
+            throw lastError || new Error("Imagen generation model is not accessible with this API key.");
+        }
+
+        async function callGeminiTTS(textToSay, voiceName = "Zephyr", styleInstruction = "") {
+            const apiKey = ensureApiKey();
+            if (!apiKey) throw new Error("Gemini API key is required. Please set your key in ⚙ Key settings.");
+
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key=${apiKey}`;
+            const fullPrompt = styleInstruction ? `${styleInstruction} ${textToSay}` : textToSay;
+            
+            const payload = {
+                contents: [{ parts: [{ text: fullPrompt }] }],
+                generationConfig: {
+                    responseModalities: ["AUDIO"],
+                    speechConfig: {
+                        voiceConfig: {
+                            prebuiltVoiceConfig: { voiceName: voiceName }
+                        }
+                    }
+                }
+            };
+
+            const response = await fetchWithBackoff(apiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (!response.ok) {
+                const errJson = await response.json().catch(() => ({}));
+                throw new Error(errJson.error?.message || `HTTP ${response.status} Error`);
+            }
+
+            const result = await response.json();
+            const part = result?.candidates?.[0]?.content?.parts?.[0];
+            const audioData = part?.inlineData?.data;
+            const mimeType = part?.inlineData?.mimeType || "audio/L16;rate=24000";
+
+            if (!audioData) {
+                throw new Error("No audio payload returned from Gemini TTS.");
+            }
+
+            let sampleRate = 24000;
+            const match = mimeType.match(/rate=(\d+)/);
+            if (match) {
+                sampleRate = parseInt(match[1], 10);
+            }
+
+            const pcmBuffer = base64ToArrayBuffer(audioData);
+            const pcm16 = new Int16Array(pcmBuffer);
+            const wavBlob = pcmToWav(pcm16, sampleRate);
+            return URL.createObjectURL(wavBlob);
+        }
+
+        function base64ToArrayBuffer(base64) {
+            const binaryString = atob(base64);
+            const len = binaryString.length;
+            const bytes = new Uint8Array(len);
+            for (let i = 0; i < len; i++) {
+                bytes[i] = binaryString.charCodeAt(i);
+            }
+            return bytes.buffer;
+        }
+
+        function pcmToWav(pcm16Data, sampleRate = 24000) {
+            const numChannels = 1;
+            const bytesPerSample = 2;
+            const blockAlign = numChannels * bytesPerSample;
+            const byteRate = sampleRate * blockAlign;
+            const dataSize = pcm16Data.length * bytesPerSample;
+            const buffer = new ArrayBuffer(44 + dataSize);
+            const view = new DataView(buffer);
+
+            writeString(view, 0, 'RIFF');
+            view.setUint32(4, 36 + dataSize, true);
+            writeString(view, 8, 'WAVE');
+
+            writeString(view, 12, 'fmt ');
+            view.setUint32(16, 16, true);
+            view.setUint16(20, 1, true);
+            view.setUint16(22, numChannels, true);
+            view.setUint32(24, sampleRate, true);
+            view.setUint32(28, byteRate, true);
+            view.setUint16(32, blockAlign, true);
+            view.setUint16(34, 16, true);
+
+            writeString(view, 36, 'data');
+            view.setUint32(40, dataSize, true);
+
+            let offset = 44;
+            for (let i = 0; i < pcm16Data.length; i++, offset += 2) {
+                view.setInt16(offset, pcm16Data[i], true);
+            }
+
+            return new Blob([buffer], { type: 'audio/wav' });
+        }
+
+        function writeString(view, offset, string) {
+            for (let i = 0; i < string.length; i++) {
+                view.setUint8(offset + i, string.charCodeAt(i));
+            }
+        }
+
+        async function generateCoverArtAI() {
+            const inputEl = document.getElementById('imagen-prompt-input');
+            const promptInput = inputEl ? inputEl.value.trim() : "";
+            if (!promptInput) {
+                showToast("Please enter a visual prompt.", true);
+                return;
+            }
+
+            const btn = document.getElementById('btn-gen-cover-art');
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = `<div class="loader-spin"></div> <span>Generating AI Cover Art...</span>`;
+            }
+
+            try {
+                const imgDataUrl = await callImagenGenerate(promptInput);
+                state.aiGeneratedCoverImg = imgDataUrl;
+
+                const cvs = document.getElementById('coverCanvas');
+                if (cvs) cvs.classList.add('hidden');
+                const container = document.getElementById('cover-ai-img-container');
+                const img = document.getElementById('cover-ai-img');
+                if (img) img.src = imgDataUrl;
+                if (container) container.classList.remove('hidden');
+
+                showToast("AI Cover Art synthesized & applied!");
+            } catch (err) {
+                resetCoverArtCanvas();
+                showToast("Note: Imagen API model not enabled for this key tier. Rendered high-concept procedural art on canvas instead.");
+            } finally {
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = `<span>✨ Generate AI Cover Art</span>`;
+                }
+            }
+        }
+
+        function resetCoverArtCanvas() {
+            state.aiGeneratedCoverImg = null;
+            const container = document.getElementById('cover-ai-img-container');
+            const cvs = document.getElementById('coverCanvas');
+            if (container) container.classList.add('hidden');
+            if (cvs) cvs.classList.remove('hidden');
+            drawCoverCanvas();
+        }
+
+        async function generateCoverTeaserAI() {
+            const btn = document.getElementById('btn-gen-teaser');
+            if (btn) {
+                btn.disabled = true;
+                btn.innerText = "✨ Synthesizing...";
+            }
+
+            try {
+                const prompt = "Write a punchy, 12-word cover teaser for a prestigious university engineering and arts magazine issue titled 'SYNTHESIS'. Highlighting technology, robotics, and human theatre. Output ONLY the teaser sentence.";
+                const text = await callGeminiText(prompt);
+                const teaserEl = document.getElementById('teaser-text');
+                if (teaserEl && text) teaserEl.innerText = text.trim();
+                showToast("AI Cover Teaser synthesized!");
+            } catch (err) {
+                showToast("Teaser generation: " + err.message, true);
+            } finally {
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerText = "✨ Synthesize with Gemini";
+                }
+            }
+        }
+
+        async function generateArticleAI() {
+            const topicInput = document.getElementById('ai-topic-input');
+            const toneSelect = document.getElementById('ai-tone-select');
+            const lengthSelect = document.getElementById('ai-length-select');
+            const contextInput = document.getElementById('ai-context-input');
+            const outputBox = document.getElementById('ai-article-output');
+            const btn = document.getElementById('btn-gen-article');
+
+            const topic = topicInput ? topicInput.value.trim() : "Future of Engineering";
+            const tone = toneSelect ? toneSelect.value : "Wired Tech-Journalism";
+            const length = lengthSelect ? lengthSelect.value : "300 words";
+            const context = contextInput ? contextInput.value.trim() : "";
+
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = `<div class="loader-spin"></div> <span>Synthesizing Article Copy...</span>`;
+            }
+
+            if (outputBox) {
+                outputBox.innerHTML = `<div class="text-stone-500 italic text-center py-12 flex flex-col items-center gap-2"><div class="loader-spin"></div><span>Gemini 2.5 Flash is writing article copy...</span></div>`;
+            }
+
+            const systemInst = "You are an award-winning senior magazine editor for 'PRAGYAURJA'. Write publication-ready long-form copy formatted with clean HTML tags: <h3> headlines, <p> body paragraphs, and <blockquote> pull quotes. Never use markdown backticks.";
+            const userPrompt = `Write a magazine feature story on the topic: "${topic}". Tone: ${tone}. Target length: ${length}. Additional context: ${context}`;
+
+            try {
+                const resultText = await callGeminiText(userPrompt, systemInst);
+                if (outputBox) {
+                    outputBox.innerHTML = resultText;
+                }
+                showToast("Article copy generated successfully!");
+            } catch (err) {
+                if (outputBox) {
+                    outputBox.innerHTML = `<div class="p-4 bg-red-50 text-red-700 rounded border border-red-200"><strong>Error generating article:</strong> ${err.message}</div>`;
+                }
+            } finally {
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = `<span>✨ Synthesize Article Copy</span>`;
+                }
+            }
+        }
+
+        async function generateSpreadArticleAI() {
+            if (!state.selectedFpItem) return;
+            const topicInput = document.getElementById('ai-topic-input');
+            const contextInput = document.getElementById('ai-context-input');
+            
+            if (topicInput) topicInput.value = state.selectedFpItem.title;
+            if (contextInput) contextInput.value = state.selectedFpItem.brief;
+
+            switchTab('aistudio');
+            generateArticleAI();
+        }
+
+        async function generateSpeechAI() {
+            const voiceSelect = document.getElementById('tts-voice-select');
+            const styleInput = document.getElementById('tts-style-input');
+            const outputBox = document.getElementById('ai-article-output');
+            const btn = document.getElementById('btn-gen-tts');
+            const audioContainer = document.getElementById('audio-player-container');
+            const audioPlayer = document.getElementById('tts-audio-player');
+            const voiceBadge = document.getElementById('tts-voice-badge');
+
+            const voice = voiceSelect ? voiceSelect.value : "Zephyr";
+            const style = styleInput ? styleInput.value.trim() : "";
+            
+            let textToRead = outputBox ? outputBox.innerText.trim() : "";
+            if (!textToRead || textToRead.length < 10) {
+                textToRead = "Welcome to Pragyaurja, the annual editorial publication of Shri Shankaracharya Technical Campus. Synthesis explores where human spirit meets technical precision.";
+            }
+
+            // Truncate to first 300 chars for fast audio preview
+            if (textToRead.length > 300) {
+                textToRead = textToRead.substring(0, 300) + "...";
+            }
+
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = `<div class="loader-spin"></div> <span>Generating AI Voiceover Audio...</span>`;
+            }
+
+            try {
+                const audioUrl = await callGeminiTTS(textToRead, voice, style);
+                if (audioPlayer) audioPlayer.src = audioUrl;
+                if (voiceBadge) voiceBadge.innerText = "Voice: " + voice;
+                if (audioContainer) audioContainer.classList.remove('hidden');
+                if (audioPlayer) audioPlayer.play();
+                showToast("AI Voiceover generated and playing!");
+            } catch (err) {
+                showToast("Audio generation failed: " + err.message, true);
+            } finally {
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = `<span>🔊 Generate AI Audio Voiceover (WAV)</span>`;
+                }
+            }
+        }
+
+        async function auditDraftAI() {
+            const inputEl = document.getElementById('audit-input-text');
+            const resultBox = document.getElementById('audit-result-box');
+            const resultText = document.getElementById('audit-result-text');
+            const btn = document.getElementById('btn-run-audit');
+
+            const text = inputEl ? inputEl.value.trim() : "";
+            if (!text) {
+                showToast("Please enter draft text to audit.", true);
+                return;
+            }
+
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = `<div class="loader-spin"></div> <span>Auditing Draft...</span>`;
+            }
+
+            const prompt = `Perform a forensic editorial prepress audit on the following student draft paragraph for a high-end university magazine:
+"${text}"
+Analyze for:
+1. Centered body text alignment violations (Rule: body copy MUST be left-aligned, rag-right).
+2. Passive voice or weak opening hooks.
+3. Typography hierarchy recommendations.
+4. Content duplication risks.
+Provide bullet points with direct SOP solutions. Format with concise HTML lists.`;
+
+            try {
+                const report = await callGeminiText(prompt);
+                if (resultText) resultText.innerHTML = report;
+                if (resultBox) resultBox.classList.remove('hidden');
+                showToast("Forensic Audit complete!");
+            } catch (err) {
+                showToast("Audit failed: " + err.message, true);
+            } finally {
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = `<span>✨ Run Forensic AI Quality Audit</span>`;
+                }
+            }
+        }
+
+        function copyGeneratedText() {
+            const box = document.getElementById('ai-article-output');
+            if (!box) return;
+            const text = box.innerText;
+            
+            const temp = document.createElement('textarea');
+            temp.value = text;
+            document.body.appendChild(temp);
+            temp.select();
+            document.execCommand('copy');
+            document.body.removeChild(temp);
+
+            showToast("Article copy copied to clipboard!");
         }
 
         function renderFlatplanGrid() {
@@ -1372,7 +1642,6 @@
             if (box) box.classList.add('hidden');
         }
 
-        // Chart.js Integration with Graceful Fallback
         let flatChartInstance = null;
 
         function renderChart() {
@@ -1418,7 +1687,6 @@
             }
         }
 
-        // Safe Initialization
         function initApp() {
             initCanvas();
             renderFlatplanGrid();
