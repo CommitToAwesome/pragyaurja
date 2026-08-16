@@ -309,6 +309,9 @@
                     <button onclick="prevSpread()" class="px-3 py-1.5 bg-stone-200 text-stone-800 rounded font-mono text-xs font-bold hover:bg-stone-300 transition">← Prev</button>
                     <span id="spread-counter" class="font-mono text-xs text-terracotta px-2 font-bold">Spread 1 of 8</span>
                     <button onclick="nextSpread()" class="px-3 py-1.5 bg-terracotta text-white rounded font-mono text-xs font-bold hover:bg-stone-900 transition">Next →</button>
+                    <button onclick="narrateCurrentSpread()" id="btn-narrate-spread" class="ml-2 px-3 py-1.5 bg-amber-100 text-terracotta border border-terracotta/40 rounded font-mono text-xs font-bold hover:bg-amber-200 transition flex items-center gap-1.5" title="Listen to Spread AI Narration">
+                        <span id="spread-voice-icon">🔊</span> <span id="spread-voice-label">Narrate Spread</span>
+                    </button>
                 </div>
             </div>
 
@@ -384,9 +387,14 @@
                 <div class="lg:col-span-7 bg-white p-6 rounded-xl border border-stone-300 flex flex-col space-y-4 shadow-sm">
                     <div class="flex justify-between items-center border-b border-stone-200 pb-2">
                         <span class="font-mono text-xs font-bold text-terracotta uppercase tracking-wider">EDITORIAL OUTPUT PREVIEW</span>
-                        <button onclick="copyGeneratedText()" class="font-mono text-[11px] text-stone-600 hover:text-terracotta flex items-center gap-1">
-                            <span>📋 Copy Text</span>
-                        </button>
+                        <div class="flex items-center gap-3">
+                            <button onclick="toggleArticleVoice()" id="btn-ai-voice" class="font-mono text-[11px] text-terracotta bg-orange-50 border border-terracotta/30 px-2.5 py-1 rounded hover:bg-orange-100 transition flex items-center gap-1.5 font-bold">
+                                <span id="ai-voice-icon">🔊</span> <span id="ai-voice-label">Play AI Voice</span>
+                            </button>
+                            <button onclick="copyGeneratedText()" class="font-mono text-[11px] text-stone-600 hover:text-terracotta flex items-center gap-1">
+                                <span>📋 Copy Text</span>
+                            </button>
+                        </div>
                     </div>
 
                     <div id="ai-article-output" class="font-sans text-xs text-stone-800 leading-relaxed space-y-3 overflow-y-auto max-h-[450px] pr-2 custom-scrollbar">
@@ -558,6 +566,8 @@
             finishes: { spotuv: false, deboss: false, grid: false },
             teaserIndex: 0,
             audioEnabled: true,
+            isSpeaking: false,
+            speakingSource: null, // 'article' or 'spread'
             flatplanFilter: 'all',
             selectedFpItem: 0,
             mouseX: 0,
@@ -568,9 +578,7 @@
         let ctx = null;
         let animAngle = 0;
         let animId = null;
-
-        // Interactive Spreads Data Bank
-        const spreadsData = [
+        let currentUtterance = null;
             {
                 pageNums: "p. 02–03",
                 title: "Inside Cover // Table of Contents",
@@ -883,117 +891,117 @@
             { range: "78–79", title: "Behind the Lens: Editorial Crew", cat: "alumni", brief: "Behind-the-scenes documentary photos of student editors, designers, and photographers.", art: "Informal candid photographic grid.", typo: "DM Mono 10pt, DM Sans 9.5pt." },
             { range: "80", title: "Back Cover: Institutional Mark", cat: "feature", brief: "Minimalist institutional crest, contact metadata, and barcode placement.", art: "Debossed crest on warm cream matte cardstock.", typo: "DM Mono 8pt." }
         ];
+        function stopSpeech() {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+            }
+            state.isSpeaking = false;
+            state.speakingSource = null;
+            
+            // Reset AI Studio Voice Button
+            const aiIcon = document.getElementById('ai-voice-icon');
+            const aiLabel = document.getElementById('ai-voice-label');
+            const aiBtn = document.getElementById('btn-ai-voice');
+            if (aiIcon) aiIcon.textContent = "🔊";
+            if (aiLabel) aiLabel.textContent = "Play AI Voice";
+            if (aiBtn) aiBtn.className = "font-mono text-[11px] text-terracotta bg-orange-50 border border-terracotta/30 px-2.5 py-1 rounded hover:bg-orange-100 transition flex items-center gap-1.5 font-bold";
 
-        function initCanvas() {
-            canvas = document.getElementById('coverCanvas');
-            if (!canvas) return;
-            ctx = canvas.getContext('2d');
-
-            canvas.addEventListener('mousemove', (e) => {
-                const rect = canvas.getBoundingClientRect();
-                state.mouseX = e.clientX - rect.left - (canvas.width / 2);
-                state.mouseY = e.clientY - rect.top - (canvas.height / 2);
-            });
-
-            if (animId) cancelAnimationFrame(animId);
-            animateCanvas();
+            // Reset Spread Voice Button
+            const spreadIcon = document.getElementById('spread-voice-icon');
+            const spreadLabel = document.getElementById('spread-voice-label');
+            const spreadBtn = document.getElementById('btn-narrate-spread');
+            if (spreadIcon) spreadIcon.textContent = "🔊";
+            if (spreadLabel) spreadLabel.textContent = "Narrate Spread";
+            if (spreadBtn) spreadBtn.className = "ml-2 px-3 py-1.5 bg-amber-100 text-terracotta border border-terracotta/40 rounded font-mono text-xs font-bold hover:bg-amber-200 transition flex items-center gap-1.5";
         }
 
-        function animateCanvas() {
-            animAngle += 0.015;
-            drawCoverCanvas();
-            animId = requestAnimationFrame(animateCanvas);
-        }
+        function speakText(text, source) {
+            stopSpeech();
 
-        function drawCoverCanvas() {
-            if (!ctx || !canvas) return;
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            const centerX = canvas.width / 2;
-            const centerY = canvas.height / 2;
-
-            ctx.save();
-            ctx.translate(centerX, centerY);
-
-            if (state.canvasArtMode === 'fibonacci') {
-                const strokeColor = state.preset === 'obsidian' ? '#00E5FF' : (state.preset === 'emerald' ? '#D4A373' : '#B55A30');
-                ctx.strokeStyle = strokeColor;
-                ctx.lineWidth = 1.2;
-
-                // Draw Sacred Geometry Golden Ratio Spiral
-                ctx.beginPath();
-                let a = 0.1, b = 0.15;
-                for (let i = 0; i < 280; i++) {
-                    let angle = 0.1 * i;
-                    let r = a * Math.exp(b * angle);
-                    let x = r * Math.cos(angle + animAngle * 0.4);
-                    let y = r * Math.sin(angle + animAngle * 0.4);
-                    if (i === 0) ctx.moveTo(x, y);
-                    else ctx.lineTo(x, y);
-                }
-                ctx.stroke();
-
-                // Draw Interconnecting Coordinate Nodes
-                ctx.fillStyle = strokeColor;
-                for (let k = 0; k < 6; k++) {
-                    let ang = animAngle + (k * Math.PI / 3);
-                    let rx = Math.cos(ang) * (50 + state.mouseX * 0.08);
-                    let ry = Math.sin(ang) * (50 + state.mouseY * 0.08);
-                    ctx.beginPath();
-                    ctx.arc(rx, ry, 3, 0, Math.PI * 2);
-                    ctx.fill();
-
-                    ctx.strokeStyle = 'rgba(181, 90, 48, 0.2)';
-                    ctx.beginPath();
-                    ctx.moveTo(0, 0);
-                    ctx.lineTo(rx, ry);
-                    ctx.stroke();
-                }
-
-            } else if (state.canvasArtMode === 'particles') {
-                const strokeColor = state.preset === 'obsidian' ? '#00E5FF' : '#B55A30';
-                ctx.strokeStyle = strokeColor;
-                ctx.lineWidth = 1.2;
-                ctx.beginPath();
-                ctx.arc(0, 0, 45 + Math.sin(animAngle) * 5, 0, Math.PI * 2);
-                ctx.stroke();
-
-                ctx.strokeStyle = 'rgba(181, 90, 48, 0.25)';
-                for (let i = -60; i <= 60; i += 15) {
-                    ctx.beginPath();
-                    ctx.moveTo(i + (state.mouseX * 0.05), -70);
-                    ctx.lineTo(i - (state.mouseX * 0.05), 70);
-                    ctx.stroke();
-                }
-
-                ctx.fillStyle = strokeColor;
-                for (let j = 0; j < 8; j++) {
-                    const angle = animAngle + (j * Math.PI / 4);
-                    const x = Math.cos(angle) * (60 + Math.sin(animAngle) * 8);
-                    const y = Math.sin(angle) * (40 + Math.cos(animAngle) * 8);
-                    ctx.fillRect(x - 2.5, y - 2.5, 5, 5);
-                }
-
-            } else if (state.canvasArtMode === 'wireframe') {
-                ctx.strokeStyle = state.preset === 'obsidian' ? '#00E5FF' : (state.preset === 'emerald' ? '#D4A373' : '#1A1A1A');
-                ctx.lineWidth = 1.4;
-                const size = 48 + Math.sin(animAngle) * 4;
-
-                ctx.strokeRect(-size/2, -size/2, size, size);
-                ctx.strokeRect(-size/3, -size/3, size, size);
-
-                ctx.beginPath();
-                ctx.moveTo(-size/2, -size/2); ctx.lineTo(-size/3, -size/3);
-                ctx.moveTo(size/2, -size/2); ctx.lineTo(2*size/3, -size/3);
-                ctx.moveTo(-size/2, size/2); ctx.lineTo(-size/3, 2*size/3);
-                ctx.moveTo(size/2, size/2); ctx.lineTo(2*size/3, 2*size/3);
-                ctx.stroke();
+            if (!('speechSynthesis' in window)) {
+                showToast("Text-to-Speech is not supported in this browser");
+                return;
             }
 
-            ctx.restore();
+            // Clean markup tags for speech synthesis
+            const tempDiv = document.createElement("div");
+            tempDiv.innerHTML = text;
+            const plainText = tempDiv.textContent || tempDiv.innerText || "";
+
+            if (!plainText.trim()) {
+                showToast("No text content available to read");
+                return;
+            }
+
+            const utterance = new SpeechSynthesisUtterance(plainText);
+            utterance.rate = 0.95; // Natural editorial pace
+            utterance.pitch = 1.0;
+
+            // Attempt to select a clear natural voice if available
+            const voices = window.speechSynthesis.getVoices();
+            const preferredVoice = voices.find(v => (v.name.includes("Google") || v.name.includes("Natural") || v.name.includes("Enhanced") || v.name.includes("Samantha")) && v.lang.startsWith("en")) || voices[0];
+            if (preferredVoice) utterance.voice = preferredVoice;
+
+            state.isSpeaking = true;
+            state.speakingSource = source;
+
+            utterance.onend = function() {
+                stopSpeech();
+                showToast("Voice Narration Finished");
+            };
+
+            utterance.onerror = function() {
+                stopSpeech();
+            };
+
+            currentUtterance = utterance;
+            window.speechSynthesis.speak(utterance);
+
+            // Update UI Button states
+            if (source === 'article') {
+                const aiIcon = document.getElementById('ai-voice-icon');
+                const aiLabel = document.getElementById('ai-voice-label');
+                const aiBtn = document.getElementById('btn-ai-voice');
+                if (aiIcon) aiIcon.textContent = "⏹";
+                if (aiLabel) aiLabel.textContent = "Stop AI Voice";
+                if (aiBtn) aiBtn.className = "font-mono text-[11px] text-white bg-terracotta border border-terracotta px-2.5 py-1 rounded hover:bg-stone-900 transition flex items-center gap-1.5 font-bold animate-pulse";
+            } else if (source === 'spread') {
+                const spreadIcon = document.getElementById('spread-voice-icon');
+                const spreadLabel = document.getElementById('spread-voice-label');
+                const spreadBtn = document.getElementById('btn-narrate-spread');
+                if (spreadIcon) spreadIcon.textContent = "⏹";
+                if (spreadLabel) spreadLabel.textContent = "Stop Narration";
+                if (spreadBtn) spreadBtn.className = "ml-2 px-3 py-1.5 bg-terracotta text-white border border-terracotta rounded font-mono text-xs font-bold hover:bg-stone-900 transition flex items-center gap-1.5 animate-pulse";
+            }
+
+            showToast("Playing AI Voice Narration...");
+        }
+
+        function toggleArticleVoice() {
+            if (state.isSpeaking && state.speakingSource === 'article') {
+                stopSpeech();
+                showToast("Stopped AI Voice");
+            } else {
+                const output = document.getElementById('ai-article-output');
+                if (!output) return;
+                speakText(output.innerHTML, 'article');
+            }
+        }
+
+        function narrateCurrentSpread() {
+            if (state.isSpeaking && state.speakingSource === 'spread') {
+                stopSpeech();
+                showToast("Stopped Spread Narration");
+            } else {
+                const spread = spreadsData[state.spreadIndex];
+                if (!spread) return;
+                const fullSpreadContent = `${spread.title}. Left page: ${spread.leftPage}. Right page: ${spread.rightPage}`;
+                speakText(fullSpreadContent, 'spread');
+            }
         }
 
         function switchTab(tabName) {
+            stopSpeech(); // Stop narration when changing tabs
             state.activeTab = tabName;
             
             const sections = ['cover', 'spread', 'aistudio', 'flatplan', 'audit', 'theme'];
@@ -1213,6 +1221,7 @@
 
         function nextSpread() {
             if (state.spreadIndex < spreadsData.length - 1) {
+                stopSpeech();
                 state.spreadIndex++;
                 playPageTurnSound();
                 renderSpread();
@@ -1221,6 +1230,7 @@
 
         function prevSpread() {
             if (state.spreadIndex > 0) {
+                stopSpeech();
                 state.spreadIndex--;
                 playPageTurnSound();
                 renderSpread();
@@ -1228,6 +1238,7 @@
         }
 
         function jumpSpread(idx) {
+            stopSpeech();
             state.spreadIndex = idx;
             playPageTurnSound();
             renderSpread();
