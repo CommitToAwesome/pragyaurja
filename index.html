@@ -12,6 +12,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=DM+Serif+Display:ital@0;1&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+    
     <script>
         tailwind.config = {
             theme: {
@@ -37,6 +38,7 @@
             }
         }
     </script>
+
     <style>
         body {
             background-color: #FDFBF7;
@@ -136,16 +138,16 @@
                 <button onclick="switchTab('identity')" id="tab-identity" class="nav-btn px-3 py-1.5 rounded-md transition-all text-stone-600 hover:bg-stone-200">
                     ¶ Identity & Typography
                 </button>
-                <button onclick="openApiModal()" class="p-1.5 rounded-md border border-stone-300 text-stone-700 hover:bg-stone-200" title="Gemini API Key Settings">
+                <button onclick="openApiModal()" class="p-1.5 rounded-md border border-stone-300 text-stone-700 hover:bg-stone-200" title="Optional Custom API Key Settings">
                     ⚙ Key
                 </button>
             </nav>
         </div>
     </header>
 
-    <!-- Main Content Area -->
     <main class="flex-grow max-w-7xl w-full mx-auto px-4 lg:px-12 py-8">
 
+        <!-- SECTION 1: COVER STUDIO -->
         <section id="section-cover" class="space-y-8">
             <div class="bg-alabaster p-6 rounded-xl border border-stone-300 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div class="max-w-3xl">
@@ -172,7 +174,7 @@
                             <label class="font-mono text-xs font-bold uppercase text-terracotta flex items-center gap-1.5">
                                 <span>🎨 AI Hero Cover Art</span>
                             </label>
-                            <span class="text-[9px] font-mono bg-terracotta/10 text-terracotta px-1.5 py-0.5 rounded">Imagen 3</span>
+                            <span class="text-[9px] font-mono bg-terracotta/10 text-terracotta px-1.5 py-0.5 rounded">Imagen AI</span>
                         </div>
                         <p class="text-[11px] text-stone-600">Generate custom high-concept artwork directly onto the cover mockup:</p>
                         
@@ -249,7 +251,6 @@
                     </div>
                 </div>
 
-                <!-- Live Cover Mockup Canvas Container -->
                 <div class="lg:col-span-8 flex justify-center">
                     <div id="cover-frame" class="relative w-full max-w-[480px] aspect-[1/1.414] bg-alabaster border-8 border-white rounded-lg shadow-2xl overflow-hidden transition-all duration-300 spot-uv-canvas flex flex-col justify-between p-6 md:p-8">
                         
@@ -305,13 +306,13 @@
             </div>
         </section>
 
-
+        <!-- SECTION 2: AI EDITORIAL STUDIO -->
         <section id="section-aistudio" class="hidden space-y-8">
             <div class="bg-alabaster p-6 rounded-xl border border-stone-300 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div>
                     <div class="flex items-center gap-2">
-                        <span class="text-terracotta font-mono text-xs font-bold uppercase tracking-widest">Powered by Gemini &amp; Imagen 3</span>
-                        <span class="bg-terracotta text-white font-mono text-[9px] px-2 py-0.5 rounded-full font-bold">LIVE API</span>
+                        <span class="text-terracotta font-mono text-xs font-bold uppercase tracking-widest">Powered by Gemini API</span>
+                        <span class="bg-terracotta text-white font-mono text-[9px] px-2 py-0.5 rounded-full font-bold">LIVE MODEL</span>
                     </div>
                     <h2 class="font-serif text-3xl md:text-4xl text-charcoal mt-1">AI Magazine Copywriting &amp; Audio Studio</h2>
                     <p class="text-stone-600 mt-2 text-sm leading-relaxed max-w-3xl">
@@ -327,7 +328,7 @@
                 <div class="lg:col-span-6 bg-white p-6 rounded-xl border border-stone-200 shadow-sm space-y-5">
                     <h3 class="font-serif text-xl font-bold text-charcoal border-b border-stone-200 pb-2 flex items-center justify-between">
                         <span>✍️ AI Article &amp; Feature Copywriter</span>
-                        <span class="font-mono text-xs font-normal text-stone-500">gemini-2.5-flash</span>
+                        <span class="font-mono text-xs font-normal text-stone-500">gemini-3-flash-preview</span>
                     </h3>
 
                     <div class="space-y-4 text-xs">
@@ -427,7 +428,7 @@
             </div>
         </section>
 
-
+        <!-- SECTION 3: THEME & INSPIRATION -->
         <section id="section-theme" class="hidden space-y-8">
             <div class="bg-alabaster p-6 rounded-xl border border-stone-300">
                 <span class="text-terracotta font-mono text-xs font-bold uppercase tracking-widest">Editorial Philosophy</span>
@@ -507,7 +508,7 @@
             </div>
         </section>
 
-
+        <!-- SECTION 4: AUDIT & SOP -->
         <section id="section-audit" class="hidden space-y-8">
             <div class="bg-alabaster p-6 rounded-xl border border-stone-300">
                 <span class="text-terracotta font-mono text-xs font-bold uppercase tracking-widest">Quality Assurance Directive</span>
@@ -539,7 +540,7 @@
                 </div>
             </div>
 
-            <!-- Audit Flaw Interactive Accordion Cards -->
+            <!-- Audit Flaw Interactive Cards -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
                 <!-- Defect 1: Duplicate Content -->
@@ -609,7 +610,7 @@
             </div>
         </section>
 
-
+        <!-- SECTION 5: 80-PAGE FLATPLAN -->
         <section id="section-flatplan" class="hidden space-y-8">
             <div class="bg-alabaster p-6 rounded-xl border border-stone-300">
                 <span class="text-terracotta font-mono text-xs font-bold uppercase tracking-widest">Master Architecture</span>
@@ -692,7 +693,7 @@
             </div>
         </section>
 
-
+        <!-- SECTION 6: IDENTITY & TYPOGRAPHY -->
         <section id="section-identity" class="hidden space-y-8">
             <div class="bg-alabaster p-6 rounded-xl border border-stone-300">
                 <span class="text-terracotta font-mono text-xs font-bold uppercase tracking-widest">Brand System &amp; Micro-Typography</span>
@@ -818,22 +819,17 @@
                 <h3 class="font-serif text-lg font-bold text-charcoal">Gemini API Key Settings</h3>
                 <button onclick="closeApiModal()" class="font-mono text-xs text-stone-500 hover:text-stone-800">✕ Close</button>
             </div>
-            
-            <div id="api-modal-notice" class="hidden text-xs text-amber-900 bg-amber-50 p-3 rounded-lg border border-amber-200 space-y-1 font-mono">
-                <div class="font-bold flex items-center gap-1">⚠️ API KEY REQUIRED</div>
-                <div id="api-modal-notice-text">Please enter a valid Google Gemini API key to enable live AI features.</div>
-            </div>
 
             <p class="text-xs text-stone-600 leading-relaxed">
-                Live AI features (Gemini Flash copywriting, TTS podcasts, and custom art) require a Google Gemini API Key. You can obtain a free key in seconds from <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener font-bold text-terracotta underline">Google AI Studio ↗</a>.
+                By default, Canvas auto-injects runtime API keys for standard features. If you want to use a custom Google Gemini API Key or override billing limits, you can enter it below. Get a key from <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener" class="font-bold text-terracotta underline">Google AI Studio ↗</a>.
             </p>
             <div>
-                <label class="font-mono text-xs font-bold text-stone-700 block mb-1">Google Gemini API Key</label>
-                <input type="password" id="custom-api-key" placeholder="AIzaSy..." class="w-full p-2.5 text-xs border border-stone-300 rounded font-mono focus:outline-none focus:border-terracotta">
+                <label class="font-mono text-xs font-bold text-stone-700 block mb-1">Optional Custom API Key</label>
+                <input type="password" id="custom-api-key" placeholder="AIzaSy... (Leave blank to use auto-injected runtime key)" class="w-full p-2.5 text-xs border border-stone-300 rounded font-mono focus:outline-none focus:border-terracotta">
             </div>
             <div class="flex justify-between items-center pt-2">
                 <button onclick="closeApiModal()" class="text-xs text-stone-500 hover:underline font-mono">Cancel</button>
-                <button onclick="saveApiKey()" class="px-4 py-2 bg-terracotta text-white rounded text-xs font-bold hover:bg-stone-900 transition">Save &amp; Enable AI</button>
+                <button onclick="saveApiKey()" class="px-4 py-2 bg-terracotta text-white rounded text-xs font-bold hover:bg-stone-900 transition">Save Key</button>
             </div>
         </div>
     </div>
@@ -850,7 +846,7 @@
             </div>
             <div class="text-stone-400 text-center md:text-right">
                 <div>CASE &amp; SPD Benchmark Aligned Specification</div>
-                <div class="text-[10px] text-stone-500 mt-0.5">Gemini 2.5 Flash Integrated Architecture</div>
+                <div class="text-[10px] text-stone-500 mt-0.5">Gemini Flash Integrated Architecture</div>
             </div>
         </div>
     </footer>
@@ -1071,30 +1067,9 @@
             return localStorage.getItem('gemini_user_api_key') || "";
         }
 
-        function ensureApiKey() {
-            const key = getApiKey();
-            if (!key) {
-                openApiModal("An API key is required to call Gemini AI endpoints. Please enter your Google Gemini API key below.");
-                return null;
-            }
-            return key;
-        }
-
-        function openApiModal(noticeText = "") {
+        function openApiModal() {
             const input = document.getElementById('custom-api-key');
             if (input) input.value = getApiKey();
-
-            const noticeBox = document.getElementById('api-modal-notice');
-            const noticeBoxText = document.getElementById('api-modal-notice-text');
-            if (noticeBox && noticeBoxText) {
-                if (noticeText) {
-                    noticeBoxText.innerText = noticeText;
-                    noticeBox.classList.remove('hidden');
-                } else {
-                    noticeBox.classList.add('hidden');
-                }
-            }
-
             const modal = document.getElementById('api-key-modal');
             if (modal) modal.classList.remove('hidden');
         }
@@ -1107,13 +1082,9 @@
         function saveApiKey() {
             const input = document.getElementById('custom-api-key');
             const key = input ? input.value.trim() : "";
-            if (!key) {
-                showToast("Please enter a valid API key.", true);
-                return;
-            }
             localStorage.setItem('gemini_user_api_key', key);
             closeApiModal();
-            showToast("API Key saved! Live AI generation enabled.");
+            showToast(key ? "Custom API Key saved!" : "Using Canvas runtime auto key.");
         }
 
         function showToast(message, isError = false) {
@@ -1155,103 +1126,61 @@
         }
 
         async function callGeminiText(prompt, systemInstruction = "") {
-            const apiKey = ensureApiKey();
-            if (!apiKey) throw new Error("Gemini API key is required. Please set your key in ⚙ Key settings.");
-
-            const candidateModels = [
-                "gemini-2.5-flash",
-                "gemini-2.0-flash",
-                "gemini-1.5-flash"
-            ];
-
-            let lastError = null;
-
-            for (const model of candidateModels) {
-                try {
-                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
-                    const payload = {
-                        contents: [{ parts: [{ text: prompt }] }]
-                    };
-                    if (systemInstruction) {
-                        payload.systemInstruction = { parts: [{ text: systemInstruction }] };
-                    }
-
-                    const response = await fetchWithBackoff(apiUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-
-                    if (!response.ok) {
-                        const errJson = await response.json().catch(() => ({}));
-                        const msg = errJson.error?.message || `HTTP ${response.status}`;
-                        lastError = new Error(`Model ${model}: ${msg}`);
-                        continue;
-                    }
-
-                    const result = await response.json();
-                    const genText = result.candidates?.[0]?.content?.parts?.[0]?.text;
-                    if (genText) return genText;
-                } catch (err) {
-                    lastError = err;
-                }
+            const apiKey = getApiKey(); // Canvas provides runtime key when apiKey is ""
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+            
+            const payload = {
+                contents: [{ parts: [{ text: prompt }] }]
+            };
+            if (systemInstruction) {
+                payload.systemInstruction = { parts: [{ text: systemInstruction }] };
             }
 
-            throw lastError || new Error("Failed to generate text content.");
+            const response = await fetchWithBackoff(apiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (!response.ok) {
+                const errJson = await response.json().catch(() => ({}));
+                throw new Error(errJson.error?.message || `HTTP ${response.status} Error`);
+            }
+
+            const result = await response.json();
+            const genText = result.candidates?.[0]?.content?.parts?.[0]?.text;
+            if (genText) return genText;
+            throw new Error("Failed to generate text content.");
         }
 
         async function callImagenGenerate(promptText) {
-            const apiKey = ensureApiKey();
-            if (!apiKey) throw new Error("Gemini API key is required. Please set your key in ⚙ Key settings.");
+            const apiKey = getApiKey();
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-001:predict?key=${apiKey}`;
+            const payload = {
+                instances: { prompt: promptText },
+                parameters: { sampleCount: 1 }
+            };
 
-            const candidateModels = [
-                "imagen-3.0-generate-002",
-                "imagen-3.0-fast-generate-001",
-                "imagen-3.0-generate-001"
-            ];
+            const response = await fetchWithBackoff(apiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
 
-            let lastError = null;
-
-            for (const model of candidateModels) {
-                try {
-                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:predict?key=${apiKey}`;
-                    const payload = {
-                        instances: [{ prompt: promptText }],
-                        parameters: { sampleCount: 1 }
-                    };
-
-                    const response = await fetchWithBackoff(apiUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-
-                    if (!response.ok) {
-                        const errJson = await response.json().catch(() => ({}));
-                        const msg = errJson.error?.message || `HTTP ${response.status}`;
-                        lastError = new Error(`Model ${model}: ${msg}`);
-                        continue;
-                    }
-
-                    const result = await response.json();
-                    if (result.predictions && result.predictions[0] && result.predictions[0].bytesBase64Encoded) {
-                        return `data:image/png;base64,${result.predictions[0].bytesBase64Encoded}`;
-                    } else if (result.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data) {
-                        const inlineData = result.candidates[0].content.parts[0].inlineData;
-                        return `data:${inlineData.mimeType || 'image/png'};base64,${inlineData.data}`;
-                    }
-                } catch (err) {
-                    lastError = err;
-                }
+            if (!response.ok) {
+                const errJson = await response.json().catch(() => ({}));
+                throw new Error(errJson.error?.message || `HTTP ${response.status} Error`);
             }
 
-            throw lastError || new Error("Imagen generation model is not accessible with this API key.");
+            const result = await response.json();
+            if (result.predictions && result.predictions[0] && result.predictions[0].bytesBase64Encoded) {
+                return `data:image/png;base64,${result.predictions[0].bytesBase64Encoded}`;
+            }
+            throw new Error("No image data returned.");
         }
 
         async function callGeminiTTS(textToSay, voiceName = "Zephyr", styleInstruction = "") {
-            const apiKey = ensureApiKey();
-            if (!apiKey) throw new Error("Gemini API key is required. Please set your key in ⚙ Key settings.");
-
+            const apiKey = getApiKey();
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key=${apiKey}`;
             const fullPrompt = styleInstruction ? `${styleInstruction} ${textToSay}` : textToSay;
             
@@ -1376,7 +1305,7 @@
                 showToast("AI Cover Art synthesized & applied!");
             } catch (err) {
                 resetCoverArtCanvas();
-                showToast("Note: Imagen API model not enabled for this key tier. Rendered high-concept procedural art on canvas instead.");
+                showToast("AI Image generation deferred: Rendering high-concept procedural art on canvas.");
             } finally {
                 if (btn) {
                     btn.disabled = false;
@@ -1436,7 +1365,7 @@
             }
 
             if (outputBox) {
-                outputBox.innerHTML = `<div class="text-stone-500 italic text-center py-12 flex flex-col items-center gap-2"><div class="loader-spin"></div><span>Gemini 2.5 Flash is writing article copy...</span></div>`;
+                outputBox.innerHTML = `<div class="text-stone-500 italic text-center py-12 flex flex-col items-center gap-2"><div class="loader-spin"></div><span>Gemini 3 Flash is writing article copy...</span></div>`;
             }
 
             const systemInst = "You are an award-winning senior magazine editor for 'PRAGYAURJA'. Write publication-ready long-form copy formatted with clean HTML tags: <h3> headlines, <p> body paragraphs, and <blockquote> pull quotes. Never use markdown backticks.";
@@ -1489,7 +1418,6 @@
                 textToRead = "Welcome to Pragyaurja, the annual editorial publication of Shri Shankaracharya Technical Campus. Synthesis explores where human spirit meets technical precision.";
             }
 
-            // Truncate to first 300 chars for fast audio preview
             if (textToRead.length > 300) {
                 textToRead = textToRead.substring(0, 300) + "...";
             }
