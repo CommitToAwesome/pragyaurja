@@ -60,16 +60,6 @@
             text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.9), -1px -1px 0px rgba(0, 0, 0, 0.3);
         }
 
-        .foil-gold-text {
-            background: linear-gradient(135deg, #D4A373 0%, #B55A30 50%, #8A6436 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .spot-uv-active {
-            box-shadow: 0 0 35px rgba(181, 90, 48, 0.25), inset 0 0 15px rgba(255, 255, 255, 0.5);
-        }
-
         .custom-scrollbar::-webkit-scrollbar {
             width: 6px;
             height: 6px;
@@ -84,7 +74,7 @@
 
         .grid-overlay {
             background-size: calc(100% / 12) 100%;
-            background-image: linear-gradient(to right, rgba(181, 90, 48, 0.15) 1px, transparent 1px);
+            background-image: linear-gradient(to right, rgba(181, 90, 48, 0.18) 1px, transparent 1px);
         }
 
         .paper-shadow {
@@ -96,21 +86,19 @@
         }
 
         .spread-flip {
-            transition: transform 0.4s ease, opacity 0.3s ease;
+            transition: transform 0.35s ease, opacity 0.25s ease;
         }
 
-        .loader-spin {
-            border: 3px solid rgba(0, 0, 0, 0.1);
-            border-top: 3px solid #B55A30;
-            border-radius: 50%;
-            width: 18px;
-            height: 18px;
-            animation: spin 0.8s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .drop-cap::first-letter {
+            font-family: 'DM Serif Display', serif;
+            float: left;
+            font-size: 3.2rem;
+            line-height: 0.8;
+            padding-top: 4px;
+            padding-right: 8px;
+            padding-bottom: 2px;
+            color: #B55A30;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -158,7 +146,6 @@
 
     <main class="flex-grow max-w-7xl w-full mx-auto px-4 lg:px-12 py-8">
 
-        <!-- SECTION 1: COVER STUDIO -->
         <section id="section-cover" class="space-y-8">
             <div class="bg-white/80 p-6 rounded-xl border border-stone-300 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 shadow-sm">
                 <div class="max-w-3xl">
@@ -180,7 +167,6 @@
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                 
-                <!-- Interactive Controls Panel -->
                 <div class="lg:col-span-4 bg-white p-6 rounded-xl border border-stone-300 shadow-sm space-y-6">
                     <h3 class="font-serif text-lg font-bold text-stone-900 border-b border-stone-200 pb-2">Cover Presets &amp; Art Modes</h3>
 
@@ -193,7 +179,7 @@
                                     <div class="font-bold text-stone-900">Classic Alabaster (Default Minimal)</div>
                                     <div class="text-[10px] text-stone-500">Warm cream base, terracotta &amp; copper</div>
                                 </div>
-                                <span class="w-3 h-3 rounded-full bg-alabaster border border-stone-400"></span>
+                                <span class="w-3 h-3 rounded-full bg-[#F4F1EA] border border-stone-400"></span>
                             </button>
                             <button onclick="setCoverStylePreset('obsidian')" id="btn-preset-obsidian" class="preset-btn p-3 border border-stone-300 rounded text-left hover:border-terracotta transition flex justify-between items-center">
                                 <div>
@@ -252,9 +238,6 @@
                     <div class="space-y-3">
                         <div class="flex justify-between items-center">
                             <label class="font-mono text-xs font-bold uppercase text-stone-500 block">4. Highlighted Teaser</label>
-                            <button onclick="generateCoverTeaserAI()" class="text-[11px] text-terracotta font-mono font-bold hover:underline flex items-center gap-1">
-                                <span>✨ Synthesize Teaser</span>
-                            </button>
                         </div>
                         <select onchange="updateTeaser(this.value)" id="cover-teaser-select" class="w-full p-2 text-xs border border-stone-300 rounded bg-white text-stone-800 font-sans focus:outline-none focus:border-terracotta">
                             <option value="0">Default: Autonomous AI &amp; Stage Arts</option>
@@ -264,7 +247,6 @@
                     </div>
                 </div>
 
-                <!-- Cover Canvas Mockup -->
                 <div class="lg:col-span-8 flex justify-center">
                     <div id="cover-frame" class="relative w-full max-w-[460px] aspect-[1/1.414] bg-alabaster border-8 border-stone-300 rounded-lg shadow-xl overflow-hidden transition-all duration-500 flex flex-col justify-between p-6 md:p-8">
                         
@@ -285,9 +267,9 @@
                             </div>
                         </div>
 
-                        <!-- Central Hero Canvas -->
+                        <!-- Central Hero Canvas Component -->
                         <div class="relative z-10 my-auto flex items-center justify-center py-4">
-                            <canvas id="coverCanvas" class="w-full max-w-[280px] h-[260px] cursor-pointer" title="Move mouse to interact with golden ratio artwork"></canvas>
+                            <canvas id="coverCanvas" width="300" height="260" class="w-full max-w-[280px] h-[260px] cursor-pointer" title="Move mouse to interact with generative artwork"></canvas>
 
                             <div id="uv-badge" class="absolute top-2 right-2 bg-terracotta text-white font-mono text-[9px] font-bold px-2 py-0.5 rounded shadow opacity-0 transition-opacity pointer-events-none z-20">
                                 SPOT-UV GLOSS ACTIVE
@@ -314,14 +296,13 @@
             </div>
         </section>
 
-        <!-- SECTION 2: LIVE 3D SPREAD READER -->
         <section id="section-spread" class="hidden space-y-8">
             <div class="bg-white/80 p-6 rounded-xl border border-stone-300 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 shadow-sm">
                 <div>
                     <span class="text-terracotta font-mono text-xs font-bold uppercase tracking-widest">Interactive 2-Page Reader</span>
                     <h2 class="font-serif text-3xl md:text-4xl text-stone-900 mt-1">Full Article Spread Flipbook</h2>
                     <p class="text-stone-600 mt-2 text-sm leading-relaxed max-w-3xl">
-                        Flip through curated double-page spreads featuring marginalia, structural diagrams, bilingual poetry, and 20mm spine gutter clearance.
+                        Flip through double-page spreads featuring marginalia, structural diagrams, bilingual poetry, and 20mm spine gutter clearance.
                     </p>
                 </div>
                 <div class="flex items-center gap-2 bg-stone-100 p-2 rounded-lg border border-stone-300">
@@ -333,7 +314,7 @@
 
             <!-- Spread Visualizer Container -->
             <div class="bg-stone-200 p-4 md:p-8 rounded-xl border border-stone-300 shadow-inner overflow-x-auto custom-scrollbar">
-                <div id="spread-wrapper" class="min-w-[780px] max-w-5xl mx-auto bg-alabaster text-charcoal rounded-lg shadow-2xl border-4 border-stone-300 grid grid-cols-2 divide-x-2 divide-stone-300 p-8 text-xs relative book-fold paper-shadow spread-flip">
+                <div id="spread-wrapper" class="min-w-[780px] max-w-5xl mx-auto bg-[#F4F1EA] text-charcoal rounded-lg shadow-2xl border-4 border-stone-300 grid grid-cols-2 divide-x-2 divide-stone-300 p-8 text-xs relative book-fold paper-shadow spread-flip">
                     <!-- Dynamic spread content injected via JS -->
                 </div>
             </div>
@@ -351,50 +332,12 @@
             </div>
         </section>
 
-        <!-- SECTION 2: LIVE 3D SPREAD READER -->
-        <section id="section-spread" class="hidden space-y-8">
-            <div class="bg-stone-900/80 p-6 rounded-xl border border-stone-800 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                <div>
-                    <span class="text-electriccyan font-mono text-xs font-bold uppercase tracking-widest">Interactive 2-Page Reader</span>
-                    <h2 class="font-serif text-3xl md:text-4xl text-white mt-1">Full Article Spread Flipbook</h2>
-                    <p class="text-stone-300 mt-2 text-sm leading-relaxed max-w-3xl">
-                        Flip through curated double-page spreads. Notice the 12-column baseline grid alignment, 20mm spine gutter clearance, drop caps, and rag-right typography.
-                    </p>
-                </div>
-                <div class="flex items-center gap-2 bg-stone-950 p-2 rounded-lg border border-stone-800">
-                    <button onclick="prevSpread()" class="px-3 py-1.5 bg-stone-800 text-white rounded font-mono text-xs font-bold hover:bg-stone-700 transition">← Prev</button>
-                    <span id="spread-counter" class="font-mono text-xs text-electriccyan px-2 font-bold">Spread 1 of 8</span>
-                    <button onclick="nextSpread()" class="px-3 py-1.5 bg-electriccyan text-black rounded font-mono text-xs font-bold hover:bg-white transition">Next →</button>
-                </div>
-            </div>
-
-            <!-- Spread Visualizer Container -->
-            <div class="bg-stone-950 p-4 md:p-8 rounded-xl border border-stone-800 shadow-2xl overflow-x-auto custom-scrollbar">
-                <div id="spread-wrapper" class="min-w-[780px] max-w-5xl mx-auto bg-alabaster text-charcoal rounded-lg shadow-2xl border-4 border-stone-300 grid grid-cols-2 divide-x-2 divide-stone-300 p-8 text-xs relative book-fold paper-shadow spread-flip">
-                    <!-- Dynamic spread content injected via JS -->
-                </div>
-            </div>
-
-            <!-- Mini Spread Navigator Bar -->
-            <div class="flex justify-center gap-2 overflow-x-auto py-2 custom-scrollbar">
-                <button onclick="jumpSpread(0)" id="spread-nav-0" class="spread-nav-btn px-3 py-1.5 rounded font-mono text-[11px] bg-electriccyan text-black font-bold">p. 02–03 (TOC)</button>
-                <button onclick="jumpSpread(1)" id="spread-nav-1" class="spread-nav-btn px-3 py-1.5 rounded font-mono text-[11px] bg-stone-800 text-stone-300 hover:bg-stone-700">p. 04–05 (Vision)</button>
-                <button onclick="jumpSpread(2)" id="spread-nav-2" class="spread-nav-btn px-3 py-1.5 rounded font-mono text-[11px] bg-stone-800 text-stone-300 hover:bg-stone-700">p. 08–09 (Physics &amp; AI)</button>
-                <button onclick="jumpSpread(3)" id="spread-nav-3" class="spread-nav-btn px-3 py-1.5 rounded font-mono text-[11px] bg-stone-800 text-stone-300 hover:bg-stone-700">p. 16–17 (Poetry)</button>
-                <button onclick="jumpSpread(4)" id="spread-nav-4" class="spread-nav-btn px-3 py-1.5 rounded font-mono text-[11px] bg-stone-800 text-stone-300 hover:bg-stone-700">p. 26–27 (Theatre)</button>
-                <button onclick="jumpSpread(5)" id="spread-nav-5" class="spread-nav-btn px-3 py-1.5 rounded font-mono text-[11px] bg-stone-800 text-stone-300 hover:bg-stone-700">p. 46–47 (Civil Essay)</button>
-                <button onclick="jumpSpread(6)" id="spread-nav-6" class="spread-nav-btn px-3 py-1.5 rounded font-mono text-[11px] bg-stone-800 text-stone-300 hover:bg-stone-700">p. 56–57 (Fine Arts)</button>
-                <button onclick="jumpSpread(7)" id="spread-nav-7" class="spread-nav-btn px-3 py-1.5 rounded font-mono text-[11px] bg-stone-800 text-stone-300 hover:bg-stone-700">p. 64–65 (Alumni)</button>
-            </div>
-        </section>
-
-        <!-- SECTION 3: AI COPY STUDIO -->
         <section id="section-aistudio" class="hidden space-y-8">
-            <div class="bg-stone-900/80 p-6 rounded-xl border border-stone-800 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div class="bg-white/80 p-6 rounded-xl border border-stone-300 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 shadow-sm">
                 <div>
-                    <span class="text-electriccyan font-mono text-xs font-bold uppercase tracking-widest">Editorial AI Engine</span>
-                    <h2 class="font-serif text-3xl md:text-4xl text-white mt-1">AI Article Synthesizer &amp; Copywriting Studio</h2>
-                    <p class="text-stone-300 mt-2 text-sm leading-relaxed max-w-3xl">
+                    <span class="text-terracotta font-mono text-xs font-bold uppercase tracking-widest">Editorial AI Engine</span>
+                    <h2 class="font-serif text-3xl md:text-4xl text-stone-900 mt-1">AI Article Synthesizer &amp; Copywriting Studio</h2>
+                    <p class="text-stone-600 mt-2 text-sm leading-relaxed max-w-3xl">
                         Generate publication-ready long-form features, poetry translations, and pull quotes formatted with clean typographic hierarchy.
                     </p>
                 </div>
@@ -402,19 +345,19 @@
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
                 <!-- Left Controls -->
-                <div class="lg:col-span-5 bg-stone-900 p-6 rounded-xl border border-stone-800 shadow-sm space-y-5">
-                    <h3 class="font-serif text-xl font-bold text-white border-b border-stone-800 pb-2">Article Copy Synthesizer</h3>
+                <div class="lg:col-span-5 bg-white p-6 rounded-xl border border-stone-300 shadow-sm space-y-5">
+                    <h3 class="font-serif text-xl font-bold text-stone-900 border-b border-stone-200 pb-2">Article Copy Synthesizer</h3>
 
                     <div class="space-y-4 text-xs">
                         <div>
-                            <label class="font-mono font-bold uppercase text-stone-400 block mb-1">Target Topic / Title</label>
-                            <input type="text" id="ai-topic-input" class="w-full p-2.5 border border-stone-700 rounded bg-stone-800 text-white font-sans focus:outline-none focus:border-electriccyan" value="The Space-Time of Thought: Modern Physics & Human Consciousness">
+                            <label class="font-mono font-bold uppercase text-stone-600 block mb-1">Target Topic / Title</label>
+                            <input type="text" id="ai-topic-input" class="w-full p-2.5 border border-stone-300 rounded bg-stone-50 text-stone-900 font-sans focus:outline-none focus:border-terracotta" value="The Space-Time of Thought: Modern Physics & Human Consciousness">
                         </div>
 
                         <div class="grid grid-cols-2 gap-3">
                             <div>
-                                <label class="font-mono font-bold uppercase text-stone-400 block mb-1">Editorial Style</label>
-                                <select id="ai-tone-select" class="w-full p-2 border border-stone-700 rounded bg-stone-800 text-stone-200 focus:outline-none focus:border-electriccyan">
+                                <label class="font-mono font-bold uppercase text-stone-600 block mb-1">Editorial Style</label>
+                                <select id="ai-tone-select" class="w-full p-2 border border-stone-300 rounded bg-stone-50 text-stone-800 focus:outline-none focus:border-terracotta">
                                     <option value="Wired Tech-Journalism (Sharp & Modern)">Wired Tech-Journalism</option>
                                     <option value="Kinfolk Literary Essay (Poetic & Introspective)">Kinfolk Literary Essay</option>
                                     <option value="NYT Feature Narrative (Human-centered)">NYT Feature Narrative</option>
@@ -422,8 +365,8 @@
                                 </select>
                             </div>
                             <div>
-                                <label class="font-mono font-bold uppercase text-stone-400 block mb-1">Length</label>
-                                <select id="ai-length-select" class="w-full p-2 border border-stone-700 rounded bg-stone-800 text-stone-200 focus:outline-none focus:border-electriccyan">
+                                <label class="font-mono font-bold uppercase text-stone-600 block mb-1">Length</label>
+                                <select id="ai-length-select" class="w-full p-2 border border-stone-300 rounded bg-stone-50 text-stone-800 focus:outline-none focus:border-terracotta">
                                     <option value="300 words (1 Page)">300 words (1 Page)</option>
                                     <option value="600 words (2-Page Spread)">600 words (2-Page Spread)</option>
                                     <option value="150 words (Deck & Pull Quote)">150 words (Deck &amp; Quote)</option>
@@ -431,22 +374,22 @@
                             </div>
                         </div>
 
-                        <button onclick="generateArticleAI()" id="btn-gen-article" class="w-full py-3 bg-electriccyan text-black rounded-lg font-bold font-sans hover:bg-white transition flex justify-center items-center gap-2 shadow">
+                        <button onclick="generateArticleAI()" id="btn-gen-article" class="w-full py-3 bg-terracotta text-white rounded-lg font-bold font-sans hover:bg-stone-900 transition flex justify-center items-center gap-2 shadow">
                             <span>✨ Synthesize Article Copy</span>
                         </button>
                     </div>
                 </div>
 
                 <!-- Right Display -->
-                <div class="lg:col-span-7 bg-stone-900 p-6 rounded-xl border border-stone-800 flex flex-col space-y-4 shadow-inner">
-                    <div class="flex justify-between items-center border-b border-stone-800 pb-2">
-                        <span class="font-mono text-xs font-bold text-electriccyan uppercase tracking-wider">EDITORIAL OUTPUT PREVIEW</span>
-                        <button onclick="copyGeneratedText()" class="font-mono text-[11px] text-stone-400 hover:text-white flex items-center gap-1">
+                <div class="lg:col-span-7 bg-white p-6 rounded-xl border border-stone-300 flex flex-col space-y-4 shadow-sm">
+                    <div class="flex justify-between items-center border-b border-stone-200 pb-2">
+                        <span class="font-mono text-xs font-bold text-terracotta uppercase tracking-wider">EDITORIAL OUTPUT PREVIEW</span>
+                        <button onclick="copyGeneratedText()" class="font-mono text-[11px] text-stone-600 hover:text-terracotta flex items-center gap-1">
                             <span>📋 Copy Text</span>
                         </button>
                     </div>
 
-                    <div id="ai-article-output" class="font-sans text-xs text-stone-200 leading-relaxed space-y-3 overflow-y-auto max-h-[450px] pr-2 custom-scrollbar">
+                    <div id="ai-article-output" class="font-sans text-xs text-stone-800 leading-relaxed space-y-3 overflow-y-auto max-h-[450px] pr-2 custom-scrollbar">
                         <div class="text-stone-500 italic text-center py-12">
                             Click "Synthesize Article Copy" to generate publication-grade text formatted with headlines, decks, and pull quotes...
                         </div>
@@ -455,26 +398,25 @@
             </div>
         </section>
 
-        <!-- SECTION 4: 80-PAGE FLATPLAN -->
         <section id="section-flatplan" class="hidden space-y-8">
-            <div class="bg-stone-900/80 p-6 rounded-xl border border-stone-800">
-                <span class="text-electriccyan font-mono text-xs font-bold uppercase tracking-widest">Master Architecture</span>
-                <h2 class="font-serif text-3xl md:text-4xl text-white mt-1">80-Page Master Flatplan Explorer</h2>
-                <p class="text-stone-300 mt-2 text-sm leading-relaxed max-w-3xl">
+            <div class="bg-white/80 p-6 rounded-xl border border-stone-300">
+                <span class="text-terracotta font-mono text-xs font-bold uppercase tracking-widest">Master Architecture</span>
+                <h2 class="font-serif text-3xl md:text-4xl text-stone-900 mt-1">80-Page Master Flatplan Explorer</h2>
+                <p class="text-stone-600 mt-2 text-sm leading-relaxed max-w-3xl">
                     Strict allocation ensures equal representation of research, creative literature, student life, and institutional milestones without administrative fluff.
                 </p>
             </div>
 
             <!-- Flatplan Analytics Chart -->
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center bg-stone-900 p-6 rounded-xl border border-stone-800 shadow-sm">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center bg-white p-6 rounded-xl border border-stone-300 shadow-sm">
                 <div class="lg:col-span-5 space-y-3">
-                    <h3 class="font-serif text-lg font-bold text-white">Page Allocation Budget</h3>
-                    <div class="space-y-1.5 font-mono text-xs text-stone-300">
-                        <div class="flex justify-between"><span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-mutedteal"></span> Features &amp; Tech</span> <span class="font-bold text-white">20 Pages (25%)</span></div>
-                        <div class="flex justify-between"><span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-terracotta"></span> Literature &amp; Poetry</span> <span class="font-bold text-white">18 Pages (22.5%)</span></div>
-                        <div class="flex justify-between"><span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-ochregold"></span> Cultural Arts</span> <span class="font-bold text-white">18 Pages (22.5%)</span></div>
-                        <div class="flex justify-between"><span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-slateblue"></span> Alumni &amp; Milestones</span> <span class="font-bold text-white">14 Pages (17.5%)</span></div>
-                        <div class="flex justify-between"><span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-stone-500"></span> Front/Back Matter</span> <span class="font-bold text-white">10 Pages (12.5%)</span></div>
+                    <h3 class="font-serif text-lg font-bold text-stone-900">Page Allocation Budget</h3>
+                    <div class="space-y-1.5 font-mono text-xs text-stone-700">
+                        <div class="flex justify-between"><span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-mutedteal"></span> Features &amp; Tech</span> <span class="font-bold text-stone-900">20 Pages (25%)</span></div>
+                        <div class="flex justify-between"><span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-terracotta"></span> Literature &amp; Poetry</span> <span class="font-bold text-stone-900">18 Pages (22.5%)</span></div>
+                        <div class="flex justify-between"><span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-ochregold"></span> Cultural Arts</span> <span class="font-bold text-stone-900">18 Pages (22.5%)</span></div>
+                        <div class="flex justify-between"><span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-slateblue"></span> Alumni &amp; Milestones</span> <span class="font-bold text-stone-900">14 Pages (17.5%)</span></div>
+                        <div class="flex justify-between"><span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-stone-500"></span> Front/Back Matter</span> <span class="font-bold text-stone-900">10 Pages (12.5%)</span></div>
                     </div>
                 </div>
                 <div class="lg:col-span-7">
@@ -486,14 +428,14 @@
 
             <!-- Flatplan Interactive Grid -->
             <div class="space-y-4">
-                <div class="flex flex-wrap items-center justify-between gap-3 border-b border-stone-800 pb-3">
-                    <h3 class="font-serif text-xl font-bold text-white">Page Spreads (Click to Inspect)</h3>
+                <div class="flex flex-wrap items-center justify-between gap-3 border-b border-stone-300 pb-3">
+                    <h3 class="font-serif text-xl font-bold text-stone-900">Page Spreads (Click to Inspect)</h3>
                     <div class="flex flex-wrap gap-1 font-mono text-[11px]">
-                        <button onclick="filterFlatplan('all', this)" class="fp-filter-btn px-2.5 py-1 rounded bg-electriccyan text-black font-bold">All (80p)</button>
-                        <button onclick="filterFlatplan('feature', this)" class="fp-filter-btn px-2.5 py-1 rounded bg-stone-800 text-stone-300 hover:bg-stone-700">Features</button>
-                        <button onclick="filterFlatplan('literature', this)" class="fp-filter-btn px-2.5 py-1 rounded bg-stone-800 text-stone-300 hover:bg-stone-700">Literature</button>
-                        <button onclick="filterFlatplan('culture', this)" class="fp-filter-btn px-2.5 py-1 rounded bg-stone-800 text-stone-300 hover:bg-stone-700">Culture</button>
-                        <button onclick="filterFlatplan('alumni', this)" class="fp-filter-btn px-2.5 py-1 rounded bg-stone-800 text-stone-300 hover:bg-stone-700">Alumni</button>
+                        <button onclick="filterFlatplan('all', this)" class="fp-filter-btn px-2.5 py-1 rounded bg-terracotta text-white font-bold">All (80p)</button>
+                        <button onclick="filterFlatplan('feature', this)" class="fp-filter-btn px-2.5 py-1 rounded bg-stone-200 text-stone-700 hover:bg-stone-300">Features</button>
+                        <button onclick="filterFlatplan('literature', this)" class="fp-filter-btn px-2.5 py-1 rounded bg-stone-200 text-stone-700 hover:bg-stone-300">Literature</button>
+                        <button onclick="filterFlatplan('culture', this)" class="fp-filter-btn px-2.5 py-1 rounded bg-stone-200 text-stone-700 hover:bg-stone-300">Culture</button>
+                        <button onclick="filterFlatplan('alumni', this)" class="fp-filter-btn px-2.5 py-1 rounded bg-stone-200 text-stone-700 hover:bg-stone-300">Alumni</button>
                     </div>
                 </div>
 
@@ -503,88 +445,86 @@
             </div>
 
             <!-- Page Inspection Drawer -->
-            <div id="fp-detail-box" class="hidden p-6 bg-stone-900 rounded-xl border-2 border-electriccyan shadow-lg space-y-4">
+            <div id="fp-detail-box" class="hidden p-6 bg-white rounded-xl border-2 border-terracotta shadow-lg space-y-4">
                 <div class="flex justify-between items-start">
                     <div>
-                        <span id="fp-detail-range" class="font-mono text-xs font-bold text-electriccyan uppercase">Pages 08–15</span>
-                        <h4 id="fp-detail-title" class="font-serif text-2xl font-bold text-white">Feature Story I: Emerging Tech &amp; AI Ethics</h4>
+                        <span id="fp-detail-range" class="font-mono text-xs font-bold text-terracotta uppercase">Pages 08–15</span>
+                        <h4 id="fp-detail-title" class="font-serif text-2xl font-bold text-stone-900">Feature Story I: Emerging Tech &amp; AI Ethics</h4>
                     </div>
                     <div class="flex gap-2">
-                        <button onclick="openSpreadFromFlatplan()" class="font-mono text-xs bg-electriccyan text-black px-3 py-1 rounded font-bold hover:bg-white transition">
+                        <button onclick="openSpreadFromFlatplan()" class="font-mono text-xs bg-terracotta text-white px-3 py-1 rounded font-bold hover:bg-stone-900 transition">
                             📖 Read in 3D Reader
                         </button>
-                        <button onclick="closeFpDetail()" class="font-mono text-xs bg-stone-800 text-stone-300 px-2.5 py-1 rounded hover:bg-stone-700">✕ Close</button>
+                        <button onclick="closeFpDetail()" class="font-mono text-xs bg-stone-200 text-stone-700 px-2.5 py-1 rounded hover:bg-stone-300">✕ Close</button>
                     </div>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs text-stone-300">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs text-stone-700">
                     <div>
-                        <strong class="text-white block font-mono mb-1">EDITORIAL CONTENT BRIEF</strong>
+                        <strong class="text-stone-900 block font-mono mb-1">EDITORIAL CONTENT BRIEF</strong>
                         <p id="fp-detail-brief">Deep-dive research feature exploring AI ethics, autonomous robotics, and campus innovation projects.</p>
                     </div>
                     <div>
-                        <strong class="text-white block font-mono mb-1">LAYOUT &amp; ART DIRECTION</strong>
+                        <strong class="text-stone-900 block font-mono mb-1">LAYOUT &amp; ART DIRECTION</strong>
                         <p id="fp-detail-art">6-Column dynamic asymmetric grid with custom vector technical line illustrations and pull quotes.</p>
                     </div>
                     <div>
-                        <strong class="text-white block font-mono mb-1">TYPOGRAPHY SPECS</strong>
+                        <strong class="text-stone-900 block font-mono mb-1">TYPOGRAPHY SPECS</strong>
                         <p id="fp-detail-typo">Header: DM Serif Display 42pt. Body: DM Sans 10pt / 13.5pt leading rag-right.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- SECTION 5: AUDIT & SOP -->
         <section id="section-audit" class="hidden space-y-8">
-            <div class="bg-stone-900/80 p-6 rounded-xl border border-stone-800">
-                <span class="text-electriccyan font-mono text-xs font-bold uppercase tracking-widest">Quality Assurance Directive</span>
-                <h2 class="font-serif text-3xl md:text-4xl text-white mt-1">Forensic Editorial Audit &amp; Solutions</h2>
-                <p class="text-stone-300 mt-2 text-sm leading-relaxed max-w-3xl">
+            <div class="bg-white/80 p-6 rounded-xl border border-stone-300">
+                <span class="text-terracotta font-mono text-xs font-bold uppercase tracking-widest">Quality Assurance Directive</span>
+                <h2 class="font-serif text-3xl md:text-4xl text-stone-900 mt-1">Forensic Editorial Audit &amp; Solutions</h2>
+                <p class="text-stone-600 mt-2 text-sm leading-relaxed max-w-3xl">
                     Comparative audit of previous edition breakdowns and the mandatory Standard Operating Procedures (SOP) to eliminate errors.
                 </p>
             </div>
 
-            <div class="bg-stone-900 p-6 rounded-xl border border-stone-800 shadow-sm space-y-4">
-                <h3 class="font-serif text-lg font-bold text-white flex items-center gap-2">
+            <div class="bg-white p-6 rounded-xl border border-stone-300 shadow-sm space-y-4">
+                <h3 class="font-serif text-lg font-bold text-stone-900 flex items-center gap-2">
                     <span>🔍 AI Draft Quality Auditor</span>
                 </h3>
-                <p class="text-xs text-stone-300">Paste student draft text below to run an instant forensic audit against SSTC prepress rules:</p>
+                <p class="text-xs text-stone-600">Paste student draft text below to run an instant forensic audit against SSTC prepress rules:</p>
                 
-                <textarea id="audit-input-text" rows="3" class="w-full p-3 text-xs border border-stone-700 rounded bg-stone-800 text-white font-sans focus:outline-none focus:border-electriccyan" placeholder="Paste draft paragraph here to audit...">When we think of Civil Engineering, we imagine bridges, skyscrapers, or highways. Yet, engineering quietly exists in our homes too, shaping our daily lives. A leaking tap may seem minor, but it involves fluid mechanics...</textarea>
+                <textarea id="audit-input-text" rows="3" class="w-full p-3 text-xs border border-stone-300 rounded bg-stone-50 text-stone-900 font-sans focus:outline-none focus:border-terracotta" placeholder="Paste draft paragraph here to audit...">When we think of Civil Engineering, we imagine bridges, skyscrapers, or highways. Yet, engineering quietly exists in our homes too, shaping our daily lives. A leaking tap may seem minor, but it involves fluid mechanics...</textarea>
                 
-                <button onclick="auditDraftAI()" class="px-4 py-2 bg-electriccyan text-black rounded text-xs font-bold hover:bg-white transition flex items-center gap-2">
+                <button onclick="auditDraftAI()" class="px-4 py-2 bg-terracotta text-white rounded text-xs font-bold hover:bg-stone-900 transition flex items-center gap-2">
                     <span>✨ Run Quality Audit</span>
                 </button>
 
-                <div id="audit-result-box" class="hidden p-4 bg-stone-950 rounded-lg border border-stone-800 text-xs text-stone-200 space-y-2">
-                    <div class="font-mono font-bold text-electriccyan uppercase">Audit Report Results</div>
+                <div id="audit-result-box" class="hidden p-4 bg-orange-50/60 rounded-lg border border-terracotta/30 text-xs text-stone-800 space-y-2">
+                    <div class="font-mono font-bold text-terracotta uppercase">Audit Report Results</div>
                     <div id="audit-result-text" class="leading-relaxed space-y-1"></div>
                 </div>
             </div>
         </section>
 
-        <!-- SECTION 6: THEME PHILOSOPHY -->
         <section id="section-theme" class="hidden space-y-8">
-            <div class="bg-stone-900/80 p-6 rounded-xl border border-stone-800">
-                <span class="text-electriccyan font-mono text-xs font-bold uppercase tracking-widest">Editorial Philosophy</span>
-                <h2 class="font-serif text-3xl md:text-4xl text-white mt-1">Core Theme: "SYNTHESIS"</h2>
-                <p class="text-stone-300 mt-2 text-sm leading-relaxed max-w-3xl">
+            <div class="bg-white/80 p-6 rounded-xl border border-stone-300">
+                <span class="text-terracotta font-mono text-xs font-bold uppercase tracking-widest">Editorial Philosophy</span>
+                <h2 class="font-serif text-3xl md:text-4xl text-stone-900 mt-1">Core Theme: "SYNTHESIS"</h2>
+                <p class="text-stone-600 mt-2 text-sm leading-relaxed max-w-3xl">
                     "SYNTHESIS" explicitly bridges SSTC's dual identities: technical engineering rigor and humanistic creative expression.
                 </p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="bg-stone-900 p-6 rounded-xl border border-stone-800 shadow-sm space-y-3">
-                    <div class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center font-serif font-bold text-electriccyan">01</div>
-                    <h3 class="font-serif text-xl font-bold text-white">The Technical Mind</h3>
-                    <p class="text-xs text-stone-300 leading-relaxed">
+                <div class="bg-white p-6 rounded-xl border border-stone-300 shadow-sm space-y-3">
+                    <div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center font-serif font-bold text-slateblue">01</div>
+                    <h3 class="font-serif text-xl font-bold text-stone-900">The Technical Mind</h3>
+                    <p class="text-xs text-stone-600 leading-relaxed">
                         Data algorithms, structural mechanics, civil megastructures, autonomous robotics, and chemical engineering.
                     </p>
                 </div>
 
-                <div class="bg-stone-900 p-6 rounded-xl border border-stone-800 shadow-sm space-y-3">
-                    <div class="w-10 h-10 rounded-full bg-orange-950 flex items-center justify-center font-serif font-bold text-terracotta">02</div>
-                    <h3 class="font-serif text-xl font-bold text-white">The Human Soul</h3>
-                    <p class="text-xs text-stone-300 leading-relaxed">
+                <div class="bg-white p-6 rounded-xl border border-stone-300 shadow-sm space-y-3">
+                    <div class="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center font-serif font-bold text-terracotta">02</div>
+                    <h3 class="font-serif text-xl font-bold text-stone-900">The Human Soul</h3>
+                    <p class="text-xs text-stone-600 leading-relaxed">
                         Hindi and English poetry, theatrical stage productions (<i>Swaang</i>), fine art, ethics, and social outreach (NSS).
                     </p>
                 </div>
@@ -596,20 +536,20 @@
     <!-- Toast Notification Container -->
     <div id="toast-container" class="fixed bottom-4 right-4 z-50 flex flex-col gap-2 pointer-events-none"></div>
 
-    <footer class="mt-16 bg-stone-950 text-stone-400 border-t border-stone-800 py-8 px-4 lg:px-12 font-mono text-xs">
+    <footer class="mt-16 bg-stone-900 text-stone-400 border-t border-stone-800 py-8 px-4 lg:px-12 font-mono text-xs">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
             <div>
                 <span class="font-serif text-lg font-bold text-white block">PRAGYAURJA REDESIGN TASKFORCE</span>
-                <span class="text-stone-500">Shri Shankaracharya Technical Campus // Editorial Overhaul</span>
+                <span class="text-stone-400">Shri Shankaracharya Technical Campus // Editorial Overhaul</span>
             </div>
-            <div class="text-stone-500 text-center md:text-right">
+            <div class="text-stone-400 text-center md:text-right">
                 <div>CASE &amp; SPD Benchmark Aligned Specification</div>
             </div>
         </div>
     </footer>
 
     <script>
-        // State initialized with alabaster light preset
+        // Global Application State Object
         const state = {
             activeTab: 'cover',
             preset: 'alabaster',
@@ -617,13 +557,354 @@
             spreadIndex: 0,
             finishes: { spotuv: false, deboss: false, grid: false },
             teaserIndex: 0,
+            audioEnabled: true,
             flatplanFilter: 'all',
-            selectedFpItem: null,
+            selectedFpItem: 0,
             mouseX: 0,
             mouseY: 0
         };
 
-        // Canvas Rendering Engine updated with Fibonacci Golden Ratio spiral
+        let canvas = null;
+        let ctx = null;
+        let animAngle = 0;
+        let animId = null;
+
+        // Interactive Spreads Data Bank
+        const spreadsData = [
+            {
+                pageNums: "p. 02–03",
+                title: "Inside Cover // Table of Contents",
+                leftPage: `
+                    <div class="flex flex-col h-full justify-between space-y-4">
+                        <div>
+                            <span class="font-mono text-[10px] text-terracotta uppercase font-bold tracking-widest block mb-1">VOL. 26 ARCHITECTURE</span>
+                            <h3 class="font-serif text-xl font-bold text-stone-900 leading-tight">CONTENTS</h3>
+                            <p class="font-mono text-[9px] text-stone-500 mt-1 uppercase">12-Column Baseline Grid Map</p>
+                        </div>
+                        <div class="space-y-2.5 font-sans text-[11px] text-stone-700 my-auto">
+                            <div class="flex justify-between border-b border-stone-300 pb-1">
+                                <span>04 // Executive Perspectives</span>
+                                <span class="font-mono text-terracotta font-bold">p. 04</span>
+                            </div>
+                            <div class="flex justify-between border-b border-stone-300 pb-1">
+                                <span>08 // Physics & Consciousness</span>
+                                <span class="font-mono text-terracotta font-bold">p. 08</span>
+                            </div>
+                            <div class="flex justify-between border-b border-stone-300 pb-1">
+                                <span>16 // Student Literature & Poetry</span>
+                                <span class="font-mono text-terracotta font-bold">p. 16</span>
+                            </div>
+                            <div class="flex justify-between border-b border-stone-300 pb-1">
+                                <span>26 // Swaang Drama Spotlight</span>
+                                <span class="font-mono text-terracotta font-bold">p. 26</span>
+                            </div>
+                            <div class="flex justify-between border-b border-stone-300 pb-1">
+                                <span>46 // Megastructures: Civil Essay</span>
+                                <span class="font-mono text-terracotta font-bold">p. 46</span>
+                            </div>
+                            <div class="flex justify-between border-b border-stone-300 pb-1">
+                                <span>56 // Fine Arts & Sketches</span>
+                                <span class="font-mono text-terracotta font-bold">p. 56</span>
+                            </div>
+                            <div class="flex justify-between border-b border-stone-300 pb-1">
+                                <span>64 // Global Alumni Network</span>
+                                <span class="font-mono text-terracotta font-bold">p. 64</span>
+                            </div>
+                        </div>
+                        <div class="font-mono text-[9px] text-stone-500 border-t border-stone-300 pt-2 flex justify-between">
+                            <span>SSTC PUBLICATION</span>
+                            <span>21.21°N, 81.38°E</span>
+                        </div>
+                    </div>
+                `,
+                rightPage: `
+                    <div class="flex flex-col h-full justify-between space-y-4">
+                        <div>
+                            <span class="font-mono text-[10px] text-terracotta uppercase font-bold tracking-widest block mb-1">EDITORIAL NOTE</span>
+                            <h3 class="font-serif text-lg font-bold text-stone-900">The Power of Synthesis</h3>
+                        </div>
+                        <div class="font-sans text-[11px] text-stone-700 leading-relaxed space-y-2 drop-cap">
+                            <p>
+                                Welcome to the 26th volume of <strong>PRAGYAURJA</strong>. This edition moves away from disjointed event recites toward a cohesive synthesis of engineering logic and artistic expression.
+                            </p>
+                            <p class="text-[10px] text-stone-600 italic border-l-2 border-terracotta pl-2 my-2">
+                                "Engineering without humanity is structural without purpose; literature without logic is vision without foundation."
+                            </p>
+                            <p>
+                                Every page within this volume adheres strictly to a 12-column baseline grid, 20mm spine gutter safety, and rag-right typography.
+                            </p>
+                        </div>
+                        <div class="border-t border-stone-300 pt-2 flex justify-between items-center text-[10px] font-mono text-stone-500">
+                            <span>TASKFORCE EDITORIAL</span>
+                            <span class="font-bold text-stone-900">PAGE 03</span>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                pageNums: "p. 04–05",
+                title: "Executive Vision // Leadership Perspectives",
+                leftPage: `
+                    <div class="flex flex-col h-full justify-between space-y-3">
+                        <span class="font-mono text-[10px] text-terracotta uppercase font-bold tracking-widest">LEADERSHIP PERSPECTIVES</span>
+                        <h3 class="font-serif text-lg font-bold text-stone-900">A Campus Built on Purpose</h3>
+                        <div class="font-sans text-[11px] text-stone-700 leading-relaxed space-y-2">
+                            <p class="drop-cap">
+                                Education at Shri Shankaracharya Technical Campus has always extended beyond classroom walls. Our focus is cultivating resilient problem solvers capable of engineering national progress.
+                            </p>
+                        </div>
+                        <div class="bg-stone-200/70 p-3 rounded border-l-2 border-terracotta space-y-1 my-auto">
+                            <span class="font-bold font-serif text-stone-900 text-xs block">Shri I.P. Mishra</span>
+                            <span class="font-mono text-[9px] text-stone-600 uppercase block">Chairman, Gangajali Education Society</span>
+                            <p class="text-[10px] text-stone-600 italic">"Always believe in your potential, stay curious, and aim high."</p>
+                        </div>
+                        <div class="font-mono text-[9px] text-stone-500 border-t border-stone-300 pt-2">PAGE 04</div>
+                    </div>
+                `,
+                rightPage: `
+                    <div class="flex flex-col h-full justify-between space-y-3">
+                        <span class="font-mono text-[10px] text-terracotta uppercase font-bold tracking-widest">EXECUTIVE VISION</span>
+                        <h3 class="font-serif text-lg font-bold text-stone-900">Empowering Young Minds</h3>
+                        <div class="bg-stone-200/70 p-3 rounded border-l-2 border-slateblue space-y-1 my-auto">
+                            <span class="font-bold font-serif text-stone-900 text-xs block">Dr. Jaya Mishra</span>
+                            <span class="font-mono text-[9px] text-stone-600 uppercase block">President, Shri Gangajali Education Society</span>
+                            <p class="text-[10px] text-stone-600 italic">"The future belongs to those who believe in the beauty of their dreams."</p>
+                        </div>
+                        <div class="font-sans text-[11px] text-stone-700 leading-relaxed">
+                            <p>
+                                Through Pragyaurja, we present a living archive of student curiosity, innovation, and character.
+                            </p>
+                        </div>
+                        <div class="font-mono text-[9px] text-stone-500 border-t border-stone-300 pt-2 text-right">PAGE 05</div>
+                    </div>
+                `
+            },
+            {
+                pageNums: "p. 08–09",
+                title: "Research Feature // Space-Time & Consciousness",
+                leftPage: `
+                    <div class="flex flex-col h-full justify-between space-y-3">
+                        <span class="font-mono text-[10px] text-slateblue uppercase font-bold tracking-widest">PHYSICS &amp; COGNITION</span>
+                        <h3 class="font-serif text-xl font-bold text-stone-900 leading-tight">The Space-Time of Thought</h3>
+                        <p class="font-serif italic text-[11px] text-stone-600">Exploring General Relativity and Consciousness</p>
+                        <div class="font-sans text-[11px] text-stone-700 leading-relaxed space-y-2 drop-cap">
+                            <p>
+                                When Albert Einstein published his General Theory of Relativity in 1915, he redefined gravity not as a force, but as the geometric warping of four-dimensional space-time.
+                            </p>
+                            <p>
+                                Modern cognitive scientists and quantum physicists are drawing parallels between neural networks and cosmic structures.
+                            </p>
+                        </div>
+                        <div class="font-mono text-[9px] text-stone-500 border-t border-stone-300 pt-2">PAGE 08</div>
+                    </div>
+                `,
+                rightPage: `
+                    <div class="flex flex-col h-full justify-between space-y-3">
+                        <div class="bg-stone-900 text-white p-3 rounded font-mono text-[10px] space-y-1">
+                            <span class="text-terracotta font-bold uppercase block">EQUATION OF CURVATURE</span>
+                            <div>G_μν + Λg_μν = (8πG/c⁴) T_μν</div>
+                            <div class="text-[9px] text-stone-400">Geometry of spacetime linked to energy distribution.</div>
+                        </div>
+                        <div class="font-sans text-[11px] text-stone-700 leading-relaxed space-y-2">
+                            <p>
+                                Just as massive objects bend light trajectories across interstellar distances, intense focused human attention bends our perceptual landscape.
+                            </p>
+                        </div>
+                        <div class="p-2.5 bg-orange-50 border border-terracotta/30 rounded font-serif italic text-stone-800 text-[10px]">
+                            "The universe is not only queerer than we suppose, but queerer than we CAN suppose." — J.B.S. Haldane
+                        </div>
+                        <div class="font-mono text-[9px] text-stone-500 border-t border-stone-300 pt-2 text-right">PAGE 09</div>
+                    </div>
+                `
+            },
+            {
+                pageNums: "p. 16–17",
+                title: "Student Literature // Hindi & English Poetry",
+                leftPage: `
+                    <div class="flex flex-col h-full justify-between space-y-3">
+                        <span class="font-mono text-[10px] text-terracotta uppercase font-bold tracking-widest">हिंदी काव्य</span>
+                        <h3 class="font-serif text-lg font-bold text-stone-900">हमें सोचना होगा</h3>
+                        <div class="font-sans text-[11px] text-stone-800 leading-snug space-y-1 italic pl-2 border-l-2 border-terracotta my-auto">
+                            <p>अनंत ब्रह्मांडों में असंख्य आकाशगंगा है,</p>
+                            <p>अनंत आकाशगंगा में सौर मंडल है अनेक,</p>
+                            <p>अनेक सौर मंडल में ग्रह अनेक,</p>
+                            <p>अनेक ग्रहों में पृथ्वी है एक।</p>
+                            <p class="pt-1 font-normal font-mono text-[9px] text-stone-600">— डॉ. रेखा त्रिवेदी (प्रोफेसर, केमिस्ट्री)</p>
+                        </div>
+                        <div class="font-mono text-[9px] text-stone-500 border-t border-stone-300 pt-2">PAGE 16</div>
+                    </div>
+                `,
+                rightPage: `
+                    <div class="flex flex-col h-full justify-between space-y-3">
+                        <span class="font-mono text-[10px] text-terracotta uppercase font-bold tracking-widest">ENGLISH POETRY</span>
+                        <h3 class="font-serif text-lg font-bold text-stone-900">Shipwreck Gardens</h3>
+                        <div class="font-serif text-[11px] text-stone-800 leading-snug space-y-1 italic pl-2 border-l-2 border-ochregold my-auto">
+                            <p>In the cathedral of the deep,</p>
+                            <p>where daylight fractures into shards of glass,</p>
+                            <p>rest the bones of voyages—</p>
+                            <p>iron spines, timbered ghosts,</p>
+                            <p>draped in velvet moss and coral lace.</p>
+                            <p class="pt-1 font-normal font-mono text-[9px] text-stone-600">— Anushka Singh (CSE 2nd Year)</p>
+                        </div>
+                        <div class="font-mono text-[9px] text-stone-500 border-t border-stone-300 pt-2 text-right">PAGE 17</div>
+                    </div>
+                `
+            },
+            {
+                pageNums: "p. 26–27",
+                title: "Stage Culture // Swaang Drama Club Spotlight",
+                leftPage: `
+                    <div class="flex flex-col h-full justify-between space-y-3">
+                        <span class="font-mono text-[10px] text-terracotta uppercase font-bold tracking-widest">STAGE DRAMA</span>
+                        <h3 class="font-serif text-xl font-bold text-stone-900">Swaang: The Drama Club</h3>
+                        <p class="font-mono text-[10px] text-stone-600 italic">"Swaroop wahi jo SWAANG rache"</p>
+                        <div class="font-sans text-[11px] text-stone-700 leading-relaxed space-y-2 drop-cap">
+                            <p>
+                                Theatre is a mirror held up to society. Swaang brings stories to life through street plays (nukkad natak), short films, and stage productions.
+                            </p>
+                        </div>
+                        <div class="font-mono text-[9px] text-stone-500 border-t border-stone-300 pt-2">PAGE 26</div>
+                    </div>
+                `,
+                rightPage: `
+                    <div class="flex flex-col h-full justify-between space-y-3">
+                        <div class="bg-stone-100 p-3 rounded border border-stone-300 space-y-1.5 text-[10px]">
+                            <span class="font-mono text-terracotta font-bold uppercase block">MAJOR MILESTONES</span>
+                            <div>• <strong>IIT Bhilai Meraz 2024:</strong> 2nd Place for <i>Antarsamaaj</i></div>
+                            <div>• <strong>IIT Kharagpur Spring Fest 2025:</strong> Finalist for <i>Selective Bias</i></div>
+                            <div>• <strong>Disorder Universe:</strong> Short films <i>Medisyn</i> &amp; <i>Netra</i></div>
+                        </div>
+                        <div class="font-serif italic text-[11px] text-stone-800 border-l-2 border-terracotta pl-2">
+                            "Rehearsals stretch late into the night—a crucible of discipline, patience, and creative experimentation."
+                        </div>
+                        <div class="font-mono text-[9px] text-stone-500 border-t border-stone-300 pt-2 text-right">PAGE 27</div>
+                    </div>
+                `
+            },
+            {
+                pageNums: "p. 46–47",
+                title: "Technical Essays // Civil Engineering Blueprint",
+                leftPage: `
+                    <div class="flex flex-col h-full justify-between space-y-3">
+                        <span class="font-mono text-[10px] text-slateblue uppercase font-bold tracking-widest">CIVIL ENGINEERING</span>
+                        <h3 class="font-serif text-xl font-bold text-stone-900">From Home Fixes to Megastructures</h3>
+                        <div class="font-sans text-[11px] text-stone-700 leading-relaxed space-y-2 drop-cap">
+                            <p>
+                                A leaking tap involves fluid mechanics—the same science used in pipelines and dams. Balancing a ceiling fan demonstrates rotational dynamics applied in towers.
+                            </p>
+                        </div>
+                        <div class="font-mono text-[9px] text-stone-500 border-t border-stone-300 pt-2">PAGE 46</div>
+                    </div>
+                `,
+                rightPage: `
+                    <div class="flex flex-col h-full justify-between space-y-3">
+                        <div class="p-3 bg-stone-900 text-white rounded font-mono text-[10px] space-y-1">
+                            <span class="text-ochregold font-bold uppercase block">STRUCTURAL MECHANICS</span>
+                            <div>Stress σ = F / A</div>
+                            <div>Bending Moment M = wL² / 8</div>
+                        </div>
+                        <div class="font-sans text-[11px] text-stone-700 leading-relaxed">
+                            <p>
+                                From thermal cracks in residential walls to hydraulic networks, engineering principles scale seamlessly from homes to smart cities.
+                            </p>
+                        </div>
+                        <div class="font-mono text-[9px] text-stone-500 border-t border-stone-300 pt-2 text-right">PAGE 47</div>
+                    </div>
+                `
+            },
+            {
+                pageNums: "p. 56–57",
+                title: "Fine Arts // Student Sketches Gallery",
+                leftPage: `
+                    <div class="flex flex-col h-full justify-between space-y-3">
+                        <span class="font-mono text-[10px] text-terracotta uppercase font-bold tracking-widest">FINE ARTS GALLERY</span>
+                        <h3 class="font-serif text-xl font-bold text-stone-900">Sketches of Life</h3>
+                        <div class="p-4 border border-stone-300 rounded bg-stone-50 text-center font-serif text-stone-600 italic my-auto">
+                            "A pencil doesn't just draw lines... it captures emotions, moments, and memories."
+                            <span class="block font-mono text-[9px] text-stone-500 not-italic mt-2">— Tushar Sahu &amp; Vineeta Singh</span>
+                        </div>
+                        <div class="font-mono text-[9px] text-stone-500 border-t border-stone-300 pt-2">PAGE 56</div>
+                    </div>
+                `,
+                rightPage: `
+                    <div class="flex flex-col h-full justify-between space-y-3">
+                        <span class="font-mono text-[10px] text-terracotta uppercase font-bold tracking-widest">TRADITIONAL ART</span>
+                        <h3 class="font-serif text-xl font-bold text-stone-900">Echoes of Tradition</h3>
+                        <div class="p-4 border border-stone-300 rounded bg-stone-50 text-center font-serif text-stone-600 italic my-auto">
+                            "In the simplicity of traditional art lies the complexity of culture and history."
+                            <span class="block font-mono text-[9px] text-stone-500 not-italic mt-2">— Samridhi Riya Das &amp; Amit Poddar</span>
+                        </div>
+                        <div class="font-mono text-[9px] text-stone-500 border-t border-stone-300 pt-2 text-right">PAGE 57</div>
+                    </div>
+                `
+            },
+            {
+                pageNums: "p. 64–65",
+                title: "Global Horizons // Alumni Network",
+                leftPage: `
+                    <div class="flex flex-col h-full justify-between space-y-3">
+                        <span class="font-mono text-[10px] text-slateblue uppercase font-bold tracking-widest">ALUMNI HORIZONS</span>
+                        <h3 class="font-serif text-xl font-bold text-stone-900">Anchors of Aspiration</h3>
+                        <div class="font-sans text-[11px] text-stone-700 leading-relaxed space-y-2 drop-cap">
+                            <p>
+                                Connecting generations of SSTC graduates thriving across technology, entrepreneurship, and social leadership worldwide.
+                            </p>
+                        </div>
+                        <div class="font-mono text-[9px] text-stone-500 border-t border-stone-300 pt-2">PAGE 64</div>
+                    </div>
+                `,
+                rightPage: `
+                    <div class="flex flex-col h-full justify-between space-y-3">
+                        <div class="bg-stone-100 p-3 rounded border-l-2 border-slateblue space-y-1">
+                            <span class="font-bold text-stone-900 text-xs block font-serif">Juhi Vyas</span>
+                            <span class="font-mono text-[9px] text-stone-600 uppercase block">Mrs. India World 2022 // Software Engineer</span>
+                            <p class="text-[10px] text-stone-600 italic">"Entrepreneurship is about building mindsets and turning challenges into opportunities."</p>
+                        </div>
+                        <div class="font-mono text-[9px] text-stone-500 border-t border-stone-300 pt-2 text-right">PAGE 65</div>
+                    </div>
+                `
+            }
+        ];
+
+        // Flatplan Spreads Explorer Data
+        const flatplanData = [
+            { range: "01", title: "Front Cover: SYNTHESIS", cat: "feature", brief: "Conceptual 3D visual artwork merging classical humanities with technical grid elements.", art: "Spot-UV varnish, blind debossed headline, warm alabaster background.", typo: "DM Serif Display 48pt, DM Mono 8pt." },
+            { range: "02–03", title: "Table of Contents & Editorial", cat: "feature", brief: "12-Column baseline aligned page directory and editor's visionary introduction.", art: "3-column asymmetric layout with terracota rule lines.", typo: "DM Serif 24pt, DM Sans 10pt/13.5pt." },
+            { range: "04–05", title: "Leadership Perspectives", cat: "feature", brief: "Consolidated vision messages from Chairman, President, CEO, and Director.", art: "Environmental photography paired with quote callout boxes.", typo: "DM Serif 20pt, DM Sans 10pt." },
+            { range: "06–07", title: "Campus Placement Analytics", cat: "feature", brief: "Data visualization spread detailing 33 LPA highest package and recruitment metrics.", art: "Infographic charts and high-contrast metric callouts.", typo: "DM Mono 14pt, DM Sans 10pt." },
+            { range: "08–15", title: "Feature I: Physics & AI Ethics", cat: "feature", brief: "Long-form research feature on quantum mechanics, relativity, and machine consciousness.", art: "6-Column asymmetric layout with technical line diagrams.", typo: "DM Serif 32pt, DM Sans 10pt." },
+            { range: "16–25", title: "Student Literature & Poetry", cat: "literature", brief: "Curated bilingual Hindi & English student poetry and reflective prose essays.", art: "Generous margins, drop caps, and terracotta accents.", typo: "Playfair Display 22pt, DM Sans 10pt." },
+            { range: "26–35", title: "Cultural Spotlight: Swaang & Music", cat: "culture", brief: "Kinetic documentary photojournalism covering drama, music bands, and dance.", art: "Full-bleed performance stills with high contrast.", typo: "DM Serif 28pt, DM Sans 10pt." },
+            { range: "36–45", title: "Social Impact & NSS Outreach", cat: "culture", brief: "Documentary photography showcasing community service, blood drives, and rural camps.", art: "Black & white documentary photography aesthetic.", typo: "DM Serif 24pt, DM Sans 10pt." },
+            { range: "46–55", title: "Civil & Engineering Essays", cat: "feature", brief: "Structural engineering essays connecting everyday repairs to civil megastructures.", art: "Blueprint vector overlays with structural formulas.", typo: "DM Serif 26pt, DM Sans 10pt." },
+            { range: "56–63", title: "Fine Arts & Sketch Gallery", cat: "culture", brief: "Exhibition spreads displaying student pencil sketches, watercolors, and digital art.", art: "Gallery white matting with minimalist caption text.", typo: "DM Serif 20pt, DM Mono 8.5pt." },
+            { range: "64–71", title: "Global Alumni Footprints", cat: "alumni", brief: "Interviews and career journeys of distinguished alumni across global industries.", art: "Editorial portraits with quote pullouts.", typo: "DM Serif 24pt, DM Sans 10pt." },
+            { range: "72–77", title: "Departmental Research Pulse", cat: "feature", brief: "Faculty research papers, laboratory innovations, and departmental milestones.", art: "Structured 4-column academic grid.", typo: "DM Serif 20pt, DM Sans 9.5pt." },
+            { range: "78–79", title: "Behind the Lens: Editorial Crew", cat: "alumni", brief: "Behind-the-scenes documentary photos of student editors, designers, and photographers.", art: "Informal candid photographic grid.", typo: "DM Mono 10pt, DM Sans 9.5pt." },
+            { range: "80", title: "Back Cover: Institutional Mark", cat: "feature", brief: "Minimalist institutional crest, contact metadata, and barcode placement.", art: "Debossed crest on warm cream matte cardstock.", typo: "DM Mono 8pt." }
+        ];
+
+        function initCanvas() {
+            canvas = document.getElementById('coverCanvas');
+            if (!canvas) return;
+            ctx = canvas.getContext('2d');
+
+            canvas.addEventListener('mousemove', (e) => {
+                const rect = canvas.getBoundingClientRect();
+                state.mouseX = e.clientX - rect.left - (canvas.width / 2);
+                state.mouseY = e.clientY - rect.top - (canvas.height / 2);
+            });
+
+            if (animId) cancelAnimationFrame(animId);
+            animateCanvas();
+        }
+
+        function animateCanvas() {
+            animAngle += 0.015;
+            drawCoverCanvas();
+            animId = requestAnimationFrame(animateCanvas);
+        }
+
         function drawCoverCanvas() {
             if (!ctx || !canvas) return;
             ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -635,28 +916,29 @@
             ctx.translate(centerX, centerY);
 
             if (state.canvasArtMode === 'fibonacci') {
-                ctx.strokeStyle = state.preset === 'obsidian' ? '#00E5FF' : (state.preset === 'emerald' ? '#D4A373' : '#B55A30');
+                const strokeColor = state.preset === 'obsidian' ? '#00E5FF' : (state.preset === 'emerald' ? '#D4A373' : '#B55A30');
+                ctx.strokeStyle = strokeColor;
                 ctx.lineWidth = 1.2;
 
-                // Draw Sacred Geometry Spiral
+                // Draw Sacred Geometry Golden Ratio Spiral
                 ctx.beginPath();
                 let a = 0.1, b = 0.15;
-                for (let i = 0; i < 300; i++) {
+                for (let i = 0; i < 280; i++) {
                     let angle = 0.1 * i;
                     let r = a * Math.exp(b * angle);
-                    let x = r * Math.cos(angle + animAngle * 0.5);
-                    let y = r * Math.sin(angle + animAngle * 0.5);
+                    let x = r * Math.cos(angle + animAngle * 0.4);
+                    let y = r * Math.sin(angle + animAngle * 0.4);
                     if (i === 0) ctx.moveTo(x, y);
                     else ctx.lineTo(x, y);
                 }
                 ctx.stroke();
 
-                // Draw Interconnecting Node Grid
-                ctx.fillStyle = ctx.strokeStyle;
+                // Draw Interconnecting Coordinate Nodes
+                ctx.fillStyle = strokeColor;
                 for (let k = 0; k < 6; k++) {
                     let ang = animAngle + (k * Math.PI / 3);
-                    let rx = Math.cos(ang) * (50 + state.mouseX * 0.1);
-                    let ry = Math.sin(ang) * (50 + state.mouseY * 0.1);
+                    let rx = Math.cos(ang) * (50 + state.mouseX * 0.08);
+                    let ry = Math.sin(ang) * (50 + state.mouseY * 0.08);
                     ctx.beginPath();
                     ctx.arc(rx, ry, 3, 0, Math.PI * 2);
                     ctx.fill();
@@ -669,32 +951,33 @@
                 }
 
             } else if (state.canvasArtMode === 'particles') {
-                ctx.strokeStyle = state.preset === 'alabaster' ? '#B55A30' : (state.preset === 'emerald' ? '#D4A373' : '#00E5FF');
+                const strokeColor = state.preset === 'obsidian' ? '#00E5FF' : '#B55A30';
+                ctx.strokeStyle = strokeColor;
                 ctx.lineWidth = 1.2;
                 ctx.beginPath();
-                ctx.arc(0, 0, 50 + Math.sin(animAngle) * 6, 0, Math.PI * 2);
+                ctx.arc(0, 0, 45 + Math.sin(animAngle) * 5, 0, Math.PI * 2);
                 ctx.stroke();
 
-                ctx.strokeStyle = 'rgba(181, 90, 48, 0.2)';
-                for (let i = -70; i <= 70; i += 15) {
+                ctx.strokeStyle = 'rgba(181, 90, 48, 0.25)';
+                for (let i = -60; i <= 60; i += 15) {
                     ctx.beginPath();
-                    ctx.moveTo(i + (state.mouseX * 0.1), -80);
-                    ctx.lineTo(i - (state.mouseX * 0.1), 80);
+                    ctx.moveTo(i + (state.mouseX * 0.05), -70);
+                    ctx.lineTo(i - (state.mouseX * 0.05), 70);
                     ctx.stroke();
                 }
 
-                ctx.fillStyle = ctx.strokeStyle;
+                ctx.fillStyle = strokeColor;
                 for (let j = 0; j < 8; j++) {
                     const angle = animAngle + (j * Math.PI / 4);
-                    const x = Math.cos(angle) * (65 + Math.sin(animAngle) * 10);
-                    const y = Math.sin(angle) * (45 + Math.cos(animAngle) * 10);
-                    ctx.fillRect(x - 3, y - 3, 6, 6);
+                    const x = Math.cos(angle) * (60 + Math.sin(animAngle) * 8);
+                    const y = Math.sin(angle) * (40 + Math.cos(animAngle) * 8);
+                    ctx.fillRect(x - 2.5, y - 2.5, 5, 5);
                 }
 
             } else if (state.canvasArtMode === 'wireframe') {
-                ctx.strokeStyle = state.preset === 'emerald' ? '#D4A373' : (state.preset === 'alabaster' ? '#1A1A1A' : '#FFFFFF');
-                ctx.lineWidth = 1.5;
-                const size = 50 + Math.sin(animAngle) * 5;
+                ctx.strokeStyle = state.preset === 'obsidian' ? '#00E5FF' : (state.preset === 'emerald' ? '#D4A373' : '#1A1A1A');
+                ctx.lineWidth = 1.4;
+                const size = 48 + Math.sin(animAngle) * 4;
 
                 ctx.strokeRect(-size/2, -size/2, size, size);
                 ctx.strokeRect(-size/3, -size/3, size, size);
@@ -710,10 +993,452 @@
             ctx.restore();
         }
 
+        function switchTab(tabName) {
+            state.activeTab = tabName;
+            
+            const sections = ['cover', 'spread', 'aistudio', 'flatplan', 'audit', 'theme'];
+            sections.forEach(s => {
+                const el = document.getElementById(`section-${s}`);
+                const btn = document.getElementById(`tab-${s}`);
+                if (el) el.classList.add('hidden');
+                if (btn) {
+                    btn.className = "nav-btn px-3 py-1.5 rounded-md transition-all text-stone-700 hover:bg-stone-200 border border-transparent";
+                }
+            });
+
+            const activeEl = document.getElementById(`section-${tabName}`);
+            const activeBtn = document.getElementById(`tab-${tabName}`);
+            if (activeEl) activeEl.classList.remove('hidden');
+            if (activeBtn) {
+                activeBtn.className = "nav-btn px-3 py-1.5 rounded-md transition-all bg-terracotta text-white font-bold shadow-sm";
+            }
+
+            if (tabName === 'cover') {
+                initCanvas();
+            } else if (tabName === 'flatplan') {
+                renderFlatplanGrid();
+                initFlatplanChart();
+            }
+        }
+
+        function setCoverStylePreset(presetName) {
+            state.preset = presetName;
+            
+            document.querySelectorAll('.preset-btn').forEach(btn => {
+                btn.classList.remove('border-2', 'border-terracotta', 'bg-orange-50/50');
+                btn.classList.add('border-stone-300');
+            });
+
+            const activeBtn = document.getElementById(`btn-preset-${presetName}`);
+            if (activeBtn) {
+                activeBtn.classList.add('border-2', 'border-terracotta', 'bg-orange-50/50');
+            }
+
+            const frame = document.getElementById('cover-frame');
+            const title = document.getElementById('cover-title-text');
+            const subtitle = document.getElementById('cover-subtitle-text');
+            const vol = document.getElementById('cover-vol-text');
+            const coords = document.getElementById('cover-coords-text');
+            const themeTitle = document.getElementById('cover-theme-title');
+            const themeSub = document.getElementById('cover-theme-sub');
+            const themeTag = document.getElementById('cover-theme-tag');
+            const teaserText = document.getElementById('teaser-text');
+
+            if (presetName === 'alabaster') {
+                frame.style.backgroundColor = '#F4F1EA';
+                frame.className = "relative w-full max-w-[460px] aspect-[1/1.414] bg-[#F4F1EA] border-8 border-stone-300 rounded-lg shadow-xl overflow-hidden transition-all duration-500 flex flex-col justify-between p-6 md:p-8 text-stone-900";
+                title.style.color = '#1A1A1A';
+                subtitle.style.color = '#555555';
+                vol.style.color = '#555555';
+                coords.style.color = '#555555';
+                themeTitle.style.color = '#1A1A1A';
+                themeSub.style.color = '#444444';
+                themeTag.style.color = '#B55A30';
+                teaserText.style.color = '#333333';
+            } else if (presetName === 'obsidian') {
+                frame.style.backgroundColor = '#0B0B0F';
+                frame.className = "relative w-full max-w-[460px] aspect-[1/1.414] bg-[#0B0B0F] border-8 border-stone-800 rounded-lg shadow-2xl overflow-hidden transition-all duration-500 flex flex-col justify-between p-6 md:p-8 text-white";
+                title.style.color = '#FFFFFF';
+                subtitle.style.color = '#999999';
+                vol.style.color = '#00E5FF';
+                coords.style.color = '#00E5FF';
+                themeTitle.style.color = '#FFFFFF';
+                themeSub.style.color = '#CCCCCC';
+                themeTag.style.color = '#00E5FF';
+                teaserText.style.color = '#DDDDDD';
+            } else if (presetName === 'brutalist') {
+                frame.style.backgroundColor = '#FFFFFF';
+                frame.className = "relative w-full max-w-[460px] aspect-[1/1.414] bg-white border-8 border-black rounded-none shadow-none overflow-hidden transition-all duration-500 flex flex-col justify-between p-6 md:p-8 text-black";
+                title.style.color = '#000000';
+                subtitle.style.color = '#000000';
+                vol.style.color = '#000000';
+                coords.style.color = '#000000';
+                themeTitle.style.color = '#000000';
+                themeSub.style.color = '#000000';
+                themeTag.style.color = '#000000';
+                teaserText.style.color = '#000000';
+            } else if (presetName === 'emerald') {
+                frame.style.backgroundColor = '#122E22';
+                frame.className = "relative w-full max-w-[460px] aspect-[1/1.414] bg-[#122E22] border-8 border-emerald-950 rounded-lg shadow-2xl overflow-hidden transition-all duration-500 flex flex-col justify-between p-6 md:p-8 text-amber-100";
+                title.style.color = '#D4A373';
+                subtitle.style.color = '#A3B18A';
+                vol.style.color = '#D4A373';
+                coords.style.color = '#D4A373';
+                themeTitle.style.color = '#FFFFFF';
+                themeSub.style.color = '#E0E7DA';
+                themeTag.style.color = '#D4A373';
+                teaserText.style.color = '#E0E7DA';
+            }
+
+            drawCoverCanvas();
+        }
+
+        function setCanvasArtMode(mode) {
+            state.canvasArtMode = mode;
+            document.querySelectorAll('.art-mode-btn').forEach(btn => {
+                btn.className = "art-mode-btn p-2 border border-stone-300 rounded text-center text-stone-700 hover:border-terracotta";
+            });
+            const activeBtn = document.getElementById(`btn-art-${mode}`);
+            if (activeBtn) {
+                activeBtn.className = "art-mode-btn p-2 border-2 border-terracotta bg-orange-50 rounded text-center text-terracotta font-bold";
+            }
+            drawCoverCanvas();
+        }
+
+        function toggleFinish(type) {
+            state.finishes[type] = !state.finishes[type];
+            
+            if (type === 'spotuv') {
+                const badge = document.getElementById('uv-badge');
+                if (badge) badge.style.opacity = state.finishes.spotuv ? '1' : '0';
+                showToast(state.finishes.spotuv ? "Spot-UV Gloss Active on Cover Canvas" : "Spot-UV Gloss Disabled");
+            } else if (type === 'deboss') {
+                const title = document.getElementById('cover-title-text');
+                if (title) {
+                    if (state.finishes.deboss) {
+                        title.classList.add('emboss-effect');
+                    } else {
+                        title.classList.remove('emboss-effect');
+                    }
+                }
+                showToast(state.finishes.deboss ? "Blind Debossing Pressed Effect Active" : "Blind Debossing Disabled");
+            } else if (type === 'grid') {
+                const overlay = document.getElementById('cover-grid-overlay');
+                const badge = document.getElementById('grid-status-badge');
+                if (overlay) overlay.style.opacity = state.finishes.grid ? '1' : '0';
+                if (badge) {
+                    badge.textContent = state.finishes.grid ? 'ON' : 'OFF';
+                    badge.className = state.finishes.grid ? 'font-mono text-[10px] bg-terracotta text-white px-2 py-0.5 rounded font-bold' : 'font-mono text-[10px] bg-stone-200 text-stone-700 px-2 py-0.5 rounded';
+                }
+                showToast(state.finishes.grid ? "12-Column Grid Overlay Visible" : "Grid Overlay Hidden");
+            }
+        }
+
+        function updateTeaser(val) {
+            const teasers = [
+                "The Ethics of Autonomous Machines (p.08) & Stage Performances (p.26)",
+                "Civil Megastructures Paradigm (p.46) & Structural Concrete Engineering (p.52)",
+                "Space-Time of Thought (p.08) & Hindi Literature Perspectives (p.16)"
+            ];
+            const textEl = document.getElementById('teaser-text');
+            if (textEl) textEl.textContent = teasers[val] || teasers[0];
+        }
+
+        function toggleAudioFx() {
+            state.audioEnabled = !state.audioEnabled;
+            const btn = document.getElementById('btn-audio-toggle');
+            if (btn) {
+                btn.textContent = state.audioEnabled ? "🔊 Sound: ON" : "🔇 Sound: OFF";
+            }
+            showToast(state.audioEnabled ? "Page Flip Sound Effects Enabled" : "Sound Muted");
+        }
+
+        function playPageTurnSound() {
+            if (!state.audioEnabled) return;
+            try {
+                const AudioCtx = window.AudioContext || window.webkitAudioContext;
+                if (!AudioCtx) return;
+                const ctx = new AudioCtx();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(300, ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(80, ctx.currentTime + 0.15);
+
+                gain.gain.setValueAtTime(0.15, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.15);
+
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+
+                osc.start();
+                osc.stop(ctx.currentTime + 0.15);
+            } catch(e) {}
+        }
+
+        function renderSpread() {
+            const wrapper = document.getElementById('spread-wrapper');
+            const counter = document.getElementById('spread-counter');
+            if (!wrapper) return;
+
+            const current = spreadsData[state.spreadIndex] || spreadsData[0];
+            
+            wrapper.style.opacity = '0';
+            wrapper.style.transform = 'scale(0.98)';
+
+            setTimeout(() => {
+                wrapper.innerHTML = `
+                    <div class="pr-6 flex flex-col justify-between h-full min-h-[360px]">
+                        ${current.leftPage}
+                    </div>
+                    <div class="pl-6 flex flex-col justify-between h-full min-h-[360px]">
+                        ${current.rightPage}
+                    </div>
+                `;
+                wrapper.style.opacity = '1';
+                wrapper.style.transform = 'scale(1)';
+            }, 150);
+
+            if (counter) counter.textContent = `Spread ${state.spreadIndex + 1} of ${spreadsData.length}`;
+
+            document.querySelectorAll('.spread-nav-btn').forEach((btn, idx) => {
+                if (idx === state.spreadIndex) {
+                    btn.className = "spread-nav-btn px-3 py-1.5 rounded font-mono text-[11px] bg-terracotta text-white font-bold";
+                } else {
+                    btn.className = "spread-nav-btn px-3 py-1.5 rounded font-mono text-[11px] bg-white text-stone-700 border border-stone-300 hover:bg-stone-200";
+                }
+            });
+        }
+
+        function nextSpread() {
+            if (state.spreadIndex < spreadsData.length - 1) {
+                state.spreadIndex++;
+                playPageTurnSound();
+                renderSpread();
+            }
+        }
+
+        function prevSpread() {
+            if (state.spreadIndex > 0) {
+                state.spreadIndex--;
+                playPageTurnSound();
+                renderSpread();
+            }
+        }
+
+        function jumpSpread(idx) {
+            state.spreadIndex = idx;
+            playPageTurnSound();
+            renderSpread();
+        }
+
+        function generateArticleAI() {
+            const topic = document.getElementById('ai-topic-input').value || "The Architecture of Thought";
+            const tone = document.getElementById('ai-tone-select').value;
+            const output = document.getElementById('ai-article-output');
+
+            if (!output) return;
+
+            output.innerHTML = `
+                <div class="flex items-center gap-2 text-terracotta font-mono text-xs py-4">
+                    <span class="animate-spin text-base">⚙</span> Synthesizing long-form editorial draft...
+                </div>
+            `;
+
+            setTimeout(() => {
+                output.innerHTML = `
+                    <div class="space-y-4">
+                        <div class="border-b border-stone-200 pb-2">
+                            <span class="font-mono text-[10px] text-terracotta font-bold uppercase tracking-widest">${tone}</span>
+                            <h2 class="font-serif text-2xl font-bold text-stone-900 mt-1">${topic}</h2>
+                            <p class="font-serif italic text-stone-600 text-xs mt-0.5">Synthesized for PRAGYAURJA Edition 2026 // SSTC Taskforce</p>
+                        </div>
+
+                        <div class="space-y-3 leading-relaxed drop-cap">
+                            <p>
+                                Engineering is fundamentally an act of structured imagination. While formulas provide mechanical stability, it is human intuition that dictates the ultimate purpose of any structure. At Shri Shankaracharya Technical Campus, the collision between technical precision and human philosophy yields an ecosystem where students do not merely learn concepts—they build physical and digital futures.
+                            </p>
+                            
+                            <div class="p-3 bg-orange-50/80 border-l-2 border-terracotta rounded my-2 italic font-serif text-stone-800 text-xs">
+                                "The highest form of engineering is indistinguishable from creative art; both bend raw materials into expressions of human purpose."
+                            </div>
+
+                            <p>
+                                As we examine the horizon of modern technology—from autonomous machine ethics to quantum computing—the boundary between the humanities and hard engineering dissolves. Our responsibility is ensuring that as algorithms grow more autonomous, human values remain the guiding architecture.
+                            </p>
+                        </div>
+
+                        <div class="font-mono text-[10px] text-stone-500 pt-2 border-t border-stone-200 flex justify-between">
+                            <span>WORD COUNT: ~320 WORDS</span>
+                            <span>LAYOUT: 6-COLUMN SPREAD</span>
+                        </div>
+                    </div>
+                `;
+                showToast("Article Copy Generated Successfully");
+            }, 600);
+        }
+
+        function copyGeneratedText() {
+            const output = document.getElementById('ai-article-output');
+            if (!output) return;
+            const text = output.innerText;
+            
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+
+            showToast("Copied Editorial Text to Clipboard");
+        }
+
+        function renderFlatplanGrid() {
+            const grid = document.getElementById('flatplan-grid');
+            if (!grid) return;
+
+            grid.innerHTML = '';
+
+            flatplanData.forEach((item, idx) => {
+                if (state.flatplanFilter !== 'all' && item.cat !== state.flatplanFilter) return;
+
+                const card = document.createElement('div');
+                card.className = "p-3 bg-white border border-stone-300 rounded hover:border-terracotta cursor-pointer transition shadow-sm hover:shadow flex flex-col justify-between min-h-[110px]";
+                card.onclick = () => inspectFlatplan(idx);
+                card.innerHTML = `
+                    <div>
+                        <span class="font-mono text-[9px] font-bold text-terracotta block uppercase">p. ${item.range}</span>
+                        <h5 class="font-serif font-bold text-stone-900 text-xs mt-0.5 leading-snug line-clamp-2">${item.title}</h5>
+                    </div>
+                    <div class="font-mono text-[9px] text-stone-500 capitalize mt-2 pt-1 border-t border-stone-100 flex justify-between">
+                        <span>${item.cat}</span>
+                        <span>Inspect →</span>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function filterFlatplan(cat, btn) {
+            state.flatplanFilter = cat;
+            document.querySelectorAll('.fp-filter-btn').forEach(b => {
+                b.className = "fp-filter-btn px-2.5 py-1 rounded bg-stone-200 text-stone-700 hover:bg-stone-300";
+            });
+            if (btn) btn.className = "fp-filter-btn px-2.5 py-1 rounded bg-terracotta text-white font-bold";
+            renderFlatplanGrid();
+        }
+
+        function inspectFlatplan(idx) {
+            state.selectedFpItem = idx;
+            const item = flatplanData[idx];
+            if (!item) return;
+
+            const drawer = document.getElementById('fp-detail-box');
+            const range = document.getElementById('fp-detail-range');
+            const title = document.getElementById('fp-detail-title');
+            const brief = document.getElementById('fp-detail-brief');
+            const art = document.getElementById('fp-detail-art');
+            const typo = document.getElementById('fp-detail-typo');
+
+            if (range) range.textContent = `Pages ${item.range}`;
+            if (title) title.textContent = item.title;
+            if (brief) brief.textContent = item.brief;
+            if (art) art.textContent = item.art;
+            if (typo) typo.textContent = item.typo;
+
+            if (drawer) drawer.classList.remove('hidden');
+        }
+
+        function closeFpDetail() {
+            const drawer = document.getElementById('fp-detail-box');
+            if (drawer) drawer.classList.add('hidden');
+        }
+
+        function openSpreadFromFlatplan() {
+            switchTab('spread');
+            jumpSpread(state.selectedFpItem % spreadsData.length);
+        }
+
+        function initFlatplanChart() {
+            const canvas = document.getElementById('flatplanChart');
+            if (!canvas || typeof Chart === 'undefined') return;
+
+            if (window.myFpChart) window.myFpChart.destroy();
+
+            window.myFpChart = new Chart(canvas.getContext('2d'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['Features & Tech', 'Literature & Poetry', 'Cultural Arts', 'Alumni & Milestones', 'Front/Back Matter'],
+                    datasets: [{
+                        data: [20, 18, 18, 14, 10],
+                        backgroundColor: ['#1F4E5B', '#B55A30', '#D4A373', '#2B4C7E', '#78716C'],
+                        borderWidth: 2,
+                        borderColor: '#FFFFFF'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    }
+                }
+            });
+        }
+
+        function auditDraftAI() {
+            const input = document.getElementById('audit-input-text').value;
+            const resultBox = document.getElementById('audit-result-box');
+            const resultText = document.getElementById('audit-result-text');
+
+            if (!resultBox || !resultText) return;
+
+            resultBox.classList.remove('hidden');
+            resultText.innerHTML = `
+                <div class="text-stone-600 italic">Running prepress compliance checks...</div>
+            `;
+
+            setTimeout(() => {
+                let report = `
+                    <div class="space-y-1.5 text-xs text-stone-800">
+                        <div class="text-emerald-700 font-bold">✓ BASELINE GRID CHECK: Text length fits 13.5pt grid increments.</div>
+                        <div class="text-emerald-700 font-bold">✓ ALIGNMENT AUDIT: Clean left-aligned (rag-right) paragraph structure.</div>
+                        <div class="text-terracotta font-bold">⚠ TYPOGRAPHY FIX: Found 2 multi-line centered lines. Convert to rag-right to prevent reader eye fatigue.</div>
+                        <div class="text-stone-600 pt-1 border-t border-stone-300">
+                            <strong>SOP ACTION:</strong> Text approved for page compilation after fixing centered line alignment.
+                        </div>
+                    </div>
+                `;
+                resultText.innerHTML = report;
+                showToast("Quality Audit Completed");
+            }, 400);
+        }
+
+        function showToast(msg) {
+            const container = document.getElementById('toast-container');
+            if (!container) return;
+
+            const toast = document.createElement('div');
+            toast.className = "px-3.5 py-2 bg-stone-900 text-white font-mono text-xs rounded shadow-lg border border-stone-700 transition-all transform translate-y-2 opacity-0";
+            toast.textContent = msg;
+
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-2', 'opacity-0');
+            }, 20);
+
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-2');
+                setTimeout(() => toast.remove(), 300);
+            }, 2500);
+        }
+
         function initApp() {
             initCanvas();
-            renderFlatplanGrid();
             renderSpread();
+            renderFlatplanGrid();
             setCoverStylePreset('alabaster');
         }
 
