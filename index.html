@@ -579,6 +579,8 @@
         let animAngle = 0;
         let animId = null;
         let currentUtterance = null;
+
+        const spreadsData = [
             {
                 pageNums: "p. 02–03",
                 title: "Inside Cover // Table of Contents",
@@ -874,7 +876,6 @@
             }
         ];
 
-        // Flatplan Spreads Explorer Data
         const flatplanData = [
             { range: "01", title: "Front Cover: SYNTHESIS", cat: "feature", brief: "Conceptual 3D visual artwork merging classical humanities with technical grid elements.", art: "Spot-UV varnish, blind debossed headline, warm alabaster background.", typo: "DM Serif Display 48pt, DM Mono 8pt." },
             { range: "02–03", title: "Table of Contents & Editorial", cat: "feature", brief: "12-Column baseline aligned page directory and editor's visionary introduction.", art: "3-column asymmetric layout with terracota rule lines.", typo: "DM Serif 24pt, DM Sans 10pt/13.5pt." },
@@ -891,6 +892,176 @@
             { range: "78–79", title: "Behind the Lens: Editorial Crew", cat: "alumni", brief: "Behind-the-scenes documentary photos of student editors, designers, and photographers.", art: "Informal candid photographic grid.", typo: "DM Mono 10pt, DM Sans 9.5pt." },
             { range: "80", title: "Back Cover: Institutional Mark", cat: "feature", brief: "Minimalist institutional crest, contact metadata, and barcode placement.", art: "Debossed crest on warm cream matte cardstock.", typo: "DM Mono 8pt." }
         ];
+
+        function initCanvas() {
+            canvas = document.getElementById('coverCanvas');
+            if (!canvas) return;
+            ctx = canvas.getContext('2d');
+
+            canvas.onmousemove = function(e) {
+                const rect = canvas.getBoundingClientRect();
+                state.mouseX = e.clientX - rect.left;
+                state.mouseY = e.clientY - rect.top;
+                drawCoverCanvas();
+            };
+
+            if (!animId) {
+                function animate() {
+                    animAngle += 0.015;
+                    drawCoverCanvas();
+                    animId = requestAnimationFrame(animate);
+                }
+                animate();
+            }
+        }
+
+        function drawCoverCanvas() {
+            if (!canvas || !ctx) return;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            let primaryColor = '#B55A30';
+            let secondaryColor = '#1F4E5B';
+
+            if (state.preset === 'obsidian') {
+                primaryColor = '#00E5FF';
+                secondaryColor = '#2B4C7E';
+            } else if (state.preset === 'brutalist') {
+                primaryColor = '#000000';
+                secondaryColor = '#666666';
+            } else if (state.preset === 'emerald') {
+                primaryColor = '#D4A373';
+                secondaryColor = '#A3B18A';
+            }
+
+            if (state.canvasArtMode === 'fibonacci') {
+                drawFibonacci(primaryColor, secondaryColor);
+            } else if (state.canvasArtMode === 'particles') {
+                drawParticles(primaryColor, secondaryColor);
+            } else if (state.canvasArtMode === 'wireframe') {
+                drawWireframe(primaryColor, secondaryColor);
+            }
+        }
+
+        function drawFibonacci(col1, col2) {
+            const cx = canvas.width / 2;
+            const cy = canvas.height / 2;
+            ctx.save();
+            ctx.translate(cx, cy);
+
+            ctx.strokeStyle = col1;
+            ctx.lineWidth = 1.5;
+            ctx.beginPath();
+
+            const goldenAngle = 137.5 * (Math.PI / 180);
+            const count = 180;
+
+            for (let i = 0; i < count; i++) {
+                const r = 8 * Math.sqrt(i);
+                const theta = i * goldenAngle + animAngle;
+                const x = r * Math.cos(theta);
+                const y = r * Math.sin(theta);
+
+                if (i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            }
+            ctx.stroke();
+
+            for (let i = 0; i < count; i += 6) {
+                const r = 8 * Math.sqrt(i);
+                const theta = i * goldenAngle + animAngle;
+                const x = r * Math.cos(theta);
+                const y = r * Math.sin(theta);
+
+                ctx.fillStyle = (i % 12 === 0) ? col1 : col2;
+                ctx.beginPath();
+                ctx.arc(x, y, 2.5, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            ctx.restore();
+        }
+
+        function drawParticles(col1, col2) {
+            const cx = canvas.width / 2;
+            const cy = canvas.height / 2;
+            ctx.save();
+
+            const count = 35;
+            for (let i = 0; i < count; i++) {
+                const angle = i * (Math.PI * 2 / count) + animAngle;
+                const dist = 40 + Math.sin(animAngle * 2 + i) * 30;
+                const x = cx + Math.cos(angle) * dist;
+                const y = cy + Math.sin(angle) * dist;
+
+                ctx.strokeStyle = col1;
+                ctx.globalAlpha = 0.4;
+                ctx.beginPath();
+                ctx.moveTo(cx, cy);
+                ctx.lineTo(x, y);
+                ctx.stroke();
+
+                ctx.fillStyle = col2;
+                ctx.globalAlpha = 0.9;
+                ctx.beginPath();
+                ctx.arc(x, y, 3, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            ctx.restore();
+        }
+
+        function drawWireframe(col1, col2) {
+            const cx = canvas.width / 2;
+            const cy = canvas.height / 2;
+            ctx.save();
+            ctx.translate(cx, cy);
+
+            const size = 50;
+            const rotX = animAngle * 0.7;
+            const rotY = animAngle * 0.9;
+
+            const vertices = [
+                [-size, -size, -size], [size, -size, -size], [size, size, -size], [-size, size, -size],
+                [-size, -size, size], [size, -size, size], [size, size, size], [-size, size, size]
+            ];
+
+            const projected = vertices.map(v => {
+                let x = v[0] * Math.cos(rotY) + v[2] * Math.sin(rotY);
+                let z = -v[0] * Math.sin(rotY) + v[2] * Math.cos(rotY);
+                let y = v[1];
+
+                let y2 = y * Math.cos(rotX) - z * Math.sin(rotX);
+
+                return [x, y2];
+            });
+
+            const edges = [
+                [0,1], [1,2], [2,3], [3,0],
+                [4,5], [5,6], [6,7], [7,4],
+                [0,4], [1,5], [2,6], [3,7]
+            ];
+
+            ctx.strokeStyle = col1;
+            ctx.lineWidth = 1.8;
+
+            edges.forEach(e => {
+                const p1 = projected[e[0]];
+                const p2 = projected[e[1]];
+                ctx.beginPath();
+                ctx.moveTo(p1[0], p1[1]);
+                ctx.lineTo(p2[0], p2[1]);
+                ctx.stroke();
+            });
+
+            projected.forEach(p => {
+                ctx.fillStyle = col2;
+                ctx.beginPath();
+                ctx.arc(p[0], p[1], 3.5, 0, Math.PI * 2);
+                ctx.fill();
+            });
+
+            ctx.restore();
+        }
+
         function stopSpeech() {
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.cancel();
@@ -898,7 +1069,6 @@
             state.isSpeaking = false;
             state.speakingSource = null;
             
-            // Reset AI Studio Voice Button
             const aiIcon = document.getElementById('ai-voice-icon');
             const aiLabel = document.getElementById('ai-voice-label');
             const aiBtn = document.getElementById('btn-ai-voice');
@@ -906,7 +1076,6 @@
             if (aiLabel) aiLabel.textContent = "Play AI Voice";
             if (aiBtn) aiBtn.className = "font-mono text-[11px] text-terracotta bg-orange-50 border border-terracotta/30 px-2.5 py-1 rounded hover:bg-orange-100 transition flex items-center gap-1.5 font-bold";
 
-            // Reset Spread Voice Button
             const spreadIcon = document.getElementById('spread-voice-icon');
             const spreadLabel = document.getElementById('spread-voice-label');
             const spreadBtn = document.getElementById('btn-narrate-spread');
@@ -923,7 +1092,6 @@
                 return;
             }
 
-            // Clean markup tags for speech synthesis
             const tempDiv = document.createElement("div");
             tempDiv.innerHTML = text;
             const plainText = tempDiv.textContent || tempDiv.innerText || "";
@@ -934,10 +1102,9 @@
             }
 
             const utterance = new SpeechSynthesisUtterance(plainText);
-            utterance.rate = 0.95; // Natural editorial pace
+            utterance.rate = 0.95;
             utterance.pitch = 1.0;
 
-            // Attempt to select a clear natural voice if available
             const voices = window.speechSynthesis.getVoices();
             const preferredVoice = voices.find(v => (v.name.includes("Google") || v.name.includes("Natural") || v.name.includes("Enhanced") || v.name.includes("Samantha")) && v.lang.startsWith("en")) || voices[0];
             if (preferredVoice) utterance.voice = preferredVoice;
@@ -957,7 +1124,6 @@
             currentUtterance = utterance;
             window.speechSynthesis.speak(utterance);
 
-            // Update UI Button states
             if (source === 'article') {
                 const aiIcon = document.getElementById('ai-voice-icon');
                 const aiLabel = document.getElementById('ai-voice-label');
@@ -1001,7 +1167,7 @@
         }
 
         function switchTab(tabName) {
-            stopSpeech(); // Stop narration when changing tabs
+            stopSpeech();
             state.activeTab = tabName;
             
             const sections = ['cover', 'spread', 'aistudio', 'flatplan', 'audit', 'theme'];
